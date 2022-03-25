@@ -1,0 +1,32 @@
+.navbar-body {
+  background-color: var(--orange-1);
+  height: 100vh;
+  box-sizing: border-box;
+  width: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em 0 1em 0;
+}
+
+.navbar-menu ul {
+  list-style: none;
+  padding: 1em 0 1em 0;
+}
+
+.navbar-menu li {
+  width: 50%;
+  padding: 0.3em;
+  margin: 25% auto 25% auto;
+  border: 1px solid var(--black-1);
+  border-radius: 15%;
+}
+
+.navbar-menu li:hover {
+  background-color: black;
+}
+
+.profile-nav img {
+  width: 65px;
+  height: 65px;
+}
