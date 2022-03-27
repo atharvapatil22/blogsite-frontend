@@ -10,7 +10,9 @@ function Navbar() {
       <nav className="navbar-body">
         <div className="brand-logo">
           <Link to={"/"}>
-            <div className="home-link">Blogomo</div>
+            <div className="home-link">
+              <p>Blogomo</p>
+            </div>
           </Link>
         </div>
 
@@ -18,12 +20,16 @@ function Navbar() {
           <ul>
             <li>
               <Link to={"/"}>
-                <BiHomeAlt fontSize={"2em"} color={"red"} />
+                <div className="navbar-link">
+                  <BiHomeAlt fontSize={"2em"} />
+                </div>
               </Link>
             </li>
             <li>
               <Link to={"/write-blog"}>
-                <TiEdit fontSize={"2em"} color={"red"} />
+                <div className="navbar-link">
+                  <TiEdit fontSize={"2em"} />
+                </div>
               </Link>
             </li>
           </ul>
