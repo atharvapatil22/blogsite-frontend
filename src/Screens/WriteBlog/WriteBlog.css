@@ -1,0 +1,22 @@
+.write-blog-container {
+  display: block;
+  width: calc(100vw - var(--navbar-width));
+}
+
+.Draftail-Toolbar {
+  background: transparent !important;
+  border: none !important;
+} /* Override default */
+.Draftail-Editor {
+  border: none !important;
+  width: 60% !important;
+  margin-top: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+} /* Override default */
+.public-DraftEditor-content {
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+} /* Override default */
+.public-DraftEditorPlaceholder-inner {
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+}

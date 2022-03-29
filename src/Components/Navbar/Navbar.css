@@ -1,9 +1,12 @@
 .navbar-body {
+  position: sticky;
+  top: 0;
   background-color: var(--white-1);
   background-image: linear-gradient(to right, white, var(--white-1));
+  border-right: 0.05mm solid grey;
   height: 100vh;
   box-sizing: border-box;
-  width: 85px;
+  width: var(--navbar-width);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
