@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <header className="navbar-container">
       <nav className="navbar-body">
-        <div className="brand-logo">
+        <div className="brand-logo hide-for-mobile">
           <Link to={"/"}>
             <div className="home-link">
               <p>Blogomo</p>
@@ -32,10 +32,15 @@ function Navbar() {
                 </div>
               </Link>
             </li>
+            <li className="profile-nav show-for-mobile">
+              <Link to={"/profile"}>
+                <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />
+              </Link>
+            </li>
           </ul>
         </div>
 
-        <div className="profile-nav">
+        <div className="profile-nav hide-for-mobile">
           <Link to={"/profile"}>
             <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />
           </Link>

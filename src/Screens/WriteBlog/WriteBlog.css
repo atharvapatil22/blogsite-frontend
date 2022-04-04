@@ -1,6 +1,6 @@
 .write-blog-container {
   display: block;
-  width: calc(100vw - var(--navbar-width));
+  width: 100%;
 }
 
 .Draftail-Toolbar {

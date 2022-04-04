@@ -53,7 +53,50 @@ li a {
   border-radius: 25%;
 }
 
+/* HARDCODED FOR NOW */
 .profile-nav img {
   width: 65px;
   height: 65px;
+}
+
+.show-for-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .hide-for-mobile {
+    display: none;
+  }
+  .show-for-mobile {
+    display: block;
+  }
+
+  .navbar-container {
+    height: var(--navbar-mobile-height);
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    z-index: 5;
+    background-color: white;
+    box-shadow: 1em 1em 1em 1em rgba(155, 155, 155, 0.486);
+  }
+
+  .navbar-body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar-menu {
+    height: 100%;
+  }
+
+  .navbar-menu ul {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }

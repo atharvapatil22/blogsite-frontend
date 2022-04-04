@@ -8,6 +8,7 @@
 
   /* Vars */
   --navbar-width: 85px;
+  --navbar-mobile-height: 85px;
 }
 
 .App {
@@ -15,4 +16,10 @@
   display: flex;
   flex-direction: row;
   font-family: "Merriweather";
+}
+
+@media screen and (max-width: 1000px) {
+  .App {
+    margin-bottom: var(--navbar-mobile-height);
+  }
 }
