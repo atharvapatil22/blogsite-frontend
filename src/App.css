@@ -8,14 +8,14 @@
 
   /* Vars */
   --navbar-width: 85px;
-  --navbar-mobile-height: 85px;
+  --navbar-mobile-height: 75px;
 }
 
 .App {
   text-align: center;
   display: flex;
   flex-direction: row;
-  font-family: "Merriweather";
+  font-family: "Source Sans Pro", "Merriweather", sans-serif;
 }
 
 @media screen and (max-width: 1000px) {

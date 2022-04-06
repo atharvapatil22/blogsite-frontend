@@ -21,6 +21,7 @@ import "draft-js/dist/Draft.css";
 import "draftail/dist/draftail.css";
 import "draft-js-inline-toolbar-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
+import WriteBlogTools from "../../Components/WriteBlogTools/WriteBlogTools";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -42,33 +43,36 @@ function WriteBlog() {
 
   return (
     <div className="write-blog-container">
-      <DraftailEditor
-        editorState={editorState}
-        onChange={(newState) => setEditorState(newState)}
-        placeholder="Start writing your blog..."
-        plugins={plugins}
-      />
-      <InlineToolbar>
-        {(externalProps) => (
-          <div>
-            <BoldButton {...externalProps} />
-            <ItalicButton {...externalProps} />
-            <UnderlineButton {...externalProps} />
-          </div>
-        )}
-      </InlineToolbar>
-      <SideToolbar>
-        {(externalProps) => (
-          <div>
-            <HeadlineOneButton {...externalProps} />
-            <HeadlineTwoButton {...externalProps} />
-            <UnorderedListButton {...externalProps} />
-            <OrderedListButton {...externalProps} />
-            <BlockquoteButton {...externalProps} />
-            <CodeBlockButton {...externalProps} />
-          </div>
-        )}
-      </SideToolbar>
+      <WriteBlogTools />
+      <div>
+        <DraftailEditor
+          editorState={editorState}
+          onChange={(newState) => setEditorState(newState)}
+          placeholder="Start writing your blog..."
+          plugins={plugins}
+        />
+        <InlineToolbar>
+          {(externalProps) => (
+            <div>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+              <UnderlineButton {...externalProps} />
+            </div>
+          )}
+        </InlineToolbar>
+        <SideToolbar>
+          {(externalProps) => (
+            <div>
+              <HeadlineOneButton {...externalProps} />
+              <HeadlineTwoButton {...externalProps} />
+              <UnorderedListButton {...externalProps} />
+              <OrderedListButton {...externalProps} />
+              <BlockquoteButton {...externalProps} />
+              <CodeBlockButton {...externalProps} />
+            </div>
+          )}
+        </SideToolbar>
+      </div>
     </div>
   );
 }
