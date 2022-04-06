@@ -21,7 +21,7 @@
   font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1080px) {
   .Draftail-Editor {
     width: 80% !important;
     margin-left: 10% !important;

@@ -1,0 +1,10 @@
+.sidebar-container {
+  background-color: var(--purple-shadow);
+  width: var(--sidebar-width);
+}
+
+@media screen and (max-width: 1080px) {
+  .sidebar-container {
+    display: none;
+  }
+}
