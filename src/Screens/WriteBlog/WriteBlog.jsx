@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { DraftailEditor } from "draftail";
+import { useNavigate } from "react-router-dom";
+import { DraftailEditor, serialiseEditorStateToRaw } from "draftail";
 import { EditorState } from "draft-js";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createSideToolbarPlugin from "draft-js-side-toolbar-plugin";
@@ -21,7 +22,9 @@ import "draft-js/dist/Draft.css";
 import "draftail/dist/draftail.css";
 import "draft-js-inline-toolbar-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
-import WriteBlogTools from "../../Components/WriteBlogTools/WriteBlogTools";
+import { Link } from "react-router-dom";
+import { BaseURL } from "../../environment";
+import axios from "axios";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -39,12 +42,88 @@ function WriteBlog() {
    *  !! Requires styles imports for editor and plugins
    */
 
+  const [blogTitle, setBlogTitle] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [previewVisible, setPreviewVisible] = useState(false);
+
+  const navigate = useNavigate();
+
+  const showPreview = () => {
+    const blogContent = serialiseEditorStateToRaw(editorState);
+    if (blogTitle == "") alert("Please add title to your blog!");
+    else if (blogContent == null) alert("Please add content to your blog!");
+    else setPreviewVisible(true);
+  };
+
+  const publishBlog = () => {
+    // window.confirm("Are you sure to publish blog?");
+
+    axios
+      .post(BaseURL + "/blogs", {
+        title: blogTitle,
+        content: serialiseEditorStateToRaw(editorState),
+      })
+      .then((res) => {
+        console.log("Response: ", res);
+        if (res.status === 200) {
+          alert(res.data);
+          navigate("/profile");
+        }
+      })
+      .catch((error) => {
+        console.log("Error :", error);
+      })
+      .finally(() => setPreviewVisible(false));
+  };
+
+  const Toolbar = () => {
+    return (
+      <div className="toolbar-container">
+        <div className="section-1">
+          <Link to={"/"}>
+            <div className="home-link">
+              <p>Blogomo</p>
+            </div>
+          </Link>
+          <p>Draft in XYZ ABC </p>
+          <p> Sav(ed/ing)</p>
+        </div>
+        <div className="section-2">
+          <button onClick={showPreview} type="button">
+            Publish
+          </button>
+          <p>D</p>
+          <p>N</p>
+          <p>P</p>
+        </div>
+      </div>
+    );
+  };
+
+  const Preview = () => {
+    return (
+      <div className="preview-container">
+        <div>
+          Preview{" "}
+          <button onClick={publishBlog} type="button">
+            Publish Now
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="write-blog-container">
-      <WriteBlogTools />
+      {previewVisible && <Preview />}
+      <Toolbar />
       <div>
+        <textarea
+          placeholder="Title"
+          onChange={(e) => setBlogTitle(e.target.value)}
+          className="blog-title"
+          rows="5"
+        />
         <DraftailEditor
           editorState={editorState}
           onChange={(newState) => setEditorState(newState)}
