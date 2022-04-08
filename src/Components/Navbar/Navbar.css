@@ -3,7 +3,8 @@
   top: 0;
   background-color: var(--white-1);
   background-image: linear-gradient(to right, white, var(--white-1));
-  border-right: 0.05mm solid grey;
+  /* border-right: 0.05mm solid grey; */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 0.5em;
   height: 100vh;
   box-sizing: border-box;
   width: var(--navbar-width);
