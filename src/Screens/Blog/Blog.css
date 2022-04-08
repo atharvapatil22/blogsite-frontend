@@ -9,10 +9,30 @@
   width: 100%;
 }
 
-.Draftail-Editor .DraftEditor-root {
+.Draftail-Editor {
+  border: none !important;
+  width: 70% !important;
+  margin-top: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.Draftail-Editor.DraftEditor-root {
   color: black;
 }
 
-.Draftail-Editor--readonly {
+.Draftail-Editor--readonly .DraftEditor-editorContainer {
   opacity: 1;
+}
+
+@media screen and (max-width: 720px) {
+  .Draftail-Editor {
+    width: 80% !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .Draftail-Editor {
+    width: 95% !important;
+  }
 }
