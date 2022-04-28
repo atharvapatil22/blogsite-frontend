@@ -1,0 +1,164 @@
+/* LOGIN FORM */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  height: 85%;
+  min-height: 250px;
+  overflow-y: auto;
+}
+
+.form-banner {
+  /* color: var(--purple-1); */
+  font-size: 2.8em;
+  margin-bottom: 2%;
+  font-family: var(--font-1);
+}
+
+/* CREATE NEW ACCOUNT */
+
+.create-account-label {
+  font-size: 1.2em;
+}
+
+.create-account-btn {
+  background-color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 1em;
+  color: var(--purple-1);
+  margin-left: 0.5%;
+}
+
+.create-account-btn:hover {
+  cursor: pointer;
+  color: var(--purple-2);
+}
+
+.create-account-email {
+  height: 60%;
+  font-size: 1.5em;
+  /* background-color: red; */
+}
+
+.create-account-form {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+form > button {
+  margin-top: 5%;
+  background-color: var(--purple-1);
+  font-size: large;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  height: 35%;
+  width: 100%;
+}
+
+form > button:hover {
+  cursor: pointer;
+}
+
+.create-account-form input {
+  margin-top: 15%;
+  width: 95%;
+  height: 30%;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: large;
+}
+
+.create-account-form input:hover {
+  border-bottom: 1.8px solid black;
+}
+
+.create-account-form input:focus {
+  outline: none;
+  border-bottom: 1.8px solid black;
+}
+
+.error-msg {
+  color: red;
+  font-size: medium;
+}
+
+/* REGISTER */
+.register-form {
+  display: flex;
+  flex-direction: column;
+
+  /* height: 50%; */
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+
+  margin-bottom: 200px;
+}
+
+.register-form label {
+  color: grey;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+
+.register-form input {
+  /* margin-bottom: 10%; */
+  width: 95%;
+  padding: 8px 0 8px 0;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: large;
+  text-align: center;
+  background-color: white;
+}
+.register-form input:hover {
+  border-bottom: 1.8px solid black;
+}
+.register-form input:focus {
+  outline: none;
+  border-bottom: 1.8px solid black;
+}
+
+.register-form button {
+  height: 2.5em;
+}
+
+.err-msg {
+  font-size: smaller;
+  color: red;
+  margin-top: 2%;
+  margin-bottom: 10%;
+}
+
+.password-input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.password-input > button {
+  position: absolute;
+  right: 1em;
+  background-color: transparent;
+  border: none;
+}
+.password-input > button:hover {
+  cursor: pointer;
+}
+
+#disabled-input:hover {
+  border-bottom: 1px solid black;
+}

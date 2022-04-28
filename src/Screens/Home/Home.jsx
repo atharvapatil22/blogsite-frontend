@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import axios from "axios";
 import { BaseURL } from "../../environment";
+import Modal from "../../Components/Modal/Modal";
+import AuthForm from "../../Components/AuthForm/AuthForm";
 
 function Home() {
   const [blogsList, setBlogsList] = useState([]);
@@ -37,6 +39,7 @@ function Home() {
             </div>
           ))}
         </div>
+        <AuthForm />
       </div>
       <Sidebar />
     </div>

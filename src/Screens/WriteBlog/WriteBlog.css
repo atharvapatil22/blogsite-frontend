@@ -19,10 +19,10 @@
   margin-right: auto !important;
 } /* Override default */
 .public-DraftEditor-content {
-  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+  font-family: var(--font-1);
 } /* Override default */
 .public-DraftEditorPlaceholder-inner {
-  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+  font-family: var(--font-1);
 }
 
 @media screen and (max-width: 1080px) {
