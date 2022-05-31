@@ -36,7 +36,6 @@
 .login-form-email {
   height: 70%;
   font-size: 1.5em;
-  /* background-color: red; */
 }
 
 .login-form {
@@ -48,14 +47,14 @@
   margin-left: auto;
   margin-right: auto;
   align-items: center;
-  /* background-color: red; */
+  padding-top: 2%;
 }
 
 .login-form input {
-  margin-top: 0%;
-  margin-bottom: 5%;
+  /* margin-top: 5%; */
+  margin-bottom: 6%;
   width: 95%;
-  height: 30%;
+  height: 25%;
   border: none;
   border-bottom: 1px solid black;
   font-size: large;
@@ -153,6 +152,49 @@ form > button:hover {
 .error-msg {
   color: red;
   font-size: medium;
+}
+
+.error-msg {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+  background-size: 120% 100%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -ms-background-clip: text;
+  -ms-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  background-image: linear-gradient(45deg, red, red);
+  animation: 2.2s shake infinite alternate;
+  animation-iteration-count: 3;
+  animation-delay: 1s;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 /* REGISTER */
