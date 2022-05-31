@@ -30,7 +30,7 @@ function SignUpForm(props) {
       })
       .catch((err) => {
         setErrorMsg(err?.response?.data?.message);
-        console.log("Error: ", err.response);
+        console.log("Error: ", err?.response);
       });
   };
 

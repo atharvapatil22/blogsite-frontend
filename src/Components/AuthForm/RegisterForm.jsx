@@ -51,7 +51,7 @@ function RegisterForm(props) {
       })
       .catch((err) => {
         alert("Some Error occured");
-        console.log("Error: ", err);
+        console.log("Error: ", err?.response);
       });
   };
 
