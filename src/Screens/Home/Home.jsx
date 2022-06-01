@@ -39,7 +39,6 @@ function Home() {
             </div>
           ))}
         </div>
-        <AuthForm />
       </div>
       <Sidebar />
     </div>

@@ -4,7 +4,7 @@ import authReducer from "./reducer";
 
 const store = createStore(
   combineReducers({
-    authUser: authReducer,
+    globalData: authReducer,
   }),
   applyMiddleware(thunk)
 );
