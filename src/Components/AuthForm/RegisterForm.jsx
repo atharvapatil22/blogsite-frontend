@@ -3,6 +3,12 @@ import React, { useState } from "react";
 import { BaseURL } from "../../environment";
 import "./AuthForm.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import {
+  authFormVisible,
+  authTokenSet,
+  authUserSet,
+} from "../../redux/actions";
 
 function RegisterForm(props) {
   const [fullname, setFullname] = useState("");
@@ -15,6 +21,8 @@ function RegisterForm(props) {
   const [errMsg1, setErrMsg1] = useState("");
   const [errMsg2, setErrMsg2] = useState("");
   const [errMsg3, setErrMsg3] = useState("");
+
+  const dispatch = useDispatch();
 
   const validateFields = () => {
     if (!fullname) setErrMsg1("Field cannot be empty!");
@@ -39,7 +47,6 @@ function RegisterForm(props) {
   };
 
   const registerUser = () => {
-    console.log("debug$$__ \n");
     axios
       .post(BaseURL + "/users", {
         email: props.newEmail,
@@ -47,7 +54,16 @@ function RegisterForm(props) {
         password: password,
       })
       .then((res) => {
-        if (res.status === 200) console.log("added");
+        console.log(
+          "User Registered successfully. User automatically logged in"
+        );
+        const userData = res.data.user;
+        const authToken = userData.accessToken;
+
+        dispatch(authTokenSet(authToken));
+        dispatch(authUserSet(userData));
+        // NAV TO HOME PAGE
+        dispatch(authFormVisible(false));
       })
       .catch((err) => {
         alert("Some Error occured");

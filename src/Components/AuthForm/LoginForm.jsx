@@ -1,12 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { BaseURL } from "../../environment";
+import {
+  authFormVisible,
+  authTokenSet,
+  authUserSet,
+} from "../../redux/actions";
 import "./AuthForm.css";
 
 function LoginForm({ setVisibleForm }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const dispatch = useDispatch();
 
   const loginUser = () => {
     if (!email) {
@@ -19,13 +26,21 @@ function LoginForm({ setVisibleForm }) {
       axios
         .post(BaseURL + "/users/login", { email: email, password: password })
         .then((res) => {
-          console.log("Response: ", res);
-          alert("Login successful");
+          console.log("Login successful");
+          const userData = res.data.user;
+          const authToken = userData.accessToken;
+
+          dispatch(authTokenSet(authToken));
+          dispatch(authUserSet(userData));
+          // NAV TO HOME PAGE
+          dispatch(authFormVisible(false));
         })
         .catch((err) => {
-          console.log("Error:", err?.response);
-          if (err.response.data.message) {
+          if (err?.response?.data?.message) {
+            console.log("Error:", err.response);
             setErrorMsg(err.response.data.message);
+          } else {
+            console.log("Error: Some error occured");
           }
         });
     }
