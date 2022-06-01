@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authFormVisible } from "./redux/actions";
 import { useEffect } from "react";
 import axios from "axios";
+import LandingPage from "./Screens/LandingPage/LandingPage";
 
 function App() {
   const store = useSelector((state) => state);
@@ -27,6 +28,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+          <Route path={"landing-page"} exact element={<LandingPage />} />
           <Route path={"/"} exact element={<Home />} />
           <Route path={"/write-blog"} exact element={<WriteBlog />} />
           <Route path={"/blog/:blogID"} exact element={<Blog />} />

@@ -1,0 +1,55 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-2);
+}
+
+.landing-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(255, 196, 19);
+  height: 10vh;
+}
+
+.landing-nav p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--purple-1);
+  color: white;
+  height: 100%;
+  padding: 0 0.5em 0 0.5em;
+}
+
+.landing-nav div > #login-btn {
+  height: 2.2em;
+  border: transparent;
+  padding: 0 0.5em 0 0.5em;
+  font-size: 1.2em;
+  background-color: transparent;
+}
+
+.landing-nav div > #get-started-btn {
+  height: 2.2em;
+  margin-left: 1em;
+  background-color: black;
+  padding: 0 0.8em 0 0.8em;
+  font-size: 1.2em;
+  border-radius: 20px;
+  border-color: transparent;
+  color: white;
+}
+
+.landing-nav button:hover {
+  cursor: pointer;
+}
+
+.banner {
+  height: 75vh;
+}
+
+.mini-home {
+  background-color: rgba(255, 196, 19, 0.637);
+}
