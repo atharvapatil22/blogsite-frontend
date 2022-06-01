@@ -9,9 +9,17 @@ import AuthForm from "./Components/AuthForm/AuthForm";
 import { useDispatch, useSelector } from "react-redux";
 import { authFormVisible } from "./redux/actions";
 import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
   const store = useSelector((state) => state);
+
+  axios.interceptors.request.use(function (config) {
+    const token = store.globalData.authToken;
+    config.headers.Authorization = token;
+
+    return config;
+  });
 
   return (
     <div className="App">
