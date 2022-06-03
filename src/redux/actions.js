@@ -7,12 +7,12 @@ export const authUserSet = (authUserData) => {
   };
 };
 
-export const authTokenSet = (authTokenData) => {
-  return {
-    type: AUTH_TOKEN_SET,
-    payload: authTokenData,
-  };
-};
+// export const authTokenSet = (authTokenData) => {
+//   return {
+//     type: AUTH_TOKEN_SET,
+//     payload: authTokenData,
+//   };
+// };
 
 export const authFormVisible = (formVisible) => {
   return {

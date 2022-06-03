@@ -16,7 +16,8 @@ function App() {
   const store = useSelector((state) => state);
 
   axios.interceptors.request.use(function (config) {
-    const token = store.globalData.authToken;
+    // const token = store.globalData.authToken;
+    const token = localStorage.getItem("logged_in");
     config.headers.Authorization = token;
 
     return config;

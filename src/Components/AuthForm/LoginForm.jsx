@@ -33,7 +33,9 @@ function LoginForm({ setVisibleForm }) {
           const userData = res.data.user;
           const authToken = userData.accessToken;
 
-          dispatch(authTokenSet(authToken));
+          localStorage.setItem("logged_id", true);
+          localStorage.setItem("access_token", authToken);
+          // dispatch(authTokenSet(authToken));
           dispatch(authUserSet(userData));
           navigate("/");
           dispatch(authFormVisible(false));
