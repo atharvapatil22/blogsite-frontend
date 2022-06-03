@@ -1,10 +1,13 @@
 import React from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BiHomeAlt } from "react-icons/bi";
 import { TiEdit } from "react-icons/ti";
 
 function Navbar() {
+  const location = useLocation();
+
+  if (location.pathname == "/landing-page") return null;
   return (
     <header className="navbar-container">
       <nav className="navbar-body">
