@@ -24,8 +24,8 @@ function App() {
 
   return (
     <div className="App">
-      {!!store.globalData.authFormVisible && <AuthForm />}
       <Router>
+        {!!store.globalData.authFormVisible && <AuthForm />}
         <Navbar />
         <Routes>
           <Route path={"landing-page"} exact element={<LandingPage />} />

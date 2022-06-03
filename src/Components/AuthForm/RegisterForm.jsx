@@ -9,6 +9,7 @@ import {
   authTokenSet,
   authUserSet,
 } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm(props) {
   const [fullname, setFullname] = useState("");
@@ -23,6 +24,7 @@ function RegisterForm(props) {
   const [errMsg3, setErrMsg3] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const validateFields = () => {
     if (!fullname) setErrMsg1("Field cannot be empty!");
@@ -62,7 +64,7 @@ function RegisterForm(props) {
 
         dispatch(authTokenSet(authToken));
         dispatch(authUserSet(userData));
-        // NAV TO HOME PAGE
+        navigate("/");
         dispatch(authFormVisible(false));
       })
       .catch((err) => {

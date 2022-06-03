@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../environment";
 import {
   authFormVisible,
@@ -13,7 +14,9 @@ function LoginForm({ setVisibleForm }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const loginUser = () => {
     if (!email) {
@@ -32,7 +35,7 @@ function LoginForm({ setVisibleForm }) {
 
           dispatch(authTokenSet(authToken));
           dispatch(authUserSet(userData));
-          // NAV TO HOME PAGE
+          navigate("/");
           dispatch(authFormVisible(false));
         })
         .catch((err) => {
