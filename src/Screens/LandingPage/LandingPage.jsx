@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LandingPage.css";
 import "../../assets/logo.png";
+import AuthForm from "../../Components/AuthForm/AuthForm";
 
 function LandingPage() {
+  const [showAuthForm, setShowAuthForm] = useState(false);
+  const [authFormType, setauthFormType] = useState("login");
+
   return (
     <div className="landing-page">
+      {!!showAuthForm && (
+        <AuthForm
+          onClose={() => setShowAuthForm(false)}
+          authFormType={authFormType}
+        />
+      )}
       <div className="banner">
         <div className="landing-main">
           <div id="box1"></div>
@@ -28,10 +38,25 @@ function LandingPage() {
                     <button type="button">About</button>
                   </li>
                   <li>
-                    <button type="button">Login</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowAuthForm(true);
+                      }}
+                    >
+                      Login
+                    </button>
                   </li>
                   <li>
-                    <button type="button">Get Started</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setauthFormType("sign-up");
+                        setShowAuthForm(true);
+                      }}
+                    >
+                      Get Started
+                    </button>
                   </li>
                 </ul>
               </div>

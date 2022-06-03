@@ -10,7 +10,7 @@ import {
 } from "../../redux/actions";
 import "./AuthForm.css";
 
-function LoginForm({ setVisibleForm }) {
+function LoginForm({ setAuthFormType }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -37,7 +37,7 @@ function LoginForm({ setVisibleForm }) {
           localStorage.setItem("access_token", authToken);
           // dispatch(authTokenSet(authToken));
           dispatch(authUserSet(userData));
-          navigate("/");
+          navigate("/home");
           dispatch(authFormVisible(false));
         })
         .catch((err) => {
@@ -91,7 +91,7 @@ function LoginForm({ setVisibleForm }) {
         No Account?
         <button
           className="login-form-btn"
-          onClick={() => setVisibleForm("sign-up")}
+          onClick={() => setAuthFormType("sign-up")}
         >
           Create One
         </button>

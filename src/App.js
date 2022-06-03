@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Screens/Home/Home";
 import WriteBlog from "./Screens/WriteBlog/WriteBlog";
@@ -31,8 +36,8 @@ function App() {
         .post(BaseURL + "/authenticate")
         .then((res) => {
           if (res.status == 200) {
-            setAuthLoader(false);
             setAuthenticated(true);
+            setAuthLoader(false);
           }
         })
         .catch((err) => {
@@ -55,39 +60,51 @@ function App() {
     return config;
   });
 
+  if (authLoader) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          fontSize: "3em",
+        }}
+      >
+        Authenticating...
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      {/* SHOW AUTH LOADER */}
-      {!!authLoader ? (
-        <div
-          style={{
-            display: "flex",
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
-            fontSize: "3em",
-          }}
-        >
-          Authenticating...
-        </div>
-      ) : // If user authenticated
-      authenticated ? (
-        <Router>
-          {!!store.globalData.authFormVisible && <AuthForm />}
-          <Navbar />
-          <Routes>
-            <Route path={"/landing-page"} exact element={<LandingPage />} />
-            <Route path={"/"} exact element={<Home />} />
-            <Route path={"/write-blog"} exact element={<WriteBlog />} />
-            <Route path={"/blog/:blogID"} exact element={<Blog />} />
-            <Route path={"/profile"} exact element={<Profile />} />
-          </Routes>
-        </Router>
-      ) : (
-        //  Else -> Show visitor routes
-        <>Visitor routes</>
-      )}
+      <Router>
+        {!!store.globalData.authFormVisible && (
+          <AuthForm onClose={() => {}} authFormType={"login"} />
+        )}
+        <Navbar />
+        <Routes>
+          <Route
+            path={"/"}
+            exact
+            element={
+              authenticated ? (
+                <Navigate to="/home" replace={true} />
+              ) : (
+                <Navigate to="/landing-page" replace={true} />
+              )
+            }
+          />
+
+          <Route path={"/home"} exact element={<Home />} />
+          <Route path={"/landing-page"} exact element={<LandingPage />} />
+          <Route path={"/write-blog"} exact element={<WriteBlog />} />
+          <Route path={"/blog/:blogID"} exact element={<Blog />} />
+          <Route path={"/profile"} exact element={<Profile />} />
+          <Route path="*" element={<>Invalid Route</>} />
+        </Routes>
+      </Router>
     </div>
   );
 }

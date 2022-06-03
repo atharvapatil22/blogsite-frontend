@@ -25,7 +25,7 @@ function SignUpForm(props) {
       .then((res) => {
         if (res.status === 200) {
           props.setNewEmail(email);
-          props.setVisibleForm("register");
+          props.setAuthFormType("register");
         }
       })
       .catch((err) => {
@@ -63,7 +63,7 @@ function SignUpForm(props) {
         Already have an account?
         <button
           className="create-account-btn"
-          onClick={() => props.setVisibleForm("login")}
+          onClick={() => props.setAuthFormType("login")}
         >
           Login
         </button>

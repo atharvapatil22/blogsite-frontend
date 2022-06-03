@@ -12,7 +12,7 @@ function Navbar() {
     <header className="navbar-container">
       <nav className="navbar-body">
         <div className="brand-logo hide-for-mobile">
-          <Link to={"/"}>
+          <Link to={"/home"}>
             <div className="home-link">
               <p>Blogomo</p>
             </div>
@@ -22,7 +22,7 @@ function Navbar() {
         <div className="navbar-menu">
           <ul>
             <li>
-              <Link to={"/"}>
+              <Link to={"/home"}>
                 <div className="navbar-link">
                   <BiHomeAlt fontSize={"2em"} />
                 </div>

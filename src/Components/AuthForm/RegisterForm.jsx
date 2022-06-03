@@ -66,7 +66,7 @@ function RegisterForm(props) {
         localStorage.setItem("access_token", authToken);
         // dispatch(authTokenSet(authToken));
         dispatch(authUserSet(userData));
-        navigate("/");
+        navigate("/home");
         dispatch(authFormVisible(false));
       })
       .catch((err) => {

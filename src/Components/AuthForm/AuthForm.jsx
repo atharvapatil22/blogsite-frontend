@@ -9,8 +9,8 @@ import LoginForm from "./LoginForm";
 import { useDispatch } from "react-redux";
 import { authFormVisible } from "../../redux/actions";
 
-function SignInForm() {
-  const [visibleForm, setVisibleForm] = useState("login");
+function AuthForm(props) {
+  const [authFormType, setAuthFormType] = useState(props.authFormType);
   const [newEmail, setNewEmail] = useState("");
 
   const dispatch = useDispatch();
@@ -20,17 +20,18 @@ function SignInForm() {
       <Modal
         show={true}
         onClose={() => {
-          dispatch(authFormVisible(false));
+          props.onClose();
+          // dispatch(authFormVisible(false));
         }}
       >
-        {visibleForm === "login" ? (
-          <LoginForm setVisibleForm={setVisibleForm} />
-        ) : visibleForm === "sign-up" ? (
+        {authFormType === "login" ? (
+          <LoginForm setAuthFormType={setAuthFormType} />
+        ) : authFormType === "sign-up" ? (
           <SignUpForm
-            setVisibleForm={setVisibleForm}
+            setAuthFormType={setAuthFormType}
             setNewEmail={setNewEmail}
           />
-        ) : visibleForm === "register" ? (
+        ) : authFormType === "register" ? (
           <RegisterForm newEmail={newEmail} />
         ) : (
           <></>
@@ -40,4 +41,4 @@ function SignInForm() {
   );
 }
 
-export default SignInForm;
+export default AuthForm;

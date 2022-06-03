@@ -80,7 +80,7 @@ function WriteBlog() {
     return (
       <div className="toolbar-container">
         <div className="section-1">
-          <Link to={"/"}>
+          <Link to={"/home"}>
             <div className="home-link">
               <p>Blogomo</p>
             </div>
