@@ -10,7 +10,7 @@ import {
 } from "../../redux/actions";
 import "./AuthForm.css";
 
-function LoginForm({ setAuthFormType }) {
+function LoginForm({ setAuthFormType, message, hideForm }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -35,10 +35,9 @@ function LoginForm({ setAuthFormType }) {
 
           localStorage.setItem("logged_in", true);
           localStorage.setItem("access_token", authToken);
-          // dispatch(authTokenSet(authToken));
           dispatch(authUserSet(userData));
           navigate("/home");
-          dispatch(authFormVisible(false));
+          hideForm();
         })
         .catch((err) => {
           if (err?.response?.data?.message) {
@@ -53,7 +52,12 @@ function LoginForm({ setAuthFormType }) {
 
   return (
     <div className="form-body">
-      <p className="form-banner"> Welcome Back!</p>
+      {!!message ? (
+        <p className="form-banner"> {message}</p>
+      ) : (
+        <p className="form-banner"> Welcome Back!</p>
+      )}
+
       <div className="login-form-email">
         <p>Enter your Email and Password</p>
         <form

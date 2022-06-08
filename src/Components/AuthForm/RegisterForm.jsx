@@ -67,7 +67,7 @@ function RegisterForm(props) {
         // dispatch(authTokenSet(authToken));
         dispatch(authUserSet(userData));
         navigate("/home");
-        dispatch(authFormVisible(false));
+        props.hideForm();
       })
       .catch((err) => {
         alert("Some Error occured");

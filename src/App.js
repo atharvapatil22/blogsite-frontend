@@ -11,6 +11,7 @@ import WriteBlog from "./Screens/WriteBlog/WriteBlog";
 import Profile from "./Screens/Profile/Profile";
 import Blog from "./Screens/Blog/Blog";
 import AuthForm from "./Components/AuthForm/AuthForm";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -21,6 +22,9 @@ function App() {
   const store = useSelector((state) => state);
   const [authLoader, setAuthLoader] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+
+  const [authFormVisible, setAuthFormVisible] = useState(false);
+  const [authFormMessage, setAuthFormMessage] = useState("");
 
   useEffect(() => {
     authenticateUser();
@@ -80,8 +84,14 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {!!store.globalData.authFormVisible && (
-          <AuthForm onClose={() => {}} authFormType={"login"} />
+        {!!authFormVisible && (
+          <AuthForm
+            type={"login"}
+            message={authFormMessage}
+            hideForm={() => {
+              setAuthFormVisible(false);
+            }}
+          />
         )}
         <Navbar />
         <Routes>
@@ -96,13 +106,40 @@ function App() {
               )
             }
           />
-
-          <Route path={"/home"} exact element={<Home />} />
+          {/* PUBLIC ROUTES */}
           <Route path={"/landing-page"} exact element={<LandingPage />} />
-          <Route path={"/write-blog"} exact element={<WriteBlog />} />
+          <Route path={"/home"} exact element={<Home />} />
           <Route path={"/blog/:blogID"} exact element={<Blog />} />
-          <Route path={"/profile"} exact element={<Profile />} />
-          <Route path="*" element={<>Invalid Route</>} />
+          <Route
+            path="*"
+            element={<div className="invalid-route">Invalid Route !!</div>}
+          />
+
+          {/* PROTECTED ROUTES */}
+          <Route
+            element={
+              <ProtectedRoute
+                userAuthenticated={authenticated}
+                formMessage="Login to start writing blogs"
+                setAuthFormVisible={setAuthFormVisible}
+                setAuthFormMessage={setAuthFormMessage}
+              />
+            }
+          >
+            <Route path={"/write-blog"} exact element={<WriteBlog />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                userAuthenticated={authenticated}
+                formMessage="Login to view Profile"
+                setAuthFormVisible={setAuthFormVisible}
+                setAuthFormMessage={setAuthFormMessage}
+              />
+            }
+          >
+            <Route path={"/profile"} exact element={<Profile />} />
+          </Route>
         </Routes>
       </Router>
     </div>

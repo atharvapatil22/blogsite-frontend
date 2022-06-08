@@ -29,3 +29,12 @@
     margin-bottom: var(--navbar-mobile-height);
   }
 }
+
+.invalid-route {
+  font-size: 3em;
+  color: red;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex: 1;
+}

@@ -8,31 +8,45 @@ import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
 import { useDispatch } from "react-redux";
 import { authFormVisible } from "../../redux/actions";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AuthForm(props) {
-  const [authFormType, setAuthFormType] = useState(props.authFormType);
+  /* @Authentication Form Component
+   *
+   * Types -> This component can render 3 types of sub-forms: login, sign-up, register
+   * Props ->
+   *   1) {required} hideForm: function executed when from is to be hidden
+   *   2) {required} type: used to set initial form type
+   *   3) {optional} message: used to override default banner message
+   *
+   * If user closes form they will always be redirected to '/' route
+   * If user completes Login/Register they will be redirected to '/' route
+   */
+  const [type, setType] = useState(props.type);
   const [newEmail, setNewEmail] = useState("");
 
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div>
       <Modal
         show={true}
         onClose={() => {
-          props.onClose();
-          // dispatch(authFormVisible(false));
+          props.hideForm();
+          if (location.pathname != "/landing-page") navigate("/");
         }}
       >
-        {authFormType === "login" ? (
-          <LoginForm setAuthFormType={setAuthFormType} />
-        ) : authFormType === "sign-up" ? (
-          <SignUpForm
-            setAuthFormType={setAuthFormType}
-            setNewEmail={setNewEmail}
+        {type === "login" ? (
+          <LoginForm
+            setAuthFormType={setType}
+            message={props.message ? props.message : ""}
+            hideForm={props.hideForm}
           />
-        ) : authFormType === "register" ? (
-          <RegisterForm newEmail={newEmail} />
+        ) : type === "sign-up" ? (
+          <SignUpForm setAuthFormType={setType} setNewEmail={setNewEmail} />
+        ) : type === "register" ? (
+          <RegisterForm newEmail={newEmail} hideForm={props.hideForm} />
         ) : (
           <></>
         )}
