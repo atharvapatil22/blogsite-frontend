@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../environment";
-import {
-  authFormVisible,
-  authTokenSet,
-  authUserSet,
-} from "../../redux/actions";
+import { authUserSet } from "../../redux/actions";
 import "./AuthForm.css";
 
 function LoginForm({ setAuthFormType, message, hideForm }) {

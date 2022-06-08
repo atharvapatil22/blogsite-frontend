@@ -1,4 +1,4 @@
-import { AUTH_FORM_VISIBLE, AUTH_TOKEN_SET, AUTH_USER_SET } from "./types";
+import { AUTH_TOKEN_SET, AUTH_USER_SET } from "./types";
 
 export const authUserSet = (authUserData) => {
   return {
@@ -13,10 +13,3 @@ export const authUserSet = (authUserData) => {
 //     payload: authTokenData,
 //   };
 // };
-
-export const authFormVisible = (formVisible) => {
-  return {
-    type: AUTH_FORM_VISIBLE,
-    payload: formVisible,
-  };
-};

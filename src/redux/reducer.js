@@ -1,9 +1,8 @@
-import { AUTH_FORM_VISIBLE, AUTH_TOKEN_SET, AUTH_USER_SET } from "./types";
+import { AUTH_TOKEN_SET, AUTH_USER_SET } from "./types";
 
 const initialState = {
   authUser: null,
   authToken: null,
-  authFormVisible: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,12 +17,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authToken: action.payload,
-      };
-
-    case AUTH_FORM_VISIBLE:
-      return {
-        ...state,
-        authFormVisible: action.payload,
       };
 
     default:

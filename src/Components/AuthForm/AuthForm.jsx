@@ -1,13 +1,9 @@
 import "./AuthForm.css";
 import React, { useState } from "react";
 import Modal from "../Modal/Modal";
-import { BaseURL } from "../../environment";
-import axios from "axios";
 import SignUpForm from "./SignUpForm";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
-import { useDispatch } from "react-redux";
-import { authFormVisible } from "../../redux/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function AuthForm(props) {

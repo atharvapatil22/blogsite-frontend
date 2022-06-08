@@ -12,7 +12,7 @@ import Profile from "./Screens/Profile/Profile";
 import Blog from "./Screens/Blog/Blog";
 import AuthForm from "./Components/AuthForm/AuthForm";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LandingPage from "./Screens/LandingPage/LandingPage";
