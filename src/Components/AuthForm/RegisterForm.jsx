@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function RegisterForm(props) {
+  const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -77,7 +78,7 @@ function RegisterForm(props) {
   return (
     <div className="form-body">
       <p className="form-banner"> Almost There</p>
-
+      {/* <p>Enter all the details</p> */}
       <form
         className="register-form"
         onSubmit={(event) => {
@@ -85,6 +86,27 @@ function RegisterForm(props) {
           // validateFields();
         }}
       >
+        <label>Avatar</label>
+        <div
+          className="avatar-wrapper"
+          onClick={() => setShowAvatarSelector(!showAvatarSelector)}
+        >
+          <img
+            className="selected-avatar"
+            src={require("../../assets/defaultAvatars/male_1.png")}
+          />
+          <p className="edit-text">{showAvatarSelector ? "Done" : "Edit"}</p>
+        </div>
+
+        {showAvatarSelector && <div className="avatar-selector"></div>}
+        <button
+          className="avatar-btn"
+          type="button"
+          onClick={() => setShowAvatarSelector(!showAvatarSelector)}
+        >
+          {showAvatarSelector ? "Done" : "Edit Avatar"}
+        </button>
+
         <label>Email</label>
         <input
           type={"text"}

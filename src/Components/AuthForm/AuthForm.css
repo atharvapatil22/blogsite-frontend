@@ -214,6 +214,65 @@ form > button:hover {
   margin-bottom: 200px;
 }
 
+.avatar-wrapper {
+  /* background-color: red; */
+  width: 70%;
+  /* margin-bottom: 1em; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.selected-avatar {
+  height: auto;
+  width: 100%;
+}
+
+.edit-text {
+  position: absolute;
+  top: auto;
+  bottom: auto;
+  /* left: 0;
+  right: 0; */
+  color: black;
+  font-size: 2em;
+  visibility: hidden;
+  opacity: 0;
+  cursor: pointer;
+
+  /* transition effect. not necessary */
+  transition: opacity 0.3s, visibility 0.2s;
+}
+
+.avatar-wrapper:hover .edit-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.avatar-wrapper:hover .selected-avatar {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.avatar-btn {
+  margin: 0.2em 0 1em 0;
+  padding: 0 1em 0 1em;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+}
+
+.avatar-selector {
+  background-color: green;
+  height: 100px;
+  width: 100%;
+}
+
 .register-form label {
   color: grey;
   margin-top: 5%;
