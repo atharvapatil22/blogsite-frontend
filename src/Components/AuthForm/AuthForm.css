@@ -215,19 +215,68 @@ form > button:hover {
 }
 
 .avatar-wrapper {
-  /* background-color: red; */
   width: 70%;
-  /* margin-bottom: 1em; */
   display: flex;
   justify-content: center;
   align-items: center;
-
+  border-radius: 50px;
   position: relative;
 }
 
 .selected-avatar {
-  height: auto;
+  height: 11em;
+  width: 11em;
+  border-radius: 100px;
+}
+
+.avatar-selector {
+  width: 110%;
+  display: flex;
+}
+
+.scroll-wrapper {
   width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 1080px) {
+  .avatar-selector {
+    width: 140%;
+  }
+}
+
+.scroll-btn {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.scroll-btn-left:hover,
+.scroll-btn-left:active {
+  background: linear-gradient(
+    90deg,
+    rgb(166, 166, 166) 0%,
+    rgb(195, 195, 195) 20%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.scroll-btn-right:hover,
+.scroll-btn-right:active {
+  background: linear-gradient(
+    270deg,
+    rgb(166, 166, 166) 0%,
+    rgb(195, 195, 195) 20%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.avatar-option {
+  width: 6em;
+  height: 6em;
+  border-radius: 25px;
+  margin: 0 5px 0 5px;
 }
 
 .edit-text {
@@ -253,7 +302,7 @@ form > button:hover {
 
 .avatar-wrapper:hover .selected-avatar {
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 .avatar-btn {
@@ -265,12 +314,6 @@ form > button:hover {
   border: none;
   color: blue;
   text-decoration: underline;
-}
-
-.avatar-selector {
-  background-color: green;
-  height: 100px;
-  width: 100%;
 }
 
 .register-form label {
@@ -297,7 +340,7 @@ form > button:hover {
   border-bottom: 1.8px solid black;
 }
 
-.register-form button {
+.register-form .submit-btn {
   height: 2.5em;
 }
 

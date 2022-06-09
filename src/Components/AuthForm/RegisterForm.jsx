@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BaseURL } from "../../environment";
 import "./AuthForm.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import {
   authFormVisible,
@@ -10,9 +11,11 @@ import {
   authUserSet,
 } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import ImgDropAndCrop from "../ImgDropAndCrop/ImgDropAndCrop";
 
 function RegisterForm(props) {
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
+  const [avatar, setAvatar] = useState(null);
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,6 +29,17 @@ function RegisterForm(props) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const myRef = useRef(null);
+
+  useEffect(() => {
+    // Set random default avatar
+    const randomNumber = Math.floor(Math.random() * 8 + 0);
+    setAvatar(defaultAvatars[randomNumber]);
+  }, []);
+
+  const updateAvatar = (index) => {
+    setAvatar(defaultAvatars[index]);
+  };
 
   const validateFields = () => {
     if (!fullname) setErrMsg1("Field cannot be empty!");
@@ -91,14 +105,55 @@ function RegisterForm(props) {
           className="avatar-wrapper"
           onClick={() => setShowAvatarSelector(!showAvatarSelector)}
         >
-          <img
-            className="selected-avatar"
-            src={require("../../assets/defaultAvatars/male_1.png")}
-          />
+          <img className="selected-avatar" src={avatar} />
           <p className="edit-text">{showAvatarSelector ? "Done" : "Edit"}</p>
         </div>
 
-        {showAvatarSelector && <div className="avatar-selector"></div>}
+        {showAvatarSelector && (
+          <>
+            <p>Choose an avatar:</p>
+            <div className="avatar-selector">
+              <button
+                className="scroll-btn-left scroll-btn"
+                type="button"
+                onClick={() => (myRef.current.scrollLeft -= 25)}
+              >
+                <BsChevronCompactLeft size={"1.8em"} />
+              </button>
+              <div className="scroll-wrapper" ref={myRef}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        <div className="avatar-option">
+                          <ImgDropAndCrop afterImageLoaded={setAvatar} />
+                        </div>
+                      </th>
+                      {defaultAvatars.map((option, index) => (
+                        <th key={index}>
+                          <div>
+                            <img
+                              onClick={() => updateAvatar(index)}
+                              className="avatar-option"
+                              src={option}
+                            ></img>
+                          </div>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <button
+                className="scroll-btn-right scroll-btn"
+                type="button"
+                onClick={() => (myRef.current.scrollLeft += 25)}
+              >
+                <BsChevronCompactRight size={"1.8em"} />
+              </button>
+            </div>
+          </>
+        )}
         <button
           className="avatar-btn"
           type="button"
@@ -177,7 +232,7 @@ function RegisterForm(props) {
         </div>
         <p className="err-msg">{errMsg3}</p>
 
-        <button onClick={validateFields} type="submit">
+        <button className="submit-btn" onClick={validateFields} type="submit">
           Create Account
         </button>
       </form>
@@ -186,3 +241,14 @@ function RegisterForm(props) {
 }
 
 export default RegisterForm;
+
+const defaultAvatars = [
+  require("../../assets/defaultAvatars/male_1.png"),
+  require("../../assets/defaultAvatars/female_1.png"),
+  require("../../assets/defaultAvatars/male_2.png"),
+  require("../../assets/defaultAvatars/female_2.png"),
+  require("../../assets/defaultAvatars/male_3.png"),
+  require("../../assets/defaultAvatars/female_3.png"),
+  require("../../assets/defaultAvatars/male_4.png"),
+  require("../../assets/defaultAvatars/female_4.png"),
+];

@@ -1,5 +1,21 @@
+.drop-zone-container {
+  width: 100%;
+  height: 100%;
+}
+
 .wrapper {
-  border: solid 1px black;
-  width: 200px;
-  height: 200px;
+  border: dashed 2px rgb(0, 191, 255);
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.wrapper p {
+  word-wrap: break-word;
+  white-space: initial;
+  /* background-color: red; */
+  font-size: small;
+  color: rgb(0, 191, 255);
 }
