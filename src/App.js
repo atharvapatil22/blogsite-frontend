@@ -12,11 +12,12 @@ import Profile from "./Screens/Profile/Profile";
 import Blog from "./Screens/Blog/Blog";
 import AuthForm from "./Components/AuthForm/AuthForm";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import LandingPage from "./Screens/LandingPage/LandingPage";
 import { BaseURL } from "./environment";
+import { authUserSet } from "./redux/actions";
 
 function App() {
   const store = useSelector((state) => state);
@@ -25,6 +26,8 @@ function App() {
 
   const [authFormVisible, setAuthFormVisible] = useState(false);
   const [authFormMessage, setAuthFormMessage] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     authenticateUser();
@@ -40,6 +43,8 @@ function App() {
         .post(BaseURL + "/authenticate")
         .then((res) => {
           if (res.status == 200) {
+            // console.log("authenticated", res.data.user);
+            dispatch(authUserSet(res.data.user));
             setAuthenticated(true);
             setAuthLoader(false);
           }

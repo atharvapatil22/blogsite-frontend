@@ -25,6 +25,7 @@ import "draft-js-side-toolbar-plugin/lib/plugin.css";
 import { Link } from "react-router-dom";
 import { BaseURL } from "../../environment";
 import axios from "axios";
+import PageLoader from "../../Components/PageLoader/PageLoader";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -45,6 +46,7 @@ function WriteBlog() {
   const [blogTitle, setBlogTitle] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [previewVisible, setPreviewVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -58,6 +60,7 @@ function WriteBlog() {
   const publishBlog = () => {
     // window.confirm("Are you sure to publish blog?");
 
+    setShowLoader(true);
     axios
       .post(BaseURL + "/blogs", {
         title: blogTitle,
@@ -73,7 +76,10 @@ function WriteBlog() {
       .catch((error) => {
         console.log("Error :", error);
       })
-      .finally(() => setPreviewVisible(false));
+      .finally(() => {
+        setShowLoader(false);
+        setPreviewVisible(false);
+      });
   };
 
   const Toolbar = () => {
@@ -112,6 +118,8 @@ function WriteBlog() {
       </div>
     );
   };
+
+  if (showLoader) return <PageLoader />;
 
   return (
     <div className="write-blog-container">
