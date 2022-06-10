@@ -12,6 +12,7 @@ import {
 } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import ImgDropAndCrop from "../ImgDropAndCrop/ImgDropAndCrop";
+import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
 function RegisterForm(props) {
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
@@ -26,6 +27,8 @@ function RegisterForm(props) {
   const [errMsg1, setErrMsg1] = useState("");
   const [errMsg2, setErrMsg2] = useState("");
   const [errMsg3, setErrMsg3] = useState("");
+
+  const [showLoader, setShowLoader] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,6 +67,7 @@ function RegisterForm(props) {
   };
 
   const registerUser = () => {
+    setShowLoader(true);
     axios
       .post(BaseURL + "/users", {
         email: props.newEmail,
@@ -86,7 +90,8 @@ function RegisterForm(props) {
       .catch((err) => {
         alert("Some Error occured");
         console.log("Error: ", err?.response);
-      });
+      })
+      .finally(() => setShowLoader(false));
   };
 
   return (
@@ -232,8 +237,15 @@ function RegisterForm(props) {
         </div>
         <p className="err-msg">{errMsg3}</p>
 
-        <button className="submit-btn" onClick={validateFields} type="submit">
-          Create Account
+        <button
+          disabled={showLoader ? true : false}
+          className={`form-btn submit-btn ${
+            showLoader ? "form-btn-disabled" : ""
+          }`}
+          onClick={validateFields}
+          type="submit"
+        >
+          <div>Create Account {showLoader && <SpinnerLoader />}</div>
         </button>
       </form>
     </div>

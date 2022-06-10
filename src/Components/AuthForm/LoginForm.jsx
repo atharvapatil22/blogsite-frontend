@@ -4,12 +4,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../environment";
 import { authUserSet } from "../../redux/actions";
+import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 import "./AuthForm.css";
 
 function LoginForm({ setAuthFormType, message, hideForm }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showLoader, setShowLoader] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ function LoginForm({ setAuthFormType, message, hideForm }) {
       setErrorMsg("Password cannot be empty!");
       return;
     } else {
+      setShowLoader(true);
       axios
         .post(BaseURL + "/users/login", { email: email, password: password })
         .then((res) => {
@@ -32,10 +35,12 @@ function LoginForm({ setAuthFormType, message, hideForm }) {
           localStorage.setItem("logged_in", true);
           localStorage.setItem("access_token", authToken);
           dispatch(authUserSet(userData));
+          setShowLoader(false);
           navigate("/home");
           hideForm();
         })
         .catch((err) => {
+          setShowLoader(false);
           if (err?.response?.data?.message) {
             console.log("Error:", err.response);
             setErrorMsg(err.response.data.message);
@@ -81,8 +86,13 @@ function LoginForm({ setAuthFormType, message, hideForm }) {
               setpassword(newVal.target.value.toLowerCase())
             }
           />
-          <button onClick={loginUser} type="submit">
-            Login
+          <button
+            disabled={showLoader ? true : false}
+            className={`form-btn ${showLoader ? "form-btn-disabled" : ""}`}
+            onClick={loginUser}
+            type="submit"
+          >
+            <div>Login {showLoader && <SpinnerLoader />}</div>
           </button>
         </form>
         {errorMsg && <p className="error-msg">{errorMsg}</p>}

@@ -38,6 +38,7 @@ function LandingPage() {
                     <button
                       type="button"
                       onClick={() => {
+                        setauthFormType("login");
                         setShowAuthForm(true);
                       }}
                     >

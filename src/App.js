@@ -18,6 +18,7 @@ import axios from "axios";
 import LandingPage from "./Screens/LandingPage/LandingPage";
 import { BaseURL } from "./environment";
 import { authUserSet } from "./redux/actions";
+import SplashLoader from "./Components/SplashLoader/SplashLoader";
 
 function App() {
   const store = useSelector((state) => state);
@@ -69,22 +70,7 @@ function App() {
     return config;
   });
 
-  if (authLoader) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          height: "80vh",
-          fontSize: "3em",
-        }}
-      >
-        Authenticating...
-      </div>
-    );
-  }
+  if (authLoader) return <SplashLoader />;
 
   return (
     <div className="App">

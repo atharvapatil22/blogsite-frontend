@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { BaseURL } from "../../environment";
 import "./AuthForm.css";
+import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
 function SignUpForm(props) {
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showLoader, setShowLoader] = useState(false);
 
   const verifyEmail = () => {
     if (!email) {
@@ -20,6 +22,7 @@ function SignUpForm(props) {
       setErrorMsg("Please enter valid email!");
       return;
     }
+    setShowLoader(true);
     axios
       .post(BaseURL + "/users/verify-email", { email: email })
       .then((res) => {
@@ -27,10 +30,12 @@ function SignUpForm(props) {
           props.setNewEmail(email);
           props.setAuthFormType("register");
         }
+        setShowLoader(false);
       })
       .catch((err) => {
         setErrorMsg(err?.response?.data?.message);
         console.log("Error: ", err?.response);
+        setShowLoader(false);
       });
   };
 
@@ -53,8 +58,16 @@ function SignUpForm(props) {
             value={email}
             onChange={(newVal) => setEmail(newVal.target.value.toLowerCase())}
           />
-          <button onClick={verifyEmail} type="submit">
-            Continue
+          <button
+            disabled={showLoader ? true : false}
+            className={`form-btn ${showLoader ? "form-btn-disabled" : ""}`}
+            onClick={verifyEmail}
+            type="submit"
+          >
+            <div>
+              Continue
+              {showLoader && <SpinnerLoader />}
+            </div>
           </button>
         </form>
         {errorMsg && <p className="error-msg">{errorMsg}</p>}

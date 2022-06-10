@@ -371,3 +371,15 @@ form > button:hover {
 #disabled-input:hover {
   border-bottom: 1px solid black;
 }
+
+.form-btn div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.form-btn-disabled {
+  background-color: rgba(66, 8, 255, 0.6);
+}
