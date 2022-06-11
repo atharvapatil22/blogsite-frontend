@@ -70,6 +70,9 @@ function App() {
     return config;
   });
 
+  // Get Redux Value for user
+  const userLoggedIn = store.globalData.authUser;
+
   if (authLoader) return <SplashLoader />;
 
   return (
@@ -90,7 +93,7 @@ function App() {
             path={"/"}
             exact
             element={
-              authenticated ? (
+              userLoggedIn != null ? (
                 <Navigate to="/home" replace={true} />
               ) : (
                 <Navigate to="/landing-page" replace={true} />
@@ -110,7 +113,7 @@ function App() {
           <Route
             element={
               <ProtectedRoute
-                userAuthenticated={authenticated}
+                userAuthenticated={userLoggedIn != null}
                 formMessage="Login to start writing blogs"
                 setAuthFormVisible={setAuthFormVisible}
                 setAuthFormMessage={setAuthFormMessage}
@@ -122,7 +125,7 @@ function App() {
           <Route
             element={
               <ProtectedRoute
-                userAuthenticated={authenticated}
+                userAuthenticated={userLoggedIn != null}
                 formMessage="Login to view Profile"
                 setAuthFormVisible={setAuthFormVisible}
                 setAuthFormMessage={setAuthFormMessage}

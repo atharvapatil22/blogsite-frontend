@@ -11,7 +11,7 @@ function LoginForm({ setAuthFormType, message, hideForm }) {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [showLoader, setShowLoader] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ function LoginForm({ setAuthFormType, message, hideForm }) {
           />
           <button
             disabled={showLoader ? true : false}
-            className={`form-btn ${showLoader ? "form-btn-disabled" : ""}`}
+            className={`form-btn temp ${showLoader ? "form-btn-disabled" : ""}`}
             onClick={loginUser}
             type="submit"
           >

@@ -4,8 +4,8 @@ import "./SplashLoader.css";
 function SplashLoader() {
   return (
     <div className="splash-loader-wrapper">
-      <div class="splash-container">
-        <div class="splash-loader">
+      <div className="splash-container">
+        <div className="splash-loader">
           <img
             className="splash-logo"
             src={require("../../assets/logo.png")}

@@ -3,10 +3,10 @@ import "./SpinnerLoader.css";
 
 function SpinnerLoader() {
   return (
-    <div class="spin-container">
-      <div class="spin-loader spin-loader-1">
-        <div class="spin-loader-outter"></div>
-        <div class="spin-loader-inner"></div>
+    <div className="spin-container">
+      <div className="spin-loader spin-loader-1">
+        <div className="spin-loader-outter"></div>
+        <div className="spin-loader-inner"></div>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ function AuthForm(props) {
         show={true}
         onClose={() => {
           props.hideForm();
-          if (location.pathname != "/landing-page") navigate("/");
+          if (location.pathname != "/landing-page") navigate(-1);
         }}
       >
         {type === "login" ? (
