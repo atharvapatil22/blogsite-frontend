@@ -16,16 +16,17 @@ import {
   UnderlineButton,
 } from "@draft-js-plugins/buttons";
 
+import { BaseURL } from "../../environment";
+import axios from "axios";
+import PageLoader from "../../Components/PageLoader/PageLoader";
+
 // Styles Imports
 import "./WriteBlog.css";
 import "draft-js/dist/Draft.css";
 import "draftail/dist/draftail.css";
 import "draft-js-inline-toolbar-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
-import { Link } from "react-router-dom";
-import { BaseURL } from "../../environment";
-import axios from "axios";
-import PageLoader from "../../Components/PageLoader/PageLoader";
+import ToolBar from "../../Components/ToolBar/ToolBar";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -82,30 +83,6 @@ function WriteBlog() {
       });
   };
 
-  const Toolbar = () => {
-    return (
-      <div className="toolbar-container">
-        <div className="section-1">
-          <Link to={"/home"}>
-            <div className="home-link">
-              <p>Blogomo</p>
-            </div>
-          </Link>
-          <p>Draft in XYZ ABC </p>
-          <p> Sav(ed/ing)</p>
-        </div>
-        <div className="section-2">
-          <button onClick={showPreview} type="button">
-            Publish
-          </button>
-          <p>D</p>
-          <p>N</p>
-          <p>P</p>
-        </div>
-      </div>
-    );
-  };
-
   const Preview = () => {
     return (
       <div className="preview-container">
@@ -124,7 +101,7 @@ function WriteBlog() {
   return (
     <div className="write-blog-container">
       {previewVisible && <Preview />}
-      <Toolbar />
+      <ToolBar showPreview={showPreview} />
       <div>
         <textarea
           placeholder="Title"

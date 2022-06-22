@@ -7,7 +7,11 @@ import { TiEdit } from "react-icons/ti";
 function Navbar() {
   const location = useLocation();
 
-  if (location.pathname == "/landing-page") return null;
+  if (
+    location.pathname == "/landing-page" ||
+    location.pathname == "/write-blog"
+  )
+    return null;
   return (
     <header className="navbar-container">
       <nav className="navbar-body">
