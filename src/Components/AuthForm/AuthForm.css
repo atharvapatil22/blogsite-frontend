@@ -9,7 +9,7 @@
 }
 
 .form-banner {
-  /* color: var(--purple-1); */
+  /* color: var(--blue-1); */
   font-size: 2.8em;
   margin-bottom: 2%;
   font-family: var(--font-1);
@@ -24,7 +24,7 @@
   border: none;
   font-weight: bold;
   font-size: 1em;
-  color: var(--purple-1);
+  color: var(--blue-1);
   margin-left: 0.5%;
 }
 
@@ -71,7 +71,7 @@
 
 .login-form > button {
   margin-top: 5%;
-  background-color: var(--purple-1);
+  background-color: var(--blue-1);
   font-size: large;
   color: white;
   border: none;
@@ -90,7 +90,7 @@
   border: none;
   font-weight: bold;
   font-size: 1em;
-  color: var(--purple-1);
+  color: var(--blue-1);
   margin-left: 0.5%;
 }
 
@@ -118,7 +118,7 @@
 
 form > button {
   margin-top: 5%;
-  background-color: var(--purple-1);
+  background-color: var(--blue-1);
   font-size: large;
   color: white;
   border: none;

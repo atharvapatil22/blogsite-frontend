@@ -15,13 +15,18 @@
 }
 
 .home-link p {
-  background-color: var(--purple-1);
+  background-color: var(--blue-1);
   color: white;
   height: 4em;
   margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+}
+
+.brand-logo a {
+  text-decoration: none;
 }
 
 .navbar-menu ul {
@@ -32,7 +37,7 @@
 .navbar-link {
   height: 100%;
   background-color: white;
-  color: var(--purple-1);
+  color: var(--blue-1);
   border-color: transparent;
   border-width: 1px;
   border-style: solid;

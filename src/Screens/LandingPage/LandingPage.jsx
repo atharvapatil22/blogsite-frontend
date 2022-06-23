@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./LandingPage.css";
-import "../../assets/logo.png";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 
 function LandingPage() {
@@ -27,7 +26,7 @@ function LandingPage() {
           <div id="box3">
             <div id="nav-container">
               <div id="logo">
-                <img src={require("../../assets/logo.png")} />
+                <img src={require("../../assets/cogito_logo.png")} />
               </div>
               <div id="menu">
                 <ul>

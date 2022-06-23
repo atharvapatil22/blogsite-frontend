@@ -8,7 +8,7 @@ function SplashLoader() {
         <div className="splash-loader">
           <img
             className="splash-logo"
-            src={require("../../assets/logo.png")}
+            src={require("../../assets/cogito_logo.png")}
             alt=""
           />
         </div>
