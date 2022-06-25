@@ -18,7 +18,7 @@ function Navbar() {
         <div className="brand-logo hide-for-mobile">
           <Link to={"/home"}>
             <div className="home-link">
-              <p>Blogomo</p>
+              <img src={require("../../assets/cogito_logo.png")} />
             </div>
           </Link>
         </div>
