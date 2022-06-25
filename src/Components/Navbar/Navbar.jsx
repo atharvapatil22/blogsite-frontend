@@ -3,9 +3,13 @@ import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { BiHomeAlt } from "react-icons/bi";
 import { TiEdit } from "react-icons/ti";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const location = useLocation();
+  const store = useSelector((state) => state);
+  const userLoggedIn = store.globalData.authUser;
+  console.log(userLoggedIn);
 
   if (
     location.pathname == "/landing-page" ||
@@ -41,7 +45,13 @@ function Navbar() {
             </li>
             <li className="profile-nav show-for-mobile">
               <Link to={"/profile"}>
-                <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />
+                <img
+                  src={
+                    userLoggedIn
+                      ? userLoggedIn.avatar
+                      : "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                  }
+                />
               </Link>
             </li>
           </ul>
@@ -49,7 +59,13 @@ function Navbar() {
 
         <div className="profile-nav hide-for-mobile">
           <Link to={"/profile"}>
-            <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" />
+            <img
+              src={
+                userLoggedIn
+                  ? userLoggedIn.avatar
+                  : "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+              }
+            />
           </Link>
         </div>
       </nav>

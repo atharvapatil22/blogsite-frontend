@@ -59,8 +59,15 @@ li a {
 
 /* HARDCODED FOR NOW */
 .profile-nav img {
-  width: 65px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
+  border-radius: 120%;
+  border: 1px solid black;
+}
+
+.show-for-mobile img {
+  width: 45px;
+  height: 45px;
 }
 
 .show-for-mobile {
