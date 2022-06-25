@@ -30,19 +30,19 @@ function ImgDropAndCrop({ afterImageLoaded }) {
         return;
       }
       console.log("accepted:", files);
+      afterImageLoaded(files[0]);
 
-      // Process Image after vrification:
-      const reader = new FileReader();
-      reader.addEventListener(
-        "load",
-        () => {
-          // console.log("image loaded:", reader.result);
-          setImgSrc(reader.result);
-          afterImageLoaded(reader.result);
-        },
-        false
-      );
-      reader.readAsDataURL(currentFile);
+      // For converting File BLOB to base64
+      // const reader = new FileReader();
+      // reader.addEventListener(
+      //   "load",
+      //   () => {
+      //     setImgSrc(reader.result);
+      //     afterImageLoaded(reader.result);
+      //   },
+      //   false
+      // );
+      // reader.readAsDataURL(currentFile);
     }
   };
 

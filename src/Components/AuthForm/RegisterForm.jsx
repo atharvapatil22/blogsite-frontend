@@ -17,6 +17,7 @@ import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 function RegisterForm(props) {
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [avatar, setAvatar] = useState(null);
+  const [avatarObject, setAvatarObject] = useState(null);
   const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,8 +41,31 @@ function RegisterForm(props) {
     setAvatar(defaultAvatars[randomNumber]);
   }, []);
 
-  const updateAvatar = (index) => {
-    setAvatar(defaultAvatars[index]);
+  // When User Selects Default Avatar
+  const handleAvatarChange = async (index) => {
+    const selectedAvatar = defaultAvatars[index];
+
+    // Need to convert the local image uri to Blob because blob is uploaded to cloudinary
+    const response = await fetch(selectedAvatar);
+    const blob = await response.blob();
+    setAvatarObject(blob);
+    setAvatar(selectedAvatar);
+  };
+
+  // When User Uploads Custom Avatar
+  const handleAvatarUpload = (image) => {
+    setAvatarObject(image);
+
+    // Need to convert blob to base64 URI for rendering image on form
+    const reader = new FileReader();
+    reader.addEventListener(
+      "load",
+      () => {
+        setAvatar(reader.result);
+      },
+      false
+    );
+    reader.readAsDataURL(image);
   };
 
   const validateFields = () => {
@@ -68,30 +92,56 @@ function RegisterForm(props) {
 
   const registerUser = () => {
     setShowLoader(true);
-    axios
-      .post(BaseURL + "/users", {
-        email: props.newEmail,
-        fullname: fullname,
-        password: password,
-      })
-      .then((res) => {
-        console.log(
-          "User Registered successfully. User automatically logged in"
-        );
-        const userData = res.data.user;
-        const authToken = userData.accessToken;
 
-        localStorage.setItem("logged_in", true);
-        localStorage.setItem("access_token", authToken);
-        dispatch(authUserSet(userData));
-        navigate("/home");
-        props.hideForm();
+    // Post Avatar To Cloudinary
+    const instance = axios.create();
+    const formData = new FormData();
+    formData.append("file", avatarObject);
+    formData.append("upload_preset", "mr8cvzpd");
+
+    instance
+      .post("https://api.cloudinary.com/v1_1/dbanpvg0t/image/upload", formData)
+      .then((req) => {
+        if (req.status == 200) {
+          const avatarUrl = req.data.secure_url;
+          console.log("Avatar Uploaded successfully.\n Public Url:", avatarUrl);
+
+          // Post User To database
+          axios
+            .post(BaseURL + "/users", {
+              email: props.newEmail,
+              fullname: fullname,
+              password: password,
+              avatar: avatarUrl,
+            })
+            .then((res) => {
+              console.log(
+                "User Registered successfully. User automatically logged in"
+              );
+              const userData = res.data.user;
+              const authToken = userData.accessToken;
+
+              localStorage.setItem("logged_in", true);
+              localStorage.setItem("access_token", authToken);
+              dispatch(authUserSet(userData));
+              navigate("/home");
+              props.hideForm();
+            })
+            .catch((err) => {
+              alert("Some Error occured");
+              console.log("Error: ", err?.response);
+            })
+            .finally(() => setShowLoader(false));
+        } else console.log("Cloudinary Request Failed (Status):", req.status);
       })
       .catch((err) => {
         alert("Some Error occured");
-        console.log("Error: ", err?.response);
-      })
-      .finally(() => setShowLoader(false));
+        if (err?.response)
+          console.log("Cloudinary Request Failed: ", err.response);
+        else console.log("Error: ", err);
+
+        setShowLoader(false);
+      });
   };
 
   return (
@@ -131,14 +181,16 @@ function RegisterForm(props) {
                     <tr>
                       <th>
                         <div className="avatar-option">
-                          <ImgDropAndCrop afterImageLoaded={setAvatar} />
+                          <ImgDropAndCrop
+                            afterImageLoaded={handleAvatarUpload}
+                          />
                         </div>
                       </th>
                       {defaultAvatars.map((option, index) => (
                         <th key={index}>
                           <div>
                             <img
-                              onClick={() => updateAvatar(index)}
+                              onClick={() => handleAvatarChange(index)}
                               className="avatar-option"
                               src={option}
                             ></img>
