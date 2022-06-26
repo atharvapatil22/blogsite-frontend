@@ -93,3 +93,20 @@
   cursor: pointer;
   background-color: var(--blue-2);
 }
+
+.disabled-publish-btn {
+  opacity: 0.7;
+}
+
+.disabled-publish-btn:hover {
+  cursor: default;
+  background-color: var(--blue-1);
+}
+
+.final-publish-btn div {
+  height: auto;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

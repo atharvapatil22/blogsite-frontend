@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { DraftailEditor, serialiseEditorStateToRaw } from "draftail";
 import { EditorState } from "draft-js";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
@@ -15,11 +14,6 @@ import {
   ItalicButton,
   UnderlineButton,
 } from "@draft-js-plugins/buttons";
-
-import { BaseURL } from "../../environment";
-import axios from "axios";
-import PageLoader from "../../Components/PageLoader/PageLoader";
-
 // Styles Imports
 import "./WriteBlog.css";
 import "draft-js/dist/Draft.css";
@@ -50,9 +44,6 @@ function WriteBlog() {
   const [blogImageObj, setBlogImageObj] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
-
-  const navigate = useNavigate();
 
   const showPreview = () => {
     const blogContent = serialiseEditorStateToRaw(editorState);
@@ -62,33 +53,6 @@ function WriteBlog() {
     else setPreviewVisible(true);
   };
 
-  const publishBlog = () => {
-    // window.confirm("Are you sure to publish blog?");
-
-    setShowLoader(true);
-    axios
-      .post(BaseURL + "/blogs", {
-        title: blogTitle,
-        content: serialiseEditorStateToRaw(editorState),
-      })
-      .then((res) => {
-        console.log("Response: ", res);
-        if (res.status === 200) {
-          alert(res.data);
-          navigate("/profile");
-        }
-      })
-      .catch((error) => {
-        console.log("Error :", error);
-      })
-      .finally(() => {
-        setShowLoader(false);
-        setPreviewVisible(false);
-      });
-  };
-
-  if (showLoader) return <PageLoader />;
-
   return (
     <div className="write-blog-container">
       {previewVisible && (
@@ -97,6 +61,7 @@ function WriteBlog() {
           blogTitle={blogTitle}
           setBlogTitle={setBlogTitle}
           blogImageObj={blogImageObj}
+          editorState={editorState}
         />
       )}
       <ToolBar showPreview={showPreview} />
