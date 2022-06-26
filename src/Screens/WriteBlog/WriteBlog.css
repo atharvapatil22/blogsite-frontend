@@ -1,22 +1,33 @@
 .write-blog-container {
   display: block;
   width: 100%;
+  overflow: hidden;
 }
 
 .blog-title {
   width: 70%;
+  min-height: 100px;
+  /* background-color: red; */
+  border: none;
+  font-size: 2em;
+  text-align: left;
+  color: black;
+  resize: none;
+  outline: none;
+  font-family: var(--font-1);
 }
 
 .Draftail-Toolbar {
   background: transparent !important;
   border: none !important;
 } /* Override default */
-.Draftail-Editor {
+.draftail-parent .Draftail-Editor {
   border: none !important;
-  width: 60% !important;
-  margin-top: 100px !important;
+  width: 70% !important;
+  margin-top: 0.5em !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  /* background-color: yellow; */
 } /* Override default */
 .public-DraftEditor-content {
   font-family: var(--font-1);
@@ -25,12 +36,81 @@
   font-family: var(--font-1);
 }
 
-@media screen and (max-width: 1080px) {
-  .Draftail-Editor {
-    width: 80% !important;
-    margin-left: 10% !important;
-    margin-right: 10% !important;
+.write-blog-image {
+  width: 720px;
+  height: 180px;
+  margin-left: 0;
+  border-radius: 10px;
+}
+
+.write-blog-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-blog-img-text {
+  visibility: hidden;
+  position: absolute;
+  top: 0.8em;
+  left: 6em;
+  font-size: 2em;
+}
+
+.write-blog-image:hover {
+  opacity: 0.65;
+  cursor: pointer;
+  border: 2px dashed grey;
+}
+
+.wb-img-container:hover .update-blog-img-text {
+  cursor: pointer;
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (max-width: 720px) {
+  .draftail-parent .Draftail-Editor {
+    width: 100% !important;
+    /* margin-left: 10% !important; */
+    /* margin-right: 10% !important; */
   }
+  .blog-title {
+    width: 95%;
+    margin: 0;
+    font-size: 1.5em;
+  }
+
+  .write-blog-image {
+    width: 600px;
+    height: 150px;
+  }
+
+  .wb-img-container:hover .update-blog-img-text {
+    visibility: hidden;
+  }
+}
+
+.write-blog-body .blog-image-upload {
+  /* margin: auto; */
+  width: 70%;
+}
+
+.wb-img-container {
+  position: relative;
+}
+
+.update-blog-mobile-text {
+  color: blue;
+  text-decoration: underline;
+  font-size: 1.5em;
+  margin-top: 0.5em;
+}
+
+.update-blog-mobile-text:hover {
+  cursor: pointer;
 }
 
 /* Preview */

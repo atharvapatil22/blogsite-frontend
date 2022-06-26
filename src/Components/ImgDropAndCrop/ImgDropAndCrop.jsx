@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import "./ImgDropAndCrop.css";
 
-function ImgDropAndCrop({ afterImageLoaded }) {
+function ImgDropAndCrop({
+  afterImageLoaded,
+  placeholder = null,
+  styles = null,
+}) {
   const [imgSrc, setImgSrc] = useState(null);
 
   const handleOnDrop = (files, rejectedFiles) => {
@@ -51,8 +55,8 @@ function ImgDropAndCrop({ afterImageLoaded }) {
       <Dropzone onDrop={handleOnDrop} maxSize={3000000} multiple={false}>
         {({ getRootProps, getInputProps }) => {
           return (
-            <div className="wrapper" {...getRootProps()}>
-              <p>+ Choose from device </p>
+            <div className="wrapper" style={styles} {...getRootProps()}>
+              <p>{placeholder ? placeholder : "  + Choose from device "}</p>
               <input accept="image/*" {...getInputProps()} />
             </div>
           );

@@ -16,6 +16,8 @@
   word-wrap: break-word;
   white-space: initial;
   /* background-color: red; */
-  font-size: small;
-  color: rgb(0, 191, 255);
+  font-size: large;
+  text-align: center;
+  width: 100%;
+  /* color: rgb(0, 191, 255); */
 }

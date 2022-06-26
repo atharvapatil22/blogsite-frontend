@@ -27,6 +27,7 @@ import "draftail/dist/draftail.css";
 import "draft-js-inline-toolbar-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
 import ToolBar from "../../Components/ToolBar/ToolBar";
+import ImgDropAndCrop from "../../Components/ImgDropAndCrop/ImgDropAndCrop";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -45,6 +46,7 @@ function WriteBlog() {
    */
 
   const [blogTitle, setBlogTitle] = useState("");
+  const [blogImageObj, setBlogImageObj] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [previewVisible, setPreviewVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -102,14 +104,52 @@ function WriteBlog() {
     <div className="write-blog-container">
       {previewVisible && <Preview />}
       <ToolBar showPreview={showPreview} />
-      <div>
+      <div className="draftail-parent write-blog-body">
         <textarea
           placeholder="Title"
           onChange={(e) => setBlogTitle(e.target.value)}
           className="blog-title"
-          rows="5"
+          rows="2"
         />
+
+        {!!blogImageObj ? (
+          <>
+            <div
+              className="wb-img-container"
+              onClick={() => {
+                setBlogImageObj(null);
+              }}
+            >
+              <img
+                className="write-blog-image"
+                src={URL.createObjectURL(blogImageObj)}
+              />
+              <p className="update-blog-img-text">Update Featured Image</p>
+            </div>
+            <p
+              onClick={() => {
+                setBlogImageObj(null);
+              }}
+              className="update-blog-mobile-text"
+            >
+              Update Featured Image
+            </p>
+          </>
+        ) : (
+          <div className="blog-image-upload">
+            <ImgDropAndCrop
+              placeholder="Add Featured Image [3:12]"
+              styles={{
+                borderColor: "black",
+                borderRadius: "10px",
+              }}
+              afterImageLoaded={setBlogImageObj}
+            />
+          </div>
+        )}
+
         <DraftailEditor
+          className="draftail-editor-write-blogs"
           editorState={editorState}
           onChange={(newState) => setEditorState(newState)}
           placeholder="Start writing your blog..."
