@@ -28,6 +28,7 @@ import "draft-js-inline-toolbar-plugin/lib/plugin.css";
 import "draft-js-side-toolbar-plugin/lib/plugin.css";
 import ToolBar from "../../Components/ToolBar/ToolBar";
 import ImgDropAndCrop from "../../Components/ImgDropAndCrop/ImgDropAndCrop";
+import BlogPreview from "../../Components/BlogPreview/BlogPreview";
 
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -57,6 +58,7 @@ function WriteBlog() {
     const blogContent = serialiseEditorStateToRaw(editorState);
     if (blogTitle == "") alert("Please add title to your blog!");
     else if (blogContent == null) alert("Please add content to your blog!");
+    else if (blogImageObj == null) alert("Please add a featured image");
     else setPreviewVisible(true);
   };
 
@@ -85,27 +87,22 @@ function WriteBlog() {
       });
   };
 
-  const Preview = () => {
-    return (
-      <div className="preview-container">
-        <div>
-          Preview{" "}
-          <button onClick={publishBlog} type="button">
-            Publish Now
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   if (showLoader) return <PageLoader />;
 
   return (
     <div className="write-blog-container">
-      {previewVisible && <Preview />}
+      {previewVisible && (
+        <BlogPreview
+          setPreviewVisible={setPreviewVisible}
+          blogTitle={blogTitle}
+          setBlogTitle={setBlogTitle}
+          blogImageObj={blogImageObj}
+        />
+      )}
       <ToolBar showPreview={showPreview} />
       <div className="draftail-parent write-blog-body">
         <textarea
+          value={blogTitle}
           placeholder="Title"
           onChange={(e) => setBlogTitle(e.target.value)}
           className="blog-title"
@@ -138,7 +135,7 @@ function WriteBlog() {
         ) : (
           <div className="blog-image-upload">
             <ImgDropAndCrop
-              placeholder="Add Featured Image [3:12]"
+              placeholder="Add Featured Image [1:3]"
               styles={{
                 borderColor: "black",
                 borderRadius: "10px",

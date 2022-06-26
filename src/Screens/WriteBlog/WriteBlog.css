@@ -27,7 +27,7 @@
   margin-top: 0.5em !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  /* background-color: yellow; */
+  margin-bottom: 100px;
 } /* Override default */
 .public-DraftEditor-content {
   font-family: var(--font-1);
@@ -37,7 +37,7 @@
 }
 
 .write-blog-image {
-  width: 720px;
+  width: 540px;
   height: 180px;
   margin-left: 0;
   border-radius: 10px;
@@ -55,7 +55,7 @@
   visibility: hidden;
   position: absolute;
   top: 0.8em;
-  left: 6em;
+  left: 20%;
   font-size: 2em;
 }
 
@@ -84,7 +84,7 @@
   }
 
   .write-blog-image {
-    width: 600px;
+    width: 450px;
     height: 150px;
   }
 
