@@ -2,9 +2,11 @@
   display: block;
   width: 100%;
   overflow: hidden;
+  margin-top: 5em;
 }
 
 .blog-title {
+  margin-top: 1em;
   width: 70%;
   min-height: 100px;
   /* background-color: red; */

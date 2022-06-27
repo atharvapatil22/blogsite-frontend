@@ -1,4 +1,4 @@
-import "./BlogPreview.css";
+import styles from "./BlogPreview.module.css";
 import React from "react";
 import Modal from "../Modal/Modal";
 import { useSelector } from "react-redux";
@@ -94,7 +94,7 @@ function BlogPreview({
   };
 
   return (
-    <div>
+    <div style={styles}>
       <Modal
         modalStyle={{ minWidth: "80vw", minHeight: "92%" }}
         show={true}

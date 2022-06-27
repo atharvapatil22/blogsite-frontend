@@ -2,9 +2,14 @@ import React from "react";
 import "./ToolBar.css";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
-import { BsThreeDots, BsBell } from "react-icons/bs";
+import { BsThreeDots } from "react-icons/bs";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 function ToolBar({ showPreview }) {
+  const store = useSelector((state) => state);
+  const currentUser = store.globalData.authUser;
+
   const toolTipProps = {
     place: "bottom",
     effect: "solid",
@@ -82,12 +87,16 @@ function ToolBar({ showPreview }) {
     <div className="toolbar-container">
       <div className="section-1">
         <Link to={"/home"}>
-          <div className="home-link">
-            <p>Blogomo</p>
+          <div className="toolbar-home-link">
+            <img
+              className="toolbar-logo"
+              src={require("../../assets/cogito_logo.png")}
+              alt=""
+            />
           </div>
         </Link>
-        <p>Draft in XYZ ABC </p>
-        <p> Sav(ed/ing)</p>
+        <p>Draft in {!!currentUser ? currentUser.fullname : "null"} </p>
+        <p style={{ color: "grey" }}>Saved</p>
       </div>
       <div className="section-2">
         <button onClick={showPreview} className="publish-btn" type="button">
@@ -99,7 +108,7 @@ function ToolBar({ showPreview }) {
           data-for="optionsTip"
           data-event="click"
         >
-          <BsThreeDots size="1.4em" />
+          <BsThreeDots size="1.6em" />
         </button>
         <button
           className="tool-btn"
@@ -107,7 +116,7 @@ function ToolBar({ showPreview }) {
           data-for="notificationsTip"
           data-event="click"
         >
-          <BsBell size="1.4em" />
+          <IoNotificationsOutline size="1.8em" />
         </button>
         <button
           className="tool-btn"
@@ -115,7 +124,15 @@ function ToolBar({ showPreview }) {
           data-for="profileTip"
           data-event="click"
         >
-          P
+          {!!currentUser ? (
+            <img
+              className="toolbar-profile-pic"
+              src={currentUser.avatar}
+              alt=""
+            />
+          ) : (
+            "P"
+          )}
         </button>
         <ReactTooltip
           id="optionsTip"

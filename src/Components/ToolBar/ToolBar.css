@@ -1,39 +1,55 @@
 .toolbar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-
-  background-color: var(--purple-shadow);
-
-  position: sticky;
-  top: 0;
+  border: 0px solid grey;
+  border-bottom-width: 1px;
   height: 5em;
-  z-index: 5;
+  z-index: 10;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
-.section-1,
-.section-2 {
+
+.toolbar-container .section-1,
+.toolbar-container .section-2 {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 40%;
 }
 
-.section-2 {
+.section-1 p {
+  margin-left: 5%;
+}
+
+.toolbar-logo {
+  height: 4em;
+}
+
+.toolbar-container .section-2 {
   justify-content: space-evenly;
   width: 20%;
 }
 
-.section-2 .publish-btn {
+.toolbar-container .section-2 .publish-btn {
   background-color: var(--blue-1);
   border: none;
-  border-radius: 20%;
+  border-radius: 10px;
   padding: 0.5em;
   color: white;
   font-weight: 400;
   font-size: 0.9em;
 }
 
-.section-2 .tool-btn {
+.toolbar-container .section-2 .publish-btn:hover {
+  background-color: var(--blue-2);
+  cursor: pointer;
+}
+
+.toolbar-container .section-2 .tool-btn {
   background-color: transparent;
   border: transparent;
   width: 2.5em;
@@ -42,14 +58,15 @@
   justify-content: center;
   align-items: center;
   border-radius: 100%;
+  color: rgb(97, 97, 97);
 }
 
-.section-2 .tool-btn:hover {
+.toolbar-container .section-2 .tool-btn:hover {
   cursor: pointer;
+  color: black;
 }
 
 .tooltip-modal {
-  background-color: red;
   width: 14%;
   text-align: left;
 }
@@ -69,4 +86,10 @@
 .tooltip-modal hr {
   border: solid rgb(204, 204, 204);
   border-width: 0.5px;
+}
+
+.toolbar-profile-pic {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 100px;
 }

@@ -104,6 +104,8 @@ function WriteBlog() {
               styles={{
                 borderColor: "black",
                 borderRadius: "10px",
+                maxWidth: "600px",
+                margin: "auto",
               }}
               afterImageLoaded={setBlogImageObj}
             />
