@@ -102,17 +102,17 @@ function BlogPreview({
           setPreviewVisible(false);
         }}
       >
-        <div className="blog-preview">
-          <div className="section-1">
+        <div className={styles.blog_preview}>
+          <div className={styles.section_1}>
             <h2>Blog Preview</h2>
             <img
-              className="preview-blog-image"
+              className={styles.preview_blog_image}
               src={URL.createObjectURL(blogImageObj)}
               alt=""
             />
             <h3>Title</h3>
             <input
-              className="preview-title"
+              className={styles.preview_title}
               type="text"
               name="title"
               value={blogTitle}
@@ -125,7 +125,7 @@ function BlogPreview({
               draft as well
             </p>
           </div>
-          <div className="section-2">
+          <div className={styles.section_2}>
             <p>
               Publishing To:{" "}
               <span style={{ fontWeight: "bold" }}>
@@ -134,13 +134,13 @@ function BlogPreview({
             </p>
             <h3>Add Tags</h3>
             <input disabled type="text" />
-            <div className="email-checkbox">
+            <div className={styles.email_checkbox}>
               <input
                 checked={false}
                 type="checkbox"
                 name=""
                 id=""
-                onChange={() => alert("Option will be added later")}
+                onChange={() => alert("Feature will be added later")}
               />
               <p>
                 Send a link to your email subscribers.
@@ -154,8 +154,8 @@ function BlogPreview({
             <button
               disabled={showLoader}
               onClick={publishBlog}
-              className={`final-publish-btn ${
-                showLoader && "disabled-publish-btn"
+              className={` ${styles.final_publish_btn} ${
+                showLoader && styles.disabled_publish_btn
               }`}
               type="button"
             >

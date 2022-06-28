@@ -1,5 +1,5 @@
 import React from "react";
-import "./Navbar.css";
+import styles from "./Navbar.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { BiHomeAlt } from "react-icons/bi";
 import { TiEdit } from "react-icons/ti";
@@ -17,33 +17,33 @@ function Navbar() {
   )
     return null;
   return (
-    <header className="navbar-container">
-      <nav className="navbar-body">
-        <div className="brand-logo hide-for-mobile">
+    <header className={styles.navbar_container}>
+      <nav className={styles.navbar_body}>
+        <div className={`${styles.brand_logo} ${styles.hide_for_mobile}`}>
           <Link to={"/home"}>
-            <div className="home-link">
+            <div className={styles.home_link}>
               <img src={require("../../assets/cogito_logo.png")} />
             </div>
           </Link>
         </div>
 
-        <div className="navbar-menu">
+        <div className={styles.navbar_menu}>
           <ul>
             <li>
               <Link to={"/home"}>
-                <div className="navbar-link">
+                <div className={styles.navbar_link}>
                   <BiHomeAlt fontSize={"2em"} />
                 </div>
               </Link>
             </li>
             <li>
               <Link to={"/write-blog"}>
-                <div className="navbar-link">
+                <div className={styles.navbar_link}>
                   <TiEdit fontSize={"2em"} />
                 </div>
               </Link>
             </li>
-            <li className="profile-nav show-for-mobile">
+            <li className={`${styles.profile_nav} ${styles.show_for_mobile}`}>
               <Link to={"/profile"}>
                 <img
                   src={
@@ -57,7 +57,7 @@ function Navbar() {
           </ul>
         </div>
 
-        <div className="profile-nav hide-for-mobile">
+        <div className={styles.profile_nav}>
           <Link to={"/profile"}>
             <img
               src={

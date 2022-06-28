@@ -1,5 +1,5 @@
 import React from "react";
-import "./ToolBar.css";
+import styles from "./ToolBar.module.css";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { BsThreeDots } from "react-icons/bs";
@@ -84,12 +84,12 @@ function ToolBar({ showPreview }) {
   };
 
   return (
-    <div className="toolbar-container">
-      <div className="section-1">
+    <div className={styles.toolbar_container}>
+      <div className={styles.section_1}>
         <Link to={"/home"}>
-          <div className="toolbar-home-link">
+          <div className={styles.toolbar_home_link}>
             <img
-              className="toolbar-logo"
+              className={styles.toolbar_logo}
               src={require("../../assets/cogito_logo.png")}
               alt=""
             />
@@ -98,12 +98,16 @@ function ToolBar({ showPreview }) {
         <p>Draft in {!!currentUser ? currentUser.fullname : "null"} </p>
         <p style={{ color: "grey" }}>Saved</p>
       </div>
-      <div className="section-2">
-        <button onClick={showPreview} className="publish-btn" type="button">
+      <div className={styles.section_2}>
+        <button
+          onClick={showPreview}
+          className={styles.publish_btn}
+          type="button"
+        >
           Publish
         </button>
         <button
-          className="tool-btn"
+          className={`${styles.tool_btn} ${styles.hide_for_mobile}`}
           data-tip
           data-for="optionsTip"
           data-event="click"
@@ -111,7 +115,7 @@ function ToolBar({ showPreview }) {
           <BsThreeDots size="1.6em" />
         </button>
         <button
-          className="tool-btn"
+          className={`${styles.tool_btn} ${styles.hide_for_mobile}`}
           data-tip
           data-for="notificationsTip"
           data-event="click"
@@ -119,14 +123,14 @@ function ToolBar({ showPreview }) {
           <IoNotificationsOutline size="1.8em" />
         </button>
         <button
-          className="tool-btn"
+          className={`${styles.tool_btn} ${styles.hide_for_mobile}`}
           data-tip
           data-for="profileTip"
           data-event="click"
         >
           {!!currentUser ? (
             <img
-              className="toolbar-profile-pic"
+              className={styles.toolbar_profile_pic}
               src={currentUser.avatar}
               alt=""
             />
@@ -137,21 +141,21 @@ function ToolBar({ showPreview }) {
         <ReactTooltip
           id="optionsTip"
           {...toolTipProps}
-          className="tooltip-modal"
+          className={styles.tooltip_modal}
         >
           <OtherOptions />
         </ReactTooltip>
         <ReactTooltip
           id="notificationsTip"
           {...toolTipProps}
-          className="tooltip-modal"
+          className={styles.tooltip_modal}
         >
           Tooltip for the notifications
         </ReactTooltip>
         <ReactTooltip
           id="profileTip"
           {...toolTipProps}
-          className="tooltip-modal"
+          className={styles.tooltip_modal}
         >
           <ProfileOptions />
         </ReactTooltip>

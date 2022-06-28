@@ -1,4 +1,4 @@
-.toolbar-container {
+.toolbar_container {
   position: fixed;
   top: 0;
   width: 100%;
@@ -13,28 +13,28 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.toolbar-container .section-1,
-.toolbar-container .section-2 {
+.toolbar_container .section_1,
+.toolbar_container .section_2 {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 40%;
 }
 
-.section-1 p {
+.section_1 p {
   margin-left: 5%;
 }
 
-.toolbar-logo {
+.toolbar_logo {
   height: 4em;
 }
 
-.toolbar-container .section-2 {
+.toolbar_container .section_2 {
   justify-content: space-evenly;
   width: 20%;
 }
 
-.toolbar-container .section-2 .publish-btn {
+.toolbar_container .section_2 .publish_btn {
   background-color: var(--blue-1);
   border: none;
   border-radius: 10px;
@@ -44,12 +44,12 @@
   font-size: 0.9em;
 }
 
-.toolbar-container .section-2 .publish-btn:hover {
+.toolbar_container .section_2 .publish_btn:hover {
   background-color: var(--blue-2);
   cursor: pointer;
 }
 
-.toolbar-container .section-2 .tool-btn {
+.toolbar_container .section_2 .tool_btn {
   background-color: transparent;
   border: transparent;
   width: 2.5em;
@@ -61,35 +61,56 @@
   color: rgb(97, 97, 97);
 }
 
-.toolbar-container .section-2 .tool-btn:hover {
+.toolbar_container .section_2 .tool_btn:hover {
   cursor: pointer;
   color: black;
 }
 
-.tooltip-modal {
+.tooltip_modal {
   width: 14%;
   text-align: left;
 }
 
-.tooltip-modal a {
+.tooltip_modal a {
   font-size: 1.3em;
   color: rgb(89, 89, 89);
   text-decoration: none;
 }
 
-.tooltip-modal a:hover {
+.tooltip_modal a:hover {
   color: black;
 }
-.tooltip-modal br {
+.tooltip_modal br {
   margin: 0.7em 0 0.7em 0;
 }
-.tooltip-modal hr {
+.tooltip_modal hr {
   border: solid rgb(204, 204, 204);
   border-width: 0.5px;
 }
 
-.toolbar-profile-pic {
+.toolbar_profile_pic {
   width: 2.5em;
   height: 2.5em;
   border-radius: 100px;
+}
+
+@media screen and (max-width: 720px) {
+  .toolbar_container {
+    justify-content: space-between;
+  }
+
+  .hide_for_mobile {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .toolbar_container .section_2 {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .toolbar_container .section_2 {
+    width: 30%;
+  }
 }
