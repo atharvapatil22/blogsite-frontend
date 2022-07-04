@@ -97,7 +97,7 @@
   font-size: large;
   margin-top: 10%;
   margin-left: 6%;
-  padding: 3% 6%;
+  padding: 1em 5%;
   border: none;
   border-radius: 1em;
 }
@@ -109,6 +109,7 @@
 
 .disabled_publish_btn {
   opacity: 0.7;
+  padding: 0.4em 3% 0.4em 3%;
 }
 
 .disabled_publish_btn:hover {
