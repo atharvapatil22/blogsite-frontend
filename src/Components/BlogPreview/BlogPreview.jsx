@@ -22,8 +22,16 @@ function BlogPreview({
 
   const [showLoader, setShowLoader] = useState(false);
 
+  const getWordCount = () => {
+    const plainText = editorState.getCurrentContent().getPlainText("");
+    const regex = /(?:\r\n|\r|\n)/g; // new line, carriage return, line feed
+    const cleanString = plainText.replace(regex, " ").trim(); // replace above characters w/ space
+    const wordArray = cleanString.match(/\S+/g); // matches words according to whitespace
+    return wordArray ? wordArray.length : 0;
+  };
+
   const publishBlog = () => {
-    // Later Add topic,length_in_time,comments
+    // Later Add topic,comments
 
     const blogContent = serialiseEditorStateToRaw(editorState);
     let errMsg = null;
@@ -44,7 +52,7 @@ function BlogPreview({
     newBlog.content = blogContent;
     newBlog.topic = "none";
     newBlog.date = new Date().toISOString().substring(0, 10);
-    newBlog.length_in_time = 0;
+    newBlog.length_in_time = Math.round(getWordCount() / 250);
     newBlog.thumbs = 0;
     newBlog.comments = "none";
     newBlog.author_id = currentUser.id;

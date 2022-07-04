@@ -1,15 +1,4 @@
-.blog-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.blog-body {
-  width: 100%;
-}
-
-.blog-body .Draftail-Editor {
+.blog_body .Draftail-Editor {
   border: none !important;
   width: 70% !important;
   margin-top: 1em !important;
@@ -17,7 +6,7 @@
   margin-right: auto !important;
 }
 
-.blog-body .Draftail-Editor.DraftEditor-root {
+.blog_body .Draftail-Editor.DraftEditor-root {
   color: black;
 }
 
@@ -26,13 +15,13 @@
 }
 
 @media screen and (max-width: 720px) {
-  .blog-body .Draftail-Editor {
+  .blog_body .Draftail-Editor {
     width: 80% !important;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .blog-body .Draftail-Editor {
+  .blog_body .Draftail-Editor {
     width: 95% !important;
   }
 }
