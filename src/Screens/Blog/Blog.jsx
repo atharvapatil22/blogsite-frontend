@@ -151,7 +151,10 @@ function Blog() {
               <ShareBtns forMobile={true} />
             </div>
 
-            <div className={styles.blog_title}>{blogInfo.title}</div>
+            <div className={styles.blog_title_and_img}>
+              <p>{blogInfo.title}</p>
+              <img src={blogInfo.image} alt="" />
+            </div>
           </>
         )}
 

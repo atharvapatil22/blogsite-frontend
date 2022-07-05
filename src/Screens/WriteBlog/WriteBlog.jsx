@@ -86,7 +86,7 @@ function WriteBlog() {
                 className="write-blog-image"
                 src={URL.createObjectURL(blogImageObj)}
               />
-              <p className="update-blog-img-text">Update Featured Image</p>
+              <p className="update-blog-img-text">Change Featured Image</p>
             </div>
             <p
               onClick={() => {
@@ -94,13 +94,13 @@ function WriteBlog() {
               }}
               className="update-blog-mobile-text"
             >
-              Update Featured Image
+              Change Featured Image
             </p>
           </>
         ) : (
           <div className="blog-image-upload">
             <ImgDropAndCrop
-              placeholder="Add Featured Image [1:3]"
+              placeholder="Add Featured Image"
               styles={{
                 borderColor: "black",
                 borderRadius: "10px",

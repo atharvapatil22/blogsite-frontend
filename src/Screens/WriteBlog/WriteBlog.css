@@ -39,8 +39,9 @@
 }
 
 .write-blog-image {
-  width: 540px;
-  height: 180px;
+  width: 50vw;
+  height: auto;
+  max-height: 40vw;
   margin-left: 0;
   border-radius: 10px;
 }
@@ -56,8 +57,9 @@
 .update-blog-img-text {
   visibility: hidden;
   position: absolute;
-  top: 0.8em;
-  left: 20%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 2em;
 }
 
@@ -87,8 +89,9 @@
   }
 
   .write-blog-image {
-    width: 450px;
-    height: 150px;
+    width: 80vw;
+    height: auto;
+    max-height: 64vw;
   }
 
   .wb-img-container:hover .update-blog-img-text {
@@ -103,6 +106,7 @@
 
 .wb-img-container {
   position: relative;
+  text-align: center;
 }
 
 .update-blog-mobile-text {
