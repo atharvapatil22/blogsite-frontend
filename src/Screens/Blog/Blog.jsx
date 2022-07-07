@@ -70,9 +70,6 @@ function Blog() {
       .finally(() => setDisableLikes(false));
   };
 
-  // RENDERER
-  if (showLoader) return <PageLoader />;
-
   const ShareBtns = ({ forMobile }) => {
     return (
       <>
@@ -105,6 +102,20 @@ function Blog() {
       </>
     );
   };
+
+  const BlankCard = () => {
+    return (
+      <div className={styles.blank_card}>
+        <div className={styles.blank_body}>
+          <div className={styles.line}></div>
+          <div className={styles.line}></div>
+        </div>
+        <div className={styles.blank_img}></div>
+      </div>
+    );
+  };
+  // RENDERER
+  if (showLoader) return <PageLoader />;
 
   return (
     <div className={`blog_container ${styles.blog_container}`}>
@@ -254,13 +265,10 @@ function Blog() {
             className={`${styles.blog_recomended} ${styles.responsive_width}`}
           >
             <h1>Recomended Blogs:</h1>
-            <p>Card1</p>
-            <p>Card2</p>
-            <p>Card3</p>
+            <BlankCard />
+            <BlankCard />
           </div>
         )}
-
-        <div style={{ height: "100vh" }}></div>
       </div>
       <Sidebar />
     </div>

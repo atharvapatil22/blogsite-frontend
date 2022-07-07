@@ -50,7 +50,9 @@
 .card_main img {
   height: 110px;
   width: 110px;
-  margin: 0 1em;
+  object-fit: cover;
+  margin: 0;
+  margin-left: 1em;
 }
 
 .card_footer {

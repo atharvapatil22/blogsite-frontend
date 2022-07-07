@@ -27,7 +27,7 @@ function BlogCard({ blog }) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
-            width: "calc(100% - 2em - 110px)",
+            width: "calc(100% - 1em - 110px)",
           }}
         >
           <p className={styles.blog_title}>{blog.title}</p>
