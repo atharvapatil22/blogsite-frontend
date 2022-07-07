@@ -13,6 +13,7 @@ import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import { IoChatbubbleOutline, IoShareOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import PublishingDate from "../../Components/PublishingDate";
 function Blog() {
   let { blogID } = useParams();
   const store = useSelector((state) => state);
@@ -71,35 +72,6 @@ function Blog() {
 
   // RENDERER
   if (showLoader) return <PageLoader />;
-
-  const PublishingDate = ({ dateString }) => {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const dateObj = new Date(dateString);
-    const today = new Date();
-
-    const date = dateObj.getDate();
-    const month = monthNames[dateObj.getMonth()];
-    const year = dateObj.getUTCFullYear();
-
-    return (
-      <div>{`${date} ${month} ${
-        year != new Date().getFullYear() ? year : ""
-      }`}</div>
-    );
-  };
 
   const ShareBtns = ({ forMobile }) => {
     return (
