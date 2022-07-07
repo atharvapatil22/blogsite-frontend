@@ -12,13 +12,20 @@ import { ImLink } from "react-icons/im";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import { IoChatbubbleOutline, IoShareOutline } from "react-icons/io5";
-
+import { useSelector } from "react-redux";
 function Blog() {
   let { blogID } = useParams();
+  const store = useSelector((state) => state);
 
   const [blogContent, setBlogContent] = useState(null);
   const [blogInfo, setBlogInfo] = useState(null);
   const [showLoader, setshowLoader] = useState(false);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [disableLikes, setDisableLikes] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = () => {
     setshowLoader(true);
@@ -26,6 +33,11 @@ function Blog() {
       .get(BaseURL + `/blogs/${blogID}`)
       .then((res) => {
         console.log("Response:", res.data);
+
+        const currentUserID = store.globalData.authUser?.id;
+        if (res.data.thumbs.length > 0 && currentUserID) {
+          if (res.data.thumbs.includes(currentUserID)) setHasLiked(true);
+        }
         let { content, ...blog_info } = res.data;
         setBlogInfo(blog_info);
         setBlogContent(res.data.content);
@@ -34,10 +46,30 @@ function Blog() {
       .finally(() => setshowLoader(false));
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const updateLikes = () => {
+    const currentUserID = store.globalData.authUser?.id;
 
+    if (!currentUserID) {
+      // If not logged in show form
+      return;
+    }
+
+    setDisableLikes(true);
+    axios
+      .post(BaseURL + "/blogs/update-likes", {
+        user_id: currentUserID,
+        blog_id: blogInfo.id,
+        update_type: hasLiked ? "REMOVE" : "ADD",
+      })
+      .then((res) => {
+        setHasLiked(!hasLiked);
+        setBlogInfo({ ...blogInfo, thumbs: res.data.updated_thumbs });
+      })
+      .catch((err) => console.log("Error occured in update-like api"))
+      .finally(() => setDisableLikes(false));
+  };
+
+  // RENDERER
   if (showLoader) return <PageLoader />;
 
   const PublishingDate = ({ dateString }) => {
@@ -177,17 +209,51 @@ function Blog() {
           id="blog_footer"
         >
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <button
-                className={styles.footer_btns}
-                style={{
-                  marginLeft: 0,
-                }}
-                type="button"
-              >
-                <RiThumbUpLine size={"1.5em"} />
-                &nbsp;{20}
-              </button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "start",
+              }}
+            >
+              {!!blogInfo && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "initial",
+                    width: "auto",
+                  }}
+                >
+                  <button
+                    className={` ${styles.footer_btns} ${
+                      disableLikes ? styles.disabled_btn : ""
+                    } `}
+                    style={{
+                      marginLeft: 0,
+                      marginRight: "0.2em",
+                      paddingRight: 0,
+                    }}
+                    type="button"
+                    onClick={updateLikes}
+                    disabled={disableLikes}
+                  >
+                    {hasLiked ? (
+                      <RiThumbUpFill size={"1.5em"} />
+                    ) : (
+                      <RiThumbUpLine size={"1.5em"} />
+                    )}
+                  </button>
+                  <button
+                    style={{ marginLeft: 0, paddingLeft: 0 }}
+                    className={styles.footer_btns}
+                    type="button"
+                  >
+                    &nbsp;{blogInfo.thumbs.length}
+                  </button>
+                </div>
+              )}
+
               <button className={styles.footer_btns} type="button">
                 <IoChatbubbleOutline size={"1.5em"} />
               </button>

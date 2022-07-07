@@ -53,7 +53,7 @@ function BlogPreview({
     newBlog.topic = "none";
     newBlog.date = new Date().toISOString().substring(0, 10);
     newBlog.length_in_time = Math.round(getWordCount() / 250);
-    newBlog.thumbs = 0;
+    newBlog.thumbs = [];
     newBlog.comments = "none";
     newBlog.author_id = currentUser.id;
 
