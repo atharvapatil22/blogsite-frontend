@@ -12,7 +12,7 @@
 
   /* Vars */
   --navbar-width: 85px;
-  --navbar-mobile-height: 75px;
+  --navbar-mobile-height: 60px;
   --sidebar-width: 40%;
 
   /* Fonts */
@@ -30,6 +30,7 @@
 @media screen and (max-width: 1080px) {
   .App {
     margin-bottom: var(--navbar-mobile-height);
+    margin-top: calc(var(--navbar-mobile-height) - 10px);
   }
 }
 
