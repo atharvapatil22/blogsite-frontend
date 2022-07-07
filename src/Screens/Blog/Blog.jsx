@@ -10,6 +10,8 @@ import PageLoader from "../../Components/PageLoader/PageLoader";
 import { BsThreeDots, BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
 import { ImLink } from "react-icons/im";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
+import { IoChatbubbleOutline, IoShareOutline } from "react-icons/io5";
 
 function Blog() {
   let { blogID } = useParams();
@@ -105,7 +107,7 @@ function Blog() {
       <div className={`blog_body ${styles.blog_body}`}>
         {!!blogInfo && (
           <>
-            <div className={styles.blog_header}>
+            <div className={`${styles.blog_header} ${styles.responsive_width}`}>
               <img
                 className={styles.author_img}
                 src={blogInfo.author_avatar}
@@ -147,11 +149,15 @@ function Blog() {
                 <BsThreeDots size={"1.6em"} />
               </button>
             </div>
-            <div className={styles.mobile_share_btns}>
+            <div
+              className={`${styles.mobile_share_btns} ${styles.responsive_width}`}
+            >
               <ShareBtns forMobile={true} />
             </div>
 
-            <div className={styles.blog_title_and_img}>
+            <div
+              className={`${styles.blog_title_and_img} ${styles.responsive_width}`}
+            >
               <p>{blogInfo.title}</p>
               <img src={blogInfo.image} alt="" />
             </div>
@@ -165,6 +171,58 @@ function Blog() {
             readOnly
           />
         )}
+
+        <div
+          className={`${styles.blog_footer} ${styles.responsive_width}`}
+          id="blog_footer"
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <button
+                className={styles.footer_btns}
+                style={{
+                  marginLeft: 0,
+                }}
+                type="button"
+              >
+                <RiThumbUpLine size={"1.5em"} />
+                &nbsp;{20}
+              </button>
+              <button className={styles.footer_btns} type="button">
+                <IoChatbubbleOutline size={"1.5em"} />
+              </button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <button className={styles.footer_btns} type="button">
+                <IoShareOutline size={"1.5em"} />
+              </button>
+              <button className={styles.footer_btns} type="button">
+                <MdOutlineBookmarkAdd size={"1.5em"} />
+              </button>
+              <button
+                className={styles.footer_btns}
+                style={{ marginRight: 0 }}
+                type="button"
+              >
+                <BsThreeDots size={"1.5em"} />
+              </button>
+            </div>
+          </div>
+          <hr />
+        </div>
+
+        {!!blogContent && (
+          <div
+            className={`${styles.blog_recomended} ${styles.responsive_width}`}
+          >
+            <h1>Recomended Blogs:</h1>
+            <p>Card1</p>
+            <p>Card2</p>
+            <p>Card3</p>
+          </div>
+        )}
+
+        <div style={{ height: "100vh" }}></div>
       </div>
       <Sidebar />
     </div>
