@@ -142,7 +142,8 @@
   }
 
   .blog_preview .section_2 {
-    top: 30em;
+    top: max(30em, 52vw);
+    right: 5%;
   }
 
   .blog_preview .section_1,
