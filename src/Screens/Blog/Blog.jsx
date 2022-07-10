@@ -7,13 +7,23 @@ import axios from "axios";
 import { BaseURL } from "../../environment";
 import { DraftailEditor } from "draftail";
 import PageLoader from "../../Components/PageLoader/PageLoader";
-import { BsThreeDots, BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
+import {
+  BsThreeDots,
+  BsTwitter,
+  BsFacebook,
+  BsLinkedin,
+  BsLink,
+} from "react-icons/bs";
 import { ImLink } from "react-icons/im";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import { IoChatbubbleOutline, IoShareOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import PublishingDate from "../../Components/PublishingDate";
+import ReactTooltip from "react-tooltip";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Blog() {
   let { blogID } = useParams();
   const store = useSelector((state) => state);
@@ -70,37 +80,167 @@ function Blog() {
       .finally(() => setDisableLikes(false));
   };
 
+  const shareBlog = (type) => {
+    let link = "";
+    const uri = window.location.href;
+
+    if (type === "twitter") {
+      link =
+        "http://twitter.com/share?url=" +
+        encodeURIComponent(uri) +
+        "&text=" +
+        encodeURIComponent("Check out this blog");
+      // "",
+      // "left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0";
+    } else if (type === "facebook")
+      link = "https://www.facebook.com/sharer.php?u=" + encodeURIComponent(uri);
+    else if (type === "linkedin")
+      link =
+        "https://www.linkedin.com/shareArticle?mini=true&url=" +
+        encodeURIComponent(uri);
+
+    window.open(link);
+  };
+
+  const toolTipProps = {
+    place: "bottom",
+    effect: "solid",
+    type: "light",
+    border: true,
+    borderColor: "grey",
+    arrowColor: "white",
+    globalEventOff: "click",
+    clickable: true,
+    dataEvebt: "click",
+  };
+
   const ShareBtns = ({ forMobile }) => {
     return (
       <>
         {forMobile && (
           <button
+            data-tip
+            data-for="share_save"
             className={`${styles.share_btns} ${styles.save_btn_mobile}`}
             type="button"
+            onClick={() => alert("Feature is under development")}
           >
             <MdOutlineBookmarkAdd size={"1.4em"} />
             &nbsp;Save&nbsp;
           </button>
         )}
-        <button className={styles.share_btns} type="button">
+        <button
+          className={styles.share_btns}
+          type="button"
+          data-tip
+          data-for="share_twitter"
+          onClick={() => shareBlog("twitter")}
+        >
           <BsTwitter size={"1.4em"} />
         </button>
-        <button className={styles.share_btns} type="button">
+        <button
+          className={styles.share_btns}
+          type="button"
+          data-tip
+          data-for="share_facebook"
+          onClick={() => shareBlog("facebook")}
+        >
           <BsFacebook size={"1.4em"} />
         </button>
-        <button className={styles.share_btns} type="button">
+        <button
+          className={styles.share_btns}
+          type="button"
+          data-tip
+          data-for="share_linkedin"
+          onClick={() => shareBlog("linkedin")}
+        >
           <BsLinkedin size={"1.4em"} />
         </button>
-        <button className={styles.share_btns} type="button">
+        <button
+          className={styles.share_btns}
+          type="button"
+          data-tip
+          data-for="share_link"
+          onClick={() => {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url);
+            toast("Link Copied", { position: "top-center", theme: "dark" });
+          }}
+        >
           <ImLink size={"1.4em"} />
         </button>
         {!forMobile && (
-          <button className={styles.share_btns} type="button">
+          <button
+            className={styles.share_btns}
+            type="button"
+            data-tip
+            data-for="share_save"
+            onClick={() => alert("Feature is under development")}
+          >
             <MdOutlineBookmarkAdd size={"1.4em"} />
           </button>
         )}
+        <ToastContainer />
+        <ReactTooltip id="share_twitter" place="top" effect="solid">
+          Share on Twitter
+        </ReactTooltip>
+        <ReactTooltip id="share_facebook" place="top" effect="solid">
+          Share on Facebook
+        </ReactTooltip>
+        <ReactTooltip id="share_linkedin" place="top" effect="solid">
+          Share on LinkedIn
+        </ReactTooltip>
+        <ReactTooltip id="share_link" place="top" effect="solid">
+          Copy Link
+        </ReactTooltip>
+        <ReactTooltip id="share_save" place="top" effect="solid">
+          Save
+        </ReactTooltip>
       </>
     );
+  };
+
+  const MoreOptions = () => {
+    const currentUser_ID = store.globalData.authUser?.id;
+
+    if (blogInfo.author_id === currentUser_ID)
+      return (
+        <>
+          {["Edit this article", "Email to subscribers"].map((item, index) => (
+            <div key={index}>
+              <a href="#">{item}</a>
+              <br />
+            </div>
+          ))}
+          <hr />
+          {["Story Settings", "Story Stats"].map((item, index) => (
+            <div key={index}>
+              <a href="#">{item}</a>
+              <br />
+            </div>
+          ))}
+          <hr />
+          {["Hide Responses", "Delete Story"].map((item, index) => (
+            <div key={index}>
+              <a href="#">{item}</a>
+              <br />
+            </div>
+          ))}
+        </>
+      );
+    else
+      return (
+        <>
+          {["Show Less Like This", "Mute this author", "Report"].map(
+            (item, index) => (
+              <div key={index}>
+                <a href="#">{item}</a>
+                <br />
+              </div>
+            )
+          )}
+        </>
+      );
   };
 
   const BlankCard = () => {
@@ -136,12 +276,38 @@ function Blog() {
                 }}
               >
                 <div className={styles.header_section_1}>
-                  <p className={styles.author_fullname}>
-                    {blogInfo.author_fullname}{" "}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p
+                      className={styles.author_fullname}
+                      data-tip
+                      data-for="author_name"
+                    >
+                      {blogInfo.author_fullname}{" "}
+                    </p>
                     <button className={styles.follow_btn} type="button">
                       Follow
                     </button>
-                  </p>
+                    <ReactTooltip
+                      id="author_name"
+                      place="top"
+                      effect="solid"
+                      {...toolTipProps}
+                    >
+                      <div style={{ display: "flex" }}>
+                        <img
+                          className={styles.author_img}
+                          src={blogInfo.author_avatar}
+                          alt=""
+                        />
+                        <p>{blogInfo.author_fullname}</p>
+                      </div>
+                    </ReactTooltip>
+                  </div>
                   <div
                     style={{
                       display: "flex",
@@ -160,9 +326,23 @@ function Blog() {
                   <ShareBtns forMobile={false} />
                 </div>
               </div>
-              <button className={styles.options_btn} type="button">
+              <button
+                className={styles.options_btn}
+                type="button"
+                data-tip
+                data-for="header_more"
+                data-event="click"
+              >
                 <BsThreeDots size={"1.6em"} />
               </button>
+
+              <ReactTooltip
+                {...toolTipProps}
+                id="header_more"
+                className={styles.tooltip_modal}
+              >
+                <MoreOptions />
+              </ReactTooltip>
             </div>
             <div
               className={`${styles.mobile_share_btns} ${styles.responsive_width}`}
@@ -242,19 +422,67 @@ function Blog() {
               </button>
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <button className={styles.footer_btns} type="button">
+              <button
+                className={styles.footer_btns}
+                data-tip
+                data-for="footer_share"
+                data-event="click"
+                type="button"
+              >
                 <IoShareOutline size={"1.5em"} />
               </button>
-              <button className={styles.footer_btns} type="button">
+              <button
+                data-tip
+                data-for="share_save"
+                className={styles.footer_btns}
+                type="button"
+                onClick={() => alert("Feature is under development")}
+              >
                 <MdOutlineBookmarkAdd size={"1.5em"} />
               </button>
               <button
                 className={styles.footer_btns}
                 style={{ marginRight: 0 }}
                 type="button"
+                data-tip
+                data-for="header_more"
+                data-event="click"
               >
                 <BsThreeDots size={"1.5em"} />
               </button>
+              <ReactTooltip
+                id="footer_share"
+                {...toolTipProps}
+                className={`${styles.tooltip_modal} `}
+              >
+                <button
+                  onClick={() => {
+                    const url = window.location.href;
+                    navigator.clipboard.writeText(url);
+                    toast("Link Copied", {
+                      position: "top-center",
+                      theme: "dark",
+                    });
+                  }}
+                >
+                  <ImLink />
+                  &nbsp;Copy Link
+                </button>
+                <button onClick={() => shareBlog("twitter")}>
+                  <BsTwitter />
+                  &nbsp;Share on Twitter
+                </button>
+
+                <button onClick={() => shareBlog("facebook")}>
+                  <BsFacebook />
+                  &nbsp;Share on Facebook
+                </button>
+
+                <button onClick={() => shareBlog("linkedin")}>
+                  <BsLinkedin />
+                  &nbsp;Share on LinkedIn
+                </button>
+              </ReactTooltip>
             </div>
           </div>
           <hr />
