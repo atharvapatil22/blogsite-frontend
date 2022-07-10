@@ -5,6 +5,7 @@ import PublishingDate from "../PublishingDate";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineMinusCircle } from "react-icons/ai";
+import ReactTooltip from "react-tooltip";
 
 function BlogCard({ blog }) {
   const navigate = useNavigate();
@@ -37,21 +38,88 @@ function BlogCard({ blog }) {
       </div>
       <div className={styles.card_footer}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <p className={styles.card_topic}>Topic</p>
+          <p
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className={styles.card_topic}
+          >
+            Topic
+          </p>
           <p style={{ color: "grey", margin: "0 0 0 0.5em" }}>
             {blog.length_in_time} min read
           </p>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <button className={styles.card_btns} type="button">
+          <button
+            data-tip
+            data-for="save_btn"
+            className={styles.card_btns}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              alert("Feature is under development");
+            }}
+          >
             <MdOutlineBookmarkAdd size={"1.5em"} />
           </button>
-          <button className={styles.card_btns} type="button">
+          <button
+            data-tip
+            data-for="mute_btn"
+            className={styles.card_btns}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <AiOutlineMinusCircle size={"1.5em"} />
           </button>
-          <button className={styles.card_btns} type="button">
+          <button
+            data-tip
+            data-for="more_btn"
+            data-event="click"
+            className={styles.card_btns}
+            type="button"
+          >
             <BsThreeDots size={"1.5em"} />
           </button>
+          <ReactTooltip place="top" effect="solid" id="save_btn">
+            Save
+          </ReactTooltip>
+          <ReactTooltip place="top" effect="solid" id="mute_btn">
+            Show less like this
+          </ReactTooltip>
+          <ReactTooltip
+            id="more_btn"
+            effect="solid"
+            place="bottom"
+            type="light"
+            border={true}
+            borderColor="grey"
+            arrowColor="white"
+            globalEventOff="click"
+            clickable={true}
+            dataEvent="click"
+            className={styles.tooltip_modal}
+          >
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              href="#"
+            >
+              Mute this author
+            </a>
+            <br />
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              href="#"
+            >
+              Report
+            </a>
+          </ReactTooltip>
         </div>
       </div>
     </div>

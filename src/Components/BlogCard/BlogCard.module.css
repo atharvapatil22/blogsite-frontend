@@ -84,3 +84,24 @@
   background-color: rgb(223, 223, 223);
   cursor: pointer;
 }
+
+.tooltip_modal {
+  text-align: left;
+}
+
+.tooltip_modal a {
+  font-size: 1.1em;
+  color: rgb(89, 89, 89);
+  text-decoration: none;
+}
+
+.tooltip_modal a:hover {
+  color: black;
+}
+.tooltip_modal br {
+  margin: 0.7em 0 0.7em 0;
+}
+.tooltip_modal hr {
+  border: solid rgb(204, 204, 204);
+  border-width: 0.5px;
+}

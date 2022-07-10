@@ -111,7 +111,7 @@ function Blog() {
     arrowColor: "white",
     globalEventOff: "click",
     clickable: true,
-    dataEvebt: "click",
+    dataEvent: "click",
   };
 
   const ShareBtns = ({ forMobile }) => {
