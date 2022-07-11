@@ -9,7 +9,11 @@ function LandingPage() {
   return (
     <div className="landing-page">
       {!!showAuthForm && (
-        <AuthForm hideForm={() => setShowAuthForm(false)} type={authFormType} />
+        <AuthForm
+          dontSendBack
+          hideForm={() => setShowAuthForm(false)}
+          type={authFormType}
+        />
       )}
       <div className="banner">
         <div className="landing-main">

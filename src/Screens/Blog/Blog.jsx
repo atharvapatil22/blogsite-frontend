@@ -24,6 +24,7 @@ import ReactTooltip from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
+import AuthForm from "../../Components/AuthForm/AuthForm";
 
 function Blog() {
   let { blogID } = useParams();
@@ -35,6 +36,7 @@ function Blog() {
   const [hasLiked, setHasLiked] = useState(false);
   const [disableLikes, setDisableLikes] = useState(false);
   const [impressionsModal, setImpressionsModal] = useState(false);
+  const [showAuthForm, setShowAuthForm] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -63,7 +65,7 @@ function Blog() {
     const currentUserID = store.globalData.authUser?.id;
 
     if (!currentUserID) {
-      // If not logged in show form
+      setShowAuthForm(true);
       return;
     }
 
@@ -262,6 +264,15 @@ function Blog() {
   return (
     <div className={`blog_container ${styles.blog_container}`}>
       <div className={`blog_body ${styles.blog_body}`}>
+        {!!showAuthForm && (
+          <AuthForm
+            dontSendBack
+            message="Login to Like Blogs"
+            hideForm={() => setShowAuthForm(false)}
+            type={"login"}
+          />
+        )}
+
         {!!blogInfo && (
           <>
             <div className={`${styles.blog_header} ${styles.responsive_width}`}>

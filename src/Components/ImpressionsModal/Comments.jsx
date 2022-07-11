@@ -7,30 +7,37 @@ function Comments() {
   const userLoggedIn = store.globalData.authUser;
   return (
     <>
-      <div className={styles.new_comment}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            height: "2em",
-          }}
-        >
-          <img src={userLoggedIn.avatar} alt="" />
-          <p style={{ marginLeft: "0.5em" }}>{userLoggedIn.fullname}</p>
+      {!!userLoggedIn ? (
+        <div className={styles.new_comment}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: "2em",
+            }}
+          >
+            <img src={userLoggedIn.avatar} alt="" />
+            <p style={{ marginLeft: "0.5em" }}>{userLoggedIn.fullname}</p>
+          </div>
+          <textarea
+            placeholder={"What are your thoughts?"}
+            maxLength={250}
+            name="new_comment"
+            onChange={() => {}}
+          />
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <button type="button">Clear</button>
+            <button type="button" className={styles.add_btn}>
+              Add
+            </button>
+          </div>
         </div>
-        <textarea
-          placeholder={"What are your thoughts?"}
-          maxLength={250}
-          name="new_comment"
-          onChange={() => {}}
-        />
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button type="button">Clear</button>
-          <button type="button" className={styles.add_btn}>
-            Add
-          </button>
+      ) : (
+        <div>
+          <p>Login to add a comment</p>
         </div>
-      </div>
+      )}
+
       <h2>comments List</h2>
       <div
         style={{

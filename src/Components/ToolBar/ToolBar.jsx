@@ -150,7 +150,7 @@ function ToolBar({ showPreview }) {
           {...toolTipProps}
           className={styles.tooltip_modal}
         >
-          Tooltip for the notifications
+          <p>New notifications will show here</p>
         </ReactTooltip>
         <ReactTooltip
           id="profileTip"

@@ -14,6 +14,7 @@ function AuthForm(props) {
    *   1) {required} hideForm: function executed when from is to be hidden
    *   2) {required} type: used to set initial form type
    *   3) {optional} message: used to override default banner message
+   *   4) {optional} dontSendBack: used to prevent backNavigation on Close
    *
    * If user closes form they will always be redirected to '/' route
    * If user completes Login/Register they will be redirected to '/' route
@@ -30,7 +31,8 @@ function AuthForm(props) {
         show={true}
         onClose={() => {
           props.hideForm();
-          if (location.pathname != "/landing-page") navigate(-1);
+          // if (location.pathname == "/landing-page") navigate(-1)
+          if (!props.dontSendBack) navigate(-1);
         }}
       >
         {type === "login" ? (
