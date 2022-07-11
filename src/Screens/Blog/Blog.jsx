@@ -374,6 +374,7 @@ function Blog() {
               onClose={() => {
                 setImpressionsModal(false);
               }}
+              blogLikes={blogInfo.thumbs}
             />
           </>
         )}

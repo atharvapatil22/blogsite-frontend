@@ -4,7 +4,7 @@ import Comments from "./Comments";
 import styles from "./ImpressionsModal.module.css";
 import Likes from "./Likes";
 
-const ImpressionsModal = ({ show, onClose, type }) => {
+const ImpressionsModal = ({ show, onClose, type, blogLikes }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -21,10 +21,14 @@ const ImpressionsModal = ({ show, onClose, type }) => {
         ref={modalRef}
         // style={backdropStyle}
         className={styles.modal_wrap}
+        onClick={onClose}
       >
         <div
           // style={modalStyle}
           className={styles.modal}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           <div className={styles.btn_container}>
             <h2 style={{ marginLeft: "1em" }}>
@@ -41,7 +45,7 @@ const ImpressionsModal = ({ show, onClose, type }) => {
           {type == "comments" ? (
             <Comments />
           ) : type === "likes" ? (
-            <Likes />
+            <Likes blogLikes={blogLikes} />
           ) : (
             "null"
           )}
