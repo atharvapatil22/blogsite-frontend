@@ -23,6 +23,7 @@ import PublishingDate from "../../Components/PublishingDate";
 import ReactTooltip from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
 
 function Blog() {
   let { blogID } = useParams();
@@ -33,6 +34,7 @@ function Blog() {
   const [showLoader, setshowLoader] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
   const [disableLikes, setDisableLikes] = useState(false);
+  const [impressionsModal, setImpressionsModal] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -360,11 +362,20 @@ function Blog() {
         )}
 
         {!!blogContent && (
-          <DraftailEditor
-            className="editor"
-            rawContentState={blogContent}
-            readOnly
-          />
+          <>
+            <DraftailEditor
+              className="editor"
+              rawContentState={blogContent}
+              readOnly
+            />
+            <ImpressionsModal
+              show={!!impressionsModal}
+              type={impressionsModal}
+              onClose={() => {
+                setImpressionsModal(false);
+              }}
+            />
+          </>
         )}
 
         <div
@@ -408,6 +419,7 @@ function Blog() {
                     )}
                   </button>
                   <button
+                    onClick={() => setImpressionsModal("likes")}
                     style={{ marginLeft: 0, paddingLeft: 0 }}
                     className={styles.footer_btns}
                     type="button"
@@ -417,7 +429,11 @@ function Blog() {
                 </div>
               )}
 
-              <button className={styles.footer_btns} type="button">
+              <button
+                onClick={() => setImpressionsModal("comments")}
+                className={styles.footer_btns}
+                type="button"
+              >
                 <IoChatbubbleOutline size={"1.5em"} />
               </button>
             </div>

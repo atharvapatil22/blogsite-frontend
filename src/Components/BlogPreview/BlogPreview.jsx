@@ -54,7 +54,7 @@ function BlogPreview({
     newBlog.date = new Date().toISOString().substring(0, 10);
     newBlog.length_in_time = Math.round(getWordCount() / 250);
     newBlog.thumbs = [];
-    newBlog.comments = "none";
+    newBlog.comments = [];
     newBlog.author_id = currentUser.id;
 
     // Post Blog Image To Cloudinary
