@@ -190,3 +190,54 @@
     top: 0%;
   }
 }
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 480px) {
+  #box1 {
+    width: 318px;
+    height: 324px;
+    left: -5%;
+    background-size: cover;
+  }
+
+  #box1:after {
+    width: 318px;
+    height: 324px;
+    background-size: cover;
+  }
+
+  @keyframes anim {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 20%;
+    }
+  }
+
+  @keyframes anim2 {
+    from {
+      left: -5%;
+      width: 318px;
+    }
+    to {
+      width: 0px;
+      left: 20%;
+    }
+  }
+
+  #box2 {
+    height: 10vh;
+    font-size: 3em;
+    font-weight: 500;
+    top: 5em;
+  }
+
+  #box2a {
+    width: 90%;
+    height: 5em;
+    font-size: 1.3em;
+    top: 15em;
+  }
+}
