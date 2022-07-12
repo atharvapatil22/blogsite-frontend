@@ -22,6 +22,9 @@ import SplashLoader from "./Components/SplashLoader/SplashLoader";
 
 function App() {
   const store = useSelector((state) => state);
+
+  const [pageTitle, setPageTitle] = useState("Cogito");
+
   const [authLoader, setAuthLoader] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -33,6 +36,10 @@ function App() {
   useEffect(() => {
     authenticateUser();
   }, []);
+
+  useEffect(() => {
+    document.title = pageTitle;
+  }, [pageTitle]);
 
   const authenticateUser = () => {
     if (localStorage.getItem("logged_in") == "true") {
@@ -101,7 +108,11 @@ function App() {
             }
           />
           {/* PUBLIC ROUTES */}
-          <Route path={"/landing-page"} exact element={<LandingPage />} />
+          <Route
+            path={"/landing-page"}
+            exact
+            element={<LandingPage setPageTitle={setPageTitle} />}
+          />
           <Route path={"/home"} exact element={<Home />} />
           <Route path={"/blog/:blogID"} exact element={<Blog />} />
           <Route
