@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./LandingPage.module.css";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import Modal from "../../Components/Modal/Modal";
+import { GrClose } from "react-icons/gr";
+import "./App.css";
 
 function LandingPage({ setPageTitle }) {
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [authFormType, setauthFormType] = useState("login");
   const [showAbout, setShowAbout] = useState(false);
 
+  const mainmenu = useRef(null);
+  const layer2 = useRef(null);
+  const menuicon = useRef(null);
+  const item1 = useRef(null);
+  const item2 = useRef(null);
+  const item3 = useRef(null);
+  const item4 = useRef(null);
   useEffect(() => {
     setPageTitle("Cogito - Where good ideas find you.");
 
@@ -15,6 +24,80 @@ function LandingPage({ setPageTitle }) {
       setPageTitle("Cogito");
     };
   }, []);
+
+  const showMenu = () => {
+    mainmenu.current.style.top = "0px";
+    layer2.current.style.top = "0px";
+
+    setTimeout(() => {
+      mainmenu.current.style.clipPath =
+        "polygon(0% 0%,100% 0%, 100% 100%, 0% 100%)";
+      layer2.current.style.clipPath =
+        "polygon(0% 0%,100% 0%, 100% 100%, 0% 100%)";
+
+      // LIs
+      item1.current.style.top = "0px";
+      item1.current.style.opacity = "1";
+      item2.current.style.top = "0px";
+      item2.current.style.opacity = "1";
+      item3.current.style.top = "0px";
+      item3.current.style.opacity = "1";
+      item4.current.style.top = "0px";
+      item4.current.style.opacity = "1";
+    }, 100);
+  };
+
+  const hideMenu = () => {
+    item1.current.style.top = "50px";
+    item1.current.style.opacity = "0";
+    item2.current.style.top = "50px";
+    item2.current.style.opacity = "0";
+    item3.current.style.top = "50px";
+    item3.current.style.opacity = "0";
+    item4.current.style.top = "50px";
+    item4.current.style.opacity = "0";
+
+    mainmenu.current.style.clipPath =
+      "polygon(0% 30%,100% 0%,100% 100%, 0% 100%)";
+    mainmenu.current.style.transition =
+      "all 0.77s cubic-bezier(0.5,0.1,0.8,0.1)";
+    layer2.current.style.clipPath =
+      "polygon(0% 30%,100% 0%,100% 100%, 0% 100%)";
+    layer2.current.style.transition = "all 0.8s cubic-bezier(0.5,0.1,0.8,0.1)";
+
+    setTimeout(() => {
+      mainmenu.current.style.top = "100%";
+      layer2.current.style.top = "100%";
+    }, 300);
+
+    setTimeout(() => {
+      mainmenu.current.style.clipPath =
+        "polygon(0% 30%,100% 0%,100%,100%,0% 100%)";
+      layer2.current.style.clipPath =
+        "polygon(0% 30%,100% 0%,100%,100%,0% 100%)";
+      layer2.current.style.transition =
+        "all 0.7s cubic-bezier(0.5,0.1,0.9,0.2)";
+    }, 1200);
+  };
+
+  const TempMenu = () => {
+    return (
+      <div id={styles.mobile_menu}>
+        <div ref={mainmenu} id={styles.mainmenu}>
+          <ul>
+            <li ref={item1}>Home</li>
+            <li ref={item2}>About</li>
+            <li ref={item3}>Project</li>
+            <li ref={item4}>Work</li>
+          </ul>
+          <div id={styles.close} onClick={hideMenu}>
+            <GrClose />
+          </div>
+        </div>
+        <div ref={layer2} id={styles.layer2}></div>
+      </div>
+    );
+  };
 
   const AboutModal = () => {
     return (
@@ -71,6 +154,8 @@ function LandingPage({ setPageTitle }) {
         />
       )}
       {!!showAbout && <AboutModal />}
+      <TempMenu />
+
       <div className={styles.banner}>
         <div className={styles.landing_main}>
           <div id={styles.box1}></div>
@@ -90,7 +175,9 @@ function LandingPage({ setPageTitle }) {
               </div>
               <div id={styles.menu}>
                 <ul>
-                  <li>
+                  {/* OLD MENU */}
+
+                  {/* <li>
                     <button type="button" onClick={() => setShowAbout(true)}>
                       About
                     </button>
@@ -116,6 +203,20 @@ function LandingPage({ setPageTitle }) {
                     >
                       Get Started
                     </button>
+                  </li> */}
+
+                  {/* NEW TEMP MENU */}
+                  <li
+                    id={styles.menu_btn}
+                    style={{ display: "flex" }}
+                    onClick={showMenu}
+                  >
+                    {/* <p>Menu</p> */}
+                    <div ref={menuicon} id={styles.menuicon}>
+                      <div id={styles.line1}></div>
+                      <div id={styles.line2}></div>
+                      <div id={styles.line3}></div>
+                    </div>
                   </li>
                 </ul>
               </div>
