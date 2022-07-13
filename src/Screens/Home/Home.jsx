@@ -13,7 +13,7 @@ function Home() {
   const fetchData = () => {
     setShowLoader(true);
     axios
-      .get(BaseURL + "/blogs/list")
+      .post(BaseURL + "/blogs/get-list")
       .then((res) => {
         if (res.status == 200) setBlogsList(res.data);
         console.log("Response: ", res);

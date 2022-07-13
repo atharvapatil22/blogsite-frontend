@@ -23,9 +23,9 @@ function PublishingDate({ dateString }) {
   const year = dateObj.getUTCFullYear();
 
   return (
-    <div>{`${date} ${month} ${
+    <p style={{ margin: 0 }}>{`${date} ${month} ${
       year != new Date().getFullYear() ? year : ""
-    }`}</div>
+    }`}</p>
   );
 }
 

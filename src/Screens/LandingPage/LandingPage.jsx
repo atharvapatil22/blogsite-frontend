@@ -3,12 +3,16 @@ import styles from "./LandingPage.module.css";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import Modal from "../../Components/Modal/Modal";
 import { GrClose } from "react-icons/gr";
-import "./App.css";
+import { BsLinkedin, BsGithub } from "react-icons/bs";
+import { MdTrendingUp } from "react-icons/md";
+import axios from "axios";
+import { BaseURL } from "../../environment";
 
 function LandingPage({ setPageTitle }) {
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [authFormType, setauthFormType] = useState("login");
   const [showAbout, setShowAbout] = useState(false);
+  const [blogsList, setBlogsList] = useState([]);
 
   const mainmenu = useRef(null);
   const layer2 = useRef(null);
@@ -17,13 +21,29 @@ function LandingPage({ setPageTitle }) {
   const item2 = useRef(null);
   const item3 = useRef(null);
   const item4 = useRef(null);
+
   useEffect(() => {
     setPageTitle("Cogito - Where good ideas find you.");
+    fetchData();
 
     return () => {
       setPageTitle("Cogito");
     };
   }, []);
+
+  const fetchData = () => {
+    // setShowLoader(true);
+    axios
+      .post(BaseURL + "/blogs/get-list", { limit: 4 })
+      .then((res) => {
+        if (res.status == 200) setBlogsList(res.data);
+        console.log("Response: ", res);
+      })
+      .catch((err) => console.log("Error: ", err))
+      .finally(() => {
+        // setShowLoader(false);
+      });
+  };
 
   const showMenu = () => {
     mainmenu.current.style.top = "0px";
@@ -224,7 +244,50 @@ function LandingPage({ setPageTitle }) {
           </div>
         </div>
       </div>
-      <div className={styles.mini_home}>Mini Home</div>
+      <div className={styles.trending}>
+        <h3>
+          <MdTrendingUp id={styles.trending_icon} /> Trending on Cogito{" "}
+        </h3>
+        <div className={styles.grid_container}>
+          <div className={styles.col}>
+            <p>Card</p>
+          </div>
+          <div className={styles.col}>
+            <p>Card</p>
+          </div>
+          <div className={styles.col}>
+            <p>Card</p>
+          </div>
+          <div className={styles.col}>
+            <p>Card</p>
+          </div>
+        </div>
+      </div>
+      <div className={styles.footer}>
+        <p style={{ marginRight: "1%" }}>© 2022 Atharva Patil</p>
+        <button onClick={() => setShowAbout(true)}>About</button>
+        <button>Help</button>
+        <button
+          onClick={() =>
+            window.open(
+              "https://github.com/atharvapatil22/blogsite-frontend",
+              "_blank"
+            )
+          }
+        >
+          <BsGithub size={"1.2em"} />
+        </button>
+        <button
+          onClick={() =>
+            window.open(
+              "https://www.linkedin.com/in/atharva-patil-6a406a1b9/",
+              "_blank"
+            )
+          }
+        >
+          <BsLinkedin size={"1.2em"} />
+        </button>
+      </div>
     </div>
   );
 }
