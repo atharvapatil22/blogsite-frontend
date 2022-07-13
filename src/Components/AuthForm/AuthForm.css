@@ -76,7 +76,7 @@
   color: white;
   border: none;
   border-radius: 25px;
-  height: 30%;
+  height: 5em;
 }
 
 /* CREATE NEW ACCOUNT */
@@ -123,7 +123,7 @@ form > button {
   color: white;
   border: none;
   border-radius: 20px;
-  height: 35%;
+  height: 5em;
   width: 100%;
 }
 
@@ -134,7 +134,7 @@ form > button:hover {
 .create-account-form input {
   margin-top: 15%;
   width: 95%;
-  height: 30%;
+  height: 5em;
   border: none;
   border-bottom: 1px solid black;
   font-size: large;

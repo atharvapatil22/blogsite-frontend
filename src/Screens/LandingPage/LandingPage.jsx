@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./LandingPage.module.css";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import Modal from "../../Components/Modal/Modal";
-import { GrClose } from "react-icons/gr";
 import { BsLinkedin, BsGithub, BsChevronCompactDown } from "react-icons/bs";
-import { MdTrendingUp } from "react-icons/md";
+import { MdTrendingUp, MdClose } from "react-icons/md";
 import axios from "axios";
 import { BaseURL } from "../../environment";
 import PublishingDate from "../../Components/PublishingDate";
@@ -24,6 +23,8 @@ function LandingPage({ setPageTitle }) {
   const item2 = useRef(null);
   const item3 = useRef(null);
   const item4 = useRef(null);
+  const item5 = useRef(null);
+  // const item6 = useRef(null);
   const trending = useRef(null);
   const scroll_down_icon = useRef(null);
 
@@ -68,26 +69,18 @@ function LandingPage({ setPageTitle }) {
         "polygon(0% 0%,100% 0%, 100% 100%, 0% 100%)";
 
       // LIs
-      item1.current.style.top = "0px";
-      item1.current.style.opacity = "1";
-      item2.current.style.top = "0px";
-      item2.current.style.opacity = "1";
-      item3.current.style.top = "0px";
-      item3.current.style.opacity = "1";
-      item4.current.style.top = "0px";
-      item4.current.style.opacity = "1";
+      [item1, item2, item3, item4, item5].forEach((item) => {
+        item.current.style.top = "0px";
+        item.current.style.opacity = "1";
+      });
     }, 100);
   };
 
   const hideMenu = () => {
-    item1.current.style.top = "50px";
-    item1.current.style.opacity = "0";
-    item2.current.style.top = "50px";
-    item2.current.style.opacity = "0";
-    item3.current.style.top = "50px";
-    item3.current.style.opacity = "0";
-    item4.current.style.top = "50px";
-    item4.current.style.opacity = "0";
+    [item1, item2, item3, item4, item5].forEach((item) => {
+      item.current.style.top = "50px";
+      item.current.style.opacity = "0";
+    });
 
     mainmenu.current.style.clipPath =
       "polygon(0% 30%,100% 0%,100% 100%, 0% 100%)";
@@ -112,18 +105,50 @@ function LandingPage({ setPageTitle }) {
     }, 1200);
   };
 
-  const TempMenu = () => {
+  const Menu = () => {
     return (
       <div id={styles.mobile_menu}>
         <div ref={mainmenu} id={styles.mainmenu}>
           <ul>
-            <li ref={item1}>Home</li>
-            <li ref={item2}>About</li>
-            <li ref={item3}>Project</li>
-            <li ref={item4}>Work</li>
+            <li ref={item1}>
+              <button type="button" onClick={() => setShowAbout(true)}>
+                About
+              </button>
+            </li>
+            <li ref={item2}>
+              <button
+                type="button"
+                onClick={() => {
+                  setauthFormType("login");
+                  setShowAuthForm(true);
+                }}
+              >
+                Login
+              </button>
+            </li>
+            <li ref={item3}>
+              <button
+                type="button"
+                onClick={() => {
+                  setauthFormType("sign-up");
+                  setShowAuthForm(true);
+                }}
+              >
+                Create Account
+              </button>
+            </li>
+            {/* <li ref={item4}>
+              <button>Browse without login</button>
+            </li> */}
+            <li ref={item4}>
+              <button>Help</button>
+            </li>
+            <li ref={item5}>
+              <button>Settings</button>
+            </li>
           </ul>
           <div id={styles.close} onClick={hideMenu}>
-            <GrClose />
+            <MdClose id={styles.icon} />
           </div>
         </div>
         <div ref={layer2} id={styles.layer2}></div>
@@ -186,7 +211,7 @@ function LandingPage({ setPageTitle }) {
         />
       )}
       {!!showAbout && <AboutModal />}
-      <TempMenu />
+      <Menu />
 
       <div className={styles.banner}>
         <div className={styles.landing_main}>
@@ -223,17 +248,6 @@ function LandingPage({ setPageTitle }) {
                       Login
                     </button>
                   </li>
-                  {/* <li>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setauthFormType("sign-up");
-                        setShowAuthForm(true);
-                      }}
-                    >
-                      Get Started
-                    </button>
-                  </li> */}
                   <li
                     id={styles.menu_btn}
                     style={{ display: "flex" }}
