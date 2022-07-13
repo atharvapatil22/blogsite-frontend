@@ -7,6 +7,9 @@ import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { MdTrendingUp } from "react-icons/md";
 import axios from "axios";
 import { BaseURL } from "../../environment";
+import PublishingDate from "../../Components/PublishingDate";
+import { useNavigate } from "react-router-dom";
+import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 
 function LandingPage({ setPageTitle }) {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -21,6 +24,8 @@ function LandingPage({ setPageTitle }) {
   const item2 = useRef(null);
   const item3 = useRef(null);
   const item4 = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPageTitle("Cogito - Where good ideas find you.");
@@ -249,18 +254,40 @@ function LandingPage({ setPageTitle }) {
           <MdTrendingUp id={styles.trending_icon} /> Trending on Cogito{" "}
         </h3>
         <div className={styles.grid_container}>
-          <div className={styles.col}>
-            <p>Card</p>
-          </div>
-          <div className={styles.col}>
-            <p>Card</p>
-          </div>
-          <div className={styles.col}>
-            <p>Card</p>
-          </div>
-          <div className={styles.col}>
-            <p>Card</p>
-          </div>
+          {!!blogsList ? (
+            blogsList.map((blog, index) => (
+              <div
+                key={index}
+                className={styles.card}
+                onClick={() => navigate(`/blog/${blog.id}`)}
+              >
+                <div className={styles.card_heading}>
+                  <img src={blog.author_avatar} alt="" />
+                  <p>{blog.author_fullname}</p>
+                </div>
+                <h4>{blog.title}</h4>
+                <div className={styles.card_footer}>
+                  <p>
+                    <PublishingDate dateString={blog.blog_date} />
+                  </p>
+                  <p style={{ margin: "0 2%" }}>∙</p>
+                  <p>{blog.length_in_time} min read</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "2.5%",
+                fontSize: "1.1em",
+                color: "grey",
+              }}
+            >
+              Loading <SpinnerLoader color={"grey"} />
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.footer}>
