@@ -132,9 +132,10 @@
     180deg,
     rgb(3, 30, 66, 0.8) 0%,
     rgba(3, 31, 68, 0.7) 20%,
-    rgba(3, 31, 68, 0.6) 40%,
+    rgba(3, 31, 68, 0.5) 60%,
     transparent 100%
   );
+  position: fixed;
 }
 
 @keyframes anim4 {
@@ -158,6 +159,23 @@
 }
 #logo img:hover {
   cursor: pointer;
+}
+
+#scroll_down_icon {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+}
+
+#scroll_down_icon:hover {
+  cursor: pointer;
+}
+
+#scroll_down_icon p {
+  margin: 0;
+  font-size: 0.8em;
+  color: #ffffff60;
 }
 
 /* MENU */
@@ -333,6 +351,8 @@
 
 /* Trending Blogs */
 .trending {
+  border: 0px solid black;
+  border-top-width: 5px;
   margin-bottom: 2em;
 }
 
@@ -340,7 +360,7 @@
   /* background-color: red; */
   text-align: left;
   width: 95%;
-  margin: 0.5em auto;
+  margin: 1em auto;
   display: flex;
   align-items: center;
   font-size: larger;
@@ -365,13 +385,32 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(14, 30, 37, 0.06) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.2) 0px 2px 16px 0px;
   border-radius: 8px;
 }
 
 .grid_container .card:hover {
   cursor: pointer;
-  box-shadow: rgba(73, 73, 73, 0.301) 0px 2px 8px 0px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.grid_container button {
+  font-size: 1.3em;
+  margin-top: 1em;
+  background-color: white;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 14px;
+  border: none;
+  padding: 0.5em 1em;
+  color: rgb(89, 89, 89);
+}
+
+.grid_container button:hover {
+  cursor: pointer;
+  color: black;
 }
 
 .card_heading {
@@ -502,6 +541,10 @@
 
   .footer {
     font-size: 1em;
+  }
+
+  #scroll_down_icon {
+    left: 38%;
   }
 }
 

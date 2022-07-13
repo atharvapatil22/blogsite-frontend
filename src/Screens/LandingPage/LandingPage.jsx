@@ -3,7 +3,7 @@ import styles from "./LandingPage.module.css";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import Modal from "../../Components/Modal/Modal";
 import { GrClose } from "react-icons/gr";
-import { BsLinkedin, BsGithub } from "react-icons/bs";
+import { BsLinkedin, BsGithub, BsChevronCompactDown } from "react-icons/bs";
 import { MdTrendingUp } from "react-icons/md";
 import axios from "axios";
 import { BaseURL } from "../../environment";
@@ -24,10 +24,13 @@ function LandingPage({ setPageTitle }) {
   const item2 = useRef(null);
   const item3 = useRef(null);
   const item4 = useRef(null);
+  const trending = useRef(null);
+  const scroll_down_icon = useRef(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setTimeout(afterAnimation, 5200);
     setPageTitle("Cogito - Where good ideas find you.");
     fetchData();
 
@@ -35,6 +38,10 @@ function LandingPage({ setPageTitle }) {
       setPageTitle("Cogito");
     };
   }, []);
+
+  const afterAnimation = () => {
+    scroll_down_icon.current.style.display = "block";
+  };
 
   const fetchData = () => {
     // setShowLoader(true);
@@ -242,34 +249,48 @@ function LandingPage({ setPageTitle }) {
               </div>
             </div>
           </div>
+          <div
+            ref={scroll_down_icon}
+            id={styles.scroll_down_icon}
+            onClick={() => {
+              scroll_down_icon.current.style.display = "none";
+              trending.current.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            <p>See what's Trending</p>
+            <BsChevronCompactDown size={"2em"} color={"#ffffff60"} />
+          </div>
         </div>
       </div>
-      <div className={styles.trending}>
+      <div className={styles.trending} ref={trending}>
         <h3>
           <MdTrendingUp id={styles.trending_icon} /> Trending on Cogito{" "}
         </h3>
         <div className={styles.grid_container}>
           {!!blogsList ? (
-            blogsList.map((blog, index) => (
-              <div
-                key={index}
-                className={styles.card}
-                onClick={() => navigate(`/blog/${blog.id}`)}
-              >
-                <div className={styles.card_heading}>
-                  <img src={blog.author_avatar} alt="" />
-                  <p>{blog.author_fullname}</p>
+            <div>
+              {blogsList.map((blog, index) => (
+                <div
+                  key={index}
+                  className={styles.card}
+                  onClick={() => navigate(`/blog/${blog.id}`)}
+                >
+                  <div className={styles.card_heading}>
+                    <img src={blog.author_avatar} alt="" />
+                    <p>{blog.author_fullname}</p>
+                  </div>
+                  <h4>{blog.title}</h4>
+                  <div className={styles.card_footer}>
+                    <p>
+                      <PublishingDate dateString={blog.blog_date} />
+                    </p>
+                    <p style={{ margin: "0 2%" }}>∙</p>
+                    <p>{blog.length_in_time} min read</p>
+                  </div>
                 </div>
-                <h4>{blog.title}</h4>
-                <div className={styles.card_footer}>
-                  <p>
-                    <PublishingDate dateString={blog.blog_date} />
-                  </p>
-                  <p style={{ margin: "0 2%" }}>∙</p>
-                  <p>{blog.length_in_time} min read</p>
-                </div>
-              </div>
-            ))
+              ))}
+              <button onClick={() => navigate("/home")}>Show More ...</button>
+            </div>
           ) : (
             <div
               style={{
