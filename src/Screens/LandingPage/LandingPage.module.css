@@ -121,7 +121,7 @@
 
 #nav_container {
   width: 100%;
-  height: 12vh;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -130,7 +130,9 @@
   animation: anim4 2s forwards 2.5s;
   background: linear-gradient(
     180deg,
-    rgba(7, 36, 74, 0.824) 0%,
+    rgb(3, 30, 66, 0.8) 0%,
+    rgba(3, 31, 68, 0.7) 20%,
+    rgba(3, 31, 68, 0.6) 40%,
     transparent 100%
   );
 }
@@ -151,30 +153,37 @@
 
 #logo img {
   width: 3em;
+  padding: 0.1em;
+  border-radius: 25px;
+}
+#logo img:hover {
+  cursor: pointer;
 }
 
 /* MENU */
 
 #menu {
   font-family: var(--font-2);
-  font-size: 1.3em;
   color: white;
   letter-spacing: 0.8px;
-  margin-right: 15%;
+  margin-right: 10%;
   float: right;
 }
 
 #menu ul {
   list-style: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
 }
 
 #menu ul li {
   display: inline-block;
-  margin-left: 4vw;
+  margin-left: 5vw;
 }
-/*
+
 #menu ul li button {
-  padding: 0.5em 1vw 0.5em 1vw;
+  padding: 0.3em 1vw 0.3em 1vw;
   border: transparent;
   border-radius: 25px;
   font-size: 0.8em;
@@ -187,15 +196,13 @@
   cursor: pointer;
   color: black;
   background-color: white;
-} */
-
-/* TEMP MENU ICON */
+}
 
 #menu_btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.4em 1em;
+  padding: 0.3em 1vw;
   border-radius: 25px;
   background-color: transparent;
   border: none;
@@ -203,7 +210,6 @@
 
 #menu_btn p {
   font-family: var(--font-2);
-  font-size: 1.4em;
   margin: 0;
   margin-right: 10px;
 }
@@ -496,5 +502,16 @@
 
   .footer {
     font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .hide_for_mobile {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  #logo {
+    margin-left: 10%;
   }
 }

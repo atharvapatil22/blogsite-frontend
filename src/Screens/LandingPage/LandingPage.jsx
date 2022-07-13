@@ -196,18 +196,16 @@ function LandingPage({ setPageTitle }) {
           <div id={styles.box3}>
             <div id={styles.nav_container}>
               <div id={styles.logo}>
-                <img src={require("../../assets/cogito_logo.png")} />
+                <img src={require("../../assets/cogito_logo_white.png")} />
               </div>
               <div id={styles.menu}>
                 <ul>
-                  {/* OLD MENU */}
-
-                  {/* <li>
+                  <li className={styles.hide_for_mobile}>
                     <button type="button" onClick={() => setShowAbout(true)}>
                       About
                     </button>
                   </li>
-                  <li>
+                  <li className={styles.hide_for_mobile}>
                     <button
                       type="button"
                       onClick={() => {
@@ -218,7 +216,7 @@ function LandingPage({ setPageTitle }) {
                       Login
                     </button>
                   </li>
-                  <li>
+                  {/* <li>
                     <button
                       type="button"
                       onClick={() => {
@@ -229,14 +227,11 @@ function LandingPage({ setPageTitle }) {
                       Get Started
                     </button>
                   </li> */}
-
-                  {/* NEW TEMP MENU */}
                   <li
                     id={styles.menu_btn}
                     style={{ display: "flex" }}
                     onClick={showMenu}
                   >
-                    {/* <p>Menu</p> */}
                     <div ref={menuicon} id={styles.menuicon}>
                       <div id={styles.line1}></div>
                       <div id={styles.line2}></div>
