@@ -540,17 +540,6 @@
   #logo {
     margin-left: 10%;
   }
-
-  #mainmenu ul li button {
-    font-size: 1.5em;
-  }
-  #mainmenu ul {
-    left: 2%;
-  }
-
-  #close #icon {
-    font-size: 1.5em;
-  }
 }
 
 @media screen and (max-width: 480px) {
@@ -611,5 +600,16 @@
 
   #scroll_down_icon {
     left: 38%;
+  }
+
+  #mainmenu ul li button {
+    font-size: 1.5em;
+  }
+  #mainmenu ul {
+    left: 2%;
+  }
+
+  #close #icon {
+    font-size: 1.5em;
   }
 }
