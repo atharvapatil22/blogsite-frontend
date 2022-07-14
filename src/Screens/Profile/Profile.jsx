@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../Components/PageLoader/PageLoader";
 import Sidebar from "../../Components/Sidebar/Sidebar";
-import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 import Header from "../../Components/UserPageComponents/Header";
 import HomeSection from "../../Components/UserPageComponents/HomeSection";
 import { BaseURL } from "../../environment";
 import { authUserSet } from "../../redux/actions";
 import styles from "./Profile.module.css";
+import { BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
 
 function Profile() {
   const store = useSelector((state) => state);
@@ -21,14 +21,25 @@ function Profile() {
   const [dataLoading, setDataLoading] = useState(false);
   const [userData, setUserData] = useState({});
   const [selectedTab, setSelectedTab] = useState("home");
+
   const [aboutText, setAboutText] = useState("");
   const [disableSaveBtn, setDisableSaveBtn] = useState(true);
   const [disableInput, setDisableInput] = useState(false);
+
+  const [socialLinks, setSocialLinks] = useState({});
+  const [hasSocialLinks, setHasSocialLinks] = useState(false);
+  const [showLinksEditor, setShowLinksEditor] = useState(false);
+  const [disableLinksEditor, setDisableLinksEditor] = useState(false);
 
   useEffect(() => {
     if (store.globalData.authUser != null) setUserLoggedIn(true);
     fetchData();
   }, []);
+
+  const checkSocialLinks = (links) => {
+    if (links === null || links === undefined || links === {}) return false;
+    else return true;
+  };
 
   const fetchData = () => {
     setDataLoading(true);
@@ -38,8 +49,11 @@ function Profile() {
         setDataLoading(false);
         console.log("Data Response: ", res.data);
         if (res.data.message === "success") {
+          const _links = res.data.user.social_links;
           setUserData(res.data.user);
           setAboutText(res.data.user.about);
+          setSocialLinks(_links);
+          setHasSocialLinks(checkSocialLinks(_links));
         }
       })
       .catch((err) => {
@@ -73,6 +87,28 @@ function Profile() {
       });
   };
 
+  const saveLinks = () => {
+    setHasSocialLinks(checkSocialLinks(socialLinks));
+
+    setDisableLinksEditor(true);
+    axios
+      .post(BaseURL + "/users/update", {
+        field_name: "social_links",
+        field_value: socialLinks,
+        user_id: currentUser_ID,
+      })
+      .then((res) => {
+        console.log("Response:", res);
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+      })
+      .finally(() => {
+        setDisableLinksEditor(false);
+        setShowLinksEditor(false);
+      });
+  };
+
   const handleLogout = () => {
     // Set redux store to null
     dispatch(authUserSet(null));
@@ -83,6 +119,142 @@ function Profile() {
 
     // Navigate to landing-page
     navigate("/landing-page");
+  };
+
+  const SocialLinks = () => {
+    if (showLinksEditor)
+      return (
+        <div className={styles.social_links}>
+          <div className={styles.editor}>
+            <div className={styles.input_wrapper}>
+              <BsTwitter />
+              <input
+                onChange={(e) => {
+                  let temp = socialLinks ? socialLinks : {};
+                  temp.twitter = e.target.value;
+                  setSocialLinks(temp);
+                }}
+                disabled={disableLinksEditor}
+                type="text"
+                placeholder={
+                  !!socialLinks?.twitter
+                    ? socialLinks?.twitter
+                    : "Link to your Twitter Profile"
+                }
+              />
+            </div>
+            <div className={styles.input_wrapper}>
+              <BsFacebook />
+              <input
+                onChange={(e) => {
+                  let temp = socialLinks;
+                  temp.facebook = e.target.value;
+                  setSocialLinks(temp);
+                }}
+                disabled={disableLinksEditor}
+                type="text"
+                placeholder={
+                  !!socialLinks?.facebook
+                    ? socialLinks?.facebook
+                    : "Link to your Facebook Profile"
+                }
+              />
+            </div>
+            <div className={styles.input_wrapper}>
+              <BsLinkedin />
+              <input
+                onChange={(e) => {
+                  let temp = socialLinks;
+                  temp.linkedin = e.target.value;
+                  setSocialLinks(temp);
+                }}
+                disabled={disableLinksEditor}
+                type="text"
+                placeholder={
+                  !!socialLinks?.linkedin
+                    ? socialLinks?.linkedin
+                    : "Link to your LinkedIn Profile"
+                }
+              />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <button
+                type="button"
+                className={styles.cancel_btn}
+                onClick={() => setShowLinksEditor(false)}
+              >
+                Cancel
+              </button>
+              <button
+                disabled={disableLinksEditor}
+                type="button"
+                className={`${styles.save_btn} ${
+                  disableLinksEditor ? styles.disabled : ""
+                }`}
+                onClick={saveLinks}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    else
+      return (
+        <div className={styles.social_links}>
+          {hasSocialLinks ? (
+            <div className={styles.your_links}>
+              <p style={{ marginRight: "1%" }}>Your Social Links</p>
+              {!!socialLinks?.twitter && (
+                <button
+                  className={styles.link_icon}
+                  onClick={() => window.open(socialLinks.twitter, "_blank")}
+                >
+                  <BsTwitter />
+                </button>
+              )}
+              {!!socialLinks?.facebook && (
+                <button
+                  className={styles.link_icon}
+                  onClick={() => window.open(socialLinks.facebook, "_blank")}
+                >
+                  <BsFacebook />
+                </button>
+              )}
+              {!!socialLinks?.linkedin && (
+                <button
+                  className={styles.link_icon}
+                  onClick={() => window.open(socialLinks.linkedin, "_blank")}
+                >
+                  <BsLinkedin />
+                </button>
+              )}
+              <button
+                type="button"
+                style={{
+                  paddingTop: "0.3em",
+                  paddingBottom: "0.3em",
+                  marginLeft: "2%",
+                }}
+                className={styles.add_links_btn}
+                onClick={() => setShowLinksEditor(true)}
+              >
+                Edit Links
+              </button>
+            </div>
+          ) : (
+            <>
+              <button
+                className={styles.add_links_btn}
+                onClick={() => setShowLinksEditor(true)}
+              >
+                + Add Social Media Links
+              </button>
+            </>
+          )}
+        </div>
+      );
   };
 
   if (dataLoading) return <PageLoader />;
@@ -146,13 +318,18 @@ function Profile() {
 
                 <div className={styles.about_footer}>
                   <div style={{ display: "flex", marginTop: "2em" }}>
-                    <button type="button" style={{ paddingLeft: "0" }}>
+                    <button
+                      className={styles.follower_btn}
+                      type="button"
+                      style={{ paddingLeft: "0" }}
+                    >
                       {userData.followers.length} Followers
                     </button>
-                    <button type="button">
+                    <button type="button" className={styles.follower_btn}>
                       {userData.following.length} Following
                     </button>
                   </div>
+                  <SocialLinks />
                 </div>
               </div>
             ) : (

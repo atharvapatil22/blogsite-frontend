@@ -52,7 +52,16 @@ function User() {
 
     return (
       <div className={styles.about_section}>
-        <p>{userData.about}</p>
+        {!!userData.about && (
+          <p
+            style={{
+              borderBottom: "1px solid lightgray",
+              paddingBottom: "2em",
+            }}
+          >
+            {userData.about}
+          </p>
+        )}
         <div className={styles.about_footer}>
           <div style={{ display: "flex", marginTop: "2em" }}>
             <button type="button" style={{ paddingLeft: "0" }}>
