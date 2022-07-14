@@ -96,6 +96,12 @@
   display: flex;
 }
 
+@media screen and (max-width: 1080px) {
+  .user_container {
+    padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
+}
+
 @media screen and (max-width: 720px) {
   .responsive_width {
     width: 80%;

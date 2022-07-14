@@ -75,6 +75,12 @@
   opacity: 1;
 }
 
+@media screen and (max-width: 1080px) {
+  .write-blog-container {
+    padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
+}
+
 @media screen and (max-width: 720px) {
   .draftail-parent .Draftail-Editor {
     width: 100% !important;

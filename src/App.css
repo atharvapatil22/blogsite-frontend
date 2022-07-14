@@ -30,7 +30,7 @@
 @media screen and (max-width: 1080px) {
   .App {
     margin-bottom: var(--navbar-mobile-height);
-    margin-top: calc(var(--navbar-mobile-height) - 10px);
+    /* margin-top: calc(var(--navbar-mobile-height) - 10px); */
   }
 }
 

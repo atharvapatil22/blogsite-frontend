@@ -22,6 +22,12 @@
   align-items: center;
 }
 
+@media screen and (max-width: 1080px) {
+  .home_container {
+    padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
+}
+
 @media screen and (max-width: 720px) {
   .responsive_width {
     width: 80%;

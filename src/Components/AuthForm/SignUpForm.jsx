@@ -24,7 +24,7 @@ function SignUpForm(props) {
     }
     setShowLoader(true);
     axios
-      .post(BaseURL + "/users/verify-email", { email: email })
+      .post(BaseURL + "/users/verify-email", { new_email: email })
       .then((res) => {
         if (res.status === 200) {
           props.setNewEmail(email);

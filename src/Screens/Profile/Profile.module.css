@@ -181,6 +181,12 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 1080px) {
+  .profile_container {
+    padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
+}
+
 @media screen and (max-width: 720px) {
   .responsive_width {
     width: 80%;

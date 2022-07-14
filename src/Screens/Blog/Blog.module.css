@@ -265,6 +265,9 @@
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1080px) {
+  .blog_container {
+    padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
   .follow_btn {
     visibility: visible;
   }
