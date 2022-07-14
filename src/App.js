@@ -19,6 +19,7 @@ import LandingPage from "./Screens/LandingPage/LandingPage";
 import { BaseURL } from "./environment";
 import { authUserSet } from "./redux/actions";
 import SplashLoader from "./Components/SplashLoader/SplashLoader";
+import User from "./Screens/User/User";
 
 function App() {
   const store = useSelector((state) => state);
@@ -115,6 +116,7 @@ function App() {
           />
           <Route path={"/home"} exact element={<Home />} />
           <Route path={"/blog/:blogID"} exact element={<Blog />} />
+          <Route path={"/user/:userID"} exact element={<User />} />
           <Route
             path="*"
             element={<div className="invalid-route">Invalid Route !!</div>}

@@ -7,8 +7,83 @@ import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import ReactTooltip from "react-tooltip";
 
-function BlogCard({ blog }) {
+function BlogCard({ blog, currentUser_ID }) {
   const navigate = useNavigate();
+
+  const MoreOptions = () => {
+    return (
+      <>
+        {blog.author_id == currentUser_ID ? (
+          <>
+            {["Edit this article", "Email to subscribers"].map(
+              (item, index) => (
+                <div key={index}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    {item}
+                  </a>
+                  <br />
+                </div>
+              )
+            )}
+            <hr />
+            {["Story Settings", "Story Stats"].map((item, index) => (
+              <div key={index}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {item}
+                </a>
+                <br />
+              </div>
+            ))}
+            <hr />
+            {["Hide Responses", "Delete Story"].map((item, index) => (
+              <div key={index}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {item}
+                </a>
+                <br />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              href="#"
+            >
+              Mute this author
+            </a>
+            <br />
+            <a
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              href="#"
+            >
+              Report
+            </a>
+          </>
+        )}
+      </>
+    );
+  };
+
   return (
     <div
       className={styles.blog_card}
@@ -102,23 +177,7 @@ function BlogCard({ blog }) {
             dataEvent="click"
             className={styles.tooltip_modal}
           >
-            <a
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              href="#"
-            >
-              Mute this author
-            </a>
-            <br />
-            <a
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              href="#"
-            >
-              Report
-            </a>
+            <MoreOptions />
           </ReactTooltip>
         </div>
       </div>

@@ -5,10 +5,12 @@ import axios from "axios";
 import { BaseURL } from "../../environment";
 import PageLoader from "../../Components/PageLoader/PageLoader";
 import BlogCard from "../../Components/BlogCard/BlogCard";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [blogsList, setBlogsList] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
+  const store = useSelector((state) => state);
 
   const fetchData = () => {
     setShowLoader(true);
@@ -27,6 +29,8 @@ function Home() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const currentUser_ID = store.globalData.authUser?.id;
 
   if (showLoader) return <PageLoader />;
 
@@ -61,7 +65,7 @@ function Home() {
                 }}
                 key={blog.id}
               >
-                <BlogCard blog={blog} />
+                <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
                 <hr
                   style={{
                     marginTop: "1em",
