@@ -2,7 +2,14 @@ import "./Modal.css";
 import React, { useEffect, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 
-const Modal = ({ modalStyle, children, show, onClose, backdropStyle }) => {
+const Modal = ({
+  modalStyle,
+  children,
+  show,
+  onClose,
+  backdropStyle,
+  bgColor,
+}) => {
   const modalRef = useRef(null);
   useEffect(() => {
     if (show) {
@@ -15,7 +22,10 @@ const Modal = ({ modalStyle, children, show, onClose, backdropStyle }) => {
     <React.Fragment>
       <div ref={modalRef} style={backdropStyle} className="modal-wrap">
         <div style={modalStyle} className="modal">
-          <div className="btn-container">
+          <div
+            style={{ backgroundColor: bgColor ? bgColor : "" }}
+            className="btn-container"
+          >
             <button onClick={onClose} className={"close-btn"}>
               <GrClose fontSize={"1.6em"} />
             </button>

@@ -20,7 +20,7 @@
 #box1 {
   width: 530px;
   height: 540px;
-  background-image: url("../../assets/man-reading-red.png");
+  background-image: url("../../assets/man-reading-color.png");
   position: absolute;
   bottom: -100%;
   left: 35%;
@@ -497,7 +497,7 @@
   color: rgb(89, 89, 89);
   border: 0px solid black;
   border-top-width: 1px;
-  margin-bottom: 1em;
+  margin-bottom: 200px;
 }
 
 .footer button {
@@ -514,6 +514,57 @@
 .footer button:hover {
   cursor: pointer;
   color: black;
+}
+
+.about_modal {
+  text-align: left;
+  padding: 5%;
+  background: #afaeae66;
+  padding-bottom: 200px;
+}
+
+.about_modal h2 {
+  margin-bottom: 2em;
+}
+
+.about_modal hr {
+  border: none;
+  border-bottom: 2px solid rgb(193, 193, 193);
+  margin: 4em 0;
+}
+
+.about_modal h3 {
+  font-family: var(--font-1);
+  color: var(--blue-1);
+}
+
+.about_modal h2 {
+  text-align: center;
+}
+
+.about_modal button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.4em 0.8em;
+  font-size: 1em;
+  border-radius: 10px;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 3px 8px;
+  color: var(--blue-1);
+  width: 35%;
+  min-width: 14em;
+  text-align: left;
+}
+
+.about_modal button:hover {
+  cursor: pointer;
+  color: var(--blue-2);
+}
+
+.about_modal button p {
+  margin: 0;
 }
 
 /* MEDIA QUERIES */
@@ -539,6 +590,10 @@
 
   #logo {
     margin-left: 10%;
+  }
+
+  .about_modal h2 {
+    font-size: 1.2em;
   }
 }
 

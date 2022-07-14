@@ -9,6 +9,7 @@ import { BaseURL } from "../../environment";
 import PublishingDate from "../../Components/PublishingDate";
 import { useNavigate } from "react-router-dom";
 import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
+import AnimatedLogo from "../../Components/AnimatedLogo/AnimatedLogo";
 
 function LandingPage({ setPageTitle }) {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -158,45 +159,78 @@ function LandingPage({ setPageTitle }) {
 
   const AboutModal = () => {
     return (
-      <Modal show={true} onClose={() => setShowAbout(false)}>
-        <h2>
-          Cogito is a blog hosting platform. Anyone can write and express their
-          ideas. Users can read articles by others on a wide range of topics.
-        </h2>
-        <h3>For Recruters:</h3>
-        <p>
-          Frontend: React JS
+      <Modal
+        show={true}
+        onClose={() => setShowAbout(false)}
+        bgColor={"#afaeae66"}
+      >
+        <div className={styles.about_modal}>
+          <h2>
+            Cogito is an open platform where readers can come to find insightful
+            and dynamic thinking. Here, expert and undiscovered voices alike can
+            dive into the heart of any topic and bring new ideas to the surface.
+            Our purpose is to spread these ideas and deepen understanding of the
+            world.
+          </h2>
+          <AnimatedLogo />
+          <hr />
+          <h3>Tech Stack:</h3>
+          <p>
+            Frontend: React JS
+            <br />
+            Backend: Express JS + PostgreSQL
+            <br />
+            Other Tools: Redux, JWT, Draftail Editor
+          </p>
+          <h3>Some Prominent Features:</h3>
+          <ul>
+            <li>JWT based authentication System</li>
+            <li>Seamless Animations</li>
+            <li>Full Responsive Design (except write blogs page)</li>
+            <li>React Router Dom v6 with Public and Private routes</li>
+            <li>Users Can write blogs with a wide range of tools</li>
+            <li>
+              They can interact with articles via likes, comments, sharing etc
+            </li>
+            <li>Users Can follow each other</li>
+          </ul>
+          <h3>Features under development:</h3>
+          <ul>
+            <li>Responsive Write Blogs Page</li>
+            <li>Topics: Blogs could be tagged with one or more topics</li>
+            <li>
+              Blog Recommendation based on topic and recent browsing history
+            </li>
+            <li>Option to save blogs to collections(public/private)</li>
+            <li>Notifications</li>
+          </ul>
+          <button
+            style={{ marginTop: "2em" }}
+            onClick={() =>
+              window.open(
+                "https://github.com/atharvapatil22/blogsite-frontend",
+                "_blank"
+              )
+            }
+          >
+            <div style={{ marginRight: "4%" }}>
+              <BsGithub size={"1.2em"} />
+            </div>
+            Source code
+          </button>
           <br />
-          Backend: Express JS + Postgres
-          <br />
-          Other Tools: CSS Modules,redux,JWT,Draftail Editor
-        </p>
-        <p>
-          This is my first full stack project. I built it to practice the
-          concepts i have learnt. All into one site. This is my first time
-          experimenting with css aimations, authentication systems, Sql based
-          backends
-        </p>
-        <h3>Some of the Features are:</h3>
-        <ul>
-          <li>Top Class Animations</li>
-          <li>Full Responsive Design (except write blogs page)</li>
-          <li>JWT based authentication System</li>
-          <li>React Routing(public and priv routes)</li>
-          <li>Users Can write blogs with a wide range of tools</li>
-          <li>
-            They can interact with others articles (likes,comments,sharing etc)
-          </li>
-          <li>Users Can follow each other</li>
-        </ul>
-        <h3>Features under development:</h3>
-        <ul>
-          <li>Topics. Blogs being recomended</li>
-          <li>Option to save blogs to collections(public/private)</li>
-          <li>Notifications</li>
-        </ul>
-        <a href="#">link to source code </a>
-        <p>social media links</p>
+          <button
+            onClick={() =>
+              window.open(
+                "https://www.linkedin.com/in/atharva-patil-6a406a1b9/",
+                "_blank"
+              )
+            }
+          >
+            <BsLinkedin size={"1.2em"} style={{ marginRight: "4%" }} /> Follow
+            me on linkedin
+          </button>
+        </div>
       </Modal>
     );
   };
