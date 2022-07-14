@@ -42,6 +42,61 @@
 .selected_tab {
   margin-top: 2.5em;
 }
+.about_section {
+  position: relative;
+}
+.about_section textarea {
+  text-align: left;
+  font-family: var(--font-1);
+  font-size: larger;
+  width: 100%;
+  height: 8em;
+  resize: none;
+  outline: none;
+}
+
+.save_btn {
+  background-color: var(--blue-1);
+  color: white;
+  font-size: 1.2em;
+  padding: 0.3em 0.6em;
+  border-radius: 40px;
+  border: none;
+}
+
+.save_btn:hover {
+  background-color: var(--blue-2);
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: lightgray;
+}
+
+.disabled:hover {
+  cursor: default;
+  background-color: lightgray;
+}
+
+.about_footer {
+  border-top: 1px solid lightgray;
+  margin-top: 2.5em;
+}
+
+.about_footer button {
+  background-color: transparent;
+  border: none;
+  color: var(--blue-1);
+  font-size: 1.1em;
+  border-radius: 25px;
+  padding: 0.2em 0.6em;
+  margin-right: 1em;
+}
+
+.about_footer button:hover {
+  color: var(--blue-2);
+  cursor: pointer;
+}
 
 @media screen and (max-width: 720px) {
   .responsive_width {

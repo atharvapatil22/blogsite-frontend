@@ -8,8 +8,8 @@ import PageLoader from "../../Components/PageLoader/PageLoader";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import { useSelector } from "react-redux";
 import { BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
-import BlogCard from "../../Components/BlogCard/BlogCard";
 import Header from "../../Components/UserPageComponents/Header";
+import HomeSection from "../../Components/UserPageComponents/HomeSection";
 
 function User() {
   const { userID } = useParams();
@@ -18,15 +18,12 @@ function User() {
 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
-  const [blogsLoading, setBlogsLoading] = useState(false);
   const [userData, setUserData] = useState({});
-  const [userBlogs, setUserBlogs] = useState([]);
   const [selectedTab, setSelectedTab] = useState("home");
 
   useEffect(() => {
     if (store.globalData.authUser != null) setUserLoggedIn(true);
     fetchData();
-    fetchBlogs();
   }, []);
 
   const fetchData = () => {
@@ -46,59 +43,6 @@ function User() {
           navigate(-1);
         } else console.log("Error in GET users/:id API", err);
       });
-  };
-
-  const fetchBlogs = () => {
-    setBlogsLoading(true);
-
-    axios
-      .get(BaseURL + `/users/${userID}/all-blogs`)
-      .then((res) => {
-        setBlogsLoading(false);
-        console.log("Blogs Response: ", res.data);
-        setUserBlogs(res.data);
-      })
-      .catch((err) => {
-        setBlogsLoading(false);
-        if (err?.response?.data) {
-          console.log(
-            "Error in GET users/:id/all-blogs API",
-            err.response.data
-          );
-          alert(err.response.data.message);
-          navigate(-1);
-        } else console.log("Error in GET users/:id/all-blogs API", err);
-      });
-  };
-
-  const HomeSection = () => {
-    if (!!userBlogs && userBlogs.length === 0)
-      return <div className={styles.home_blogs}>No blogs</div>;
-    else if (!!userBlogs && userBlogs.length > 0)
-      return (
-        <div className={styles.home_blogs}>
-          {userBlogs.map((blog) => (
-            <div
-              style={{
-                width: "100%",
-              }}
-              key={blog.id}
-            >
-              <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
-              <hr
-                style={{
-                  marginTop: "1em",
-                  marginBottom: "1em",
-                  borderColor: "#f0f0f0",
-                  borderWidth: "0.1px",
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      );
-    // Show loader
-    else return <></>;
   };
 
   const AboutSection = () => {
@@ -155,8 +99,6 @@ function User() {
     );
   };
 
-  const currentUser_ID = store.globalData.authUser?.id;
-
   if (dataLoading) return <PageLoader />;
 
   return (
@@ -185,7 +127,7 @@ function User() {
           </div>
           <div className={styles.selected_tab}>
             {selectedTab == "home" ? (
-              <HomeSection />
+              <HomeSection userID={userID} />
             ) : selectedTab === "about" ? (
               <AboutSection />
             ) : (
