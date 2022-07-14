@@ -163,7 +163,11 @@ function User() {
     <div className={styles.user_container}>
       <div className={styles.user_body}>
         <div className={styles.responsive_width}>
-          <Header userData={userData} userLoggedIn={userLoggedIn} />
+          <Header
+            userData={userData}
+            userLoggedIn={userLoggedIn}
+            selfProfile={false}
+          />
           <div className={styles.tab_menu}>
             <p
               className={selectedTab === "home" ? styles.selected : ""}

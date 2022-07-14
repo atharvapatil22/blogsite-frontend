@@ -1,0 +1,56 @@
+.profile_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.profile_body {
+  width: 100%;
+}
+
+.responsive_width {
+  width: 70%;
+  margin: auto;
+}
+
+.tab_menu {
+  display: flex;
+  margin-top: 2em;
+  border-bottom: 1px solid lightgray;
+}
+
+.tab_menu p {
+  margin-bottom: 1em;
+  position: relative;
+}
+
+.tab_menu p:hover {
+  cursor: pointer;
+}
+
+.tab_menu .selected:after {
+  content: "";
+  background-color: black;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 1.5px;
+  bottom: -1em;
+}
+
+.selected_tab {
+  margin-top: 2.5em;
+}
+
+@media screen and (max-width: 720px) {
+  .responsive_width {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .responsive_width {
+    width: 95%;
+  }
+}

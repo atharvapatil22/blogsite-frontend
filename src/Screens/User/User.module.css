@@ -25,28 +25,6 @@
   color: black;
 }
 
-.tooltip_modal {
-  text-align: left;
-}
-
-.tooltip_modal a {
-  font-size: 1.2em;
-  color: rgb(89, 89, 89);
-  text-decoration: none;
-  margin: 1em auto;
-}
-
-.tooltip_modal a:hover {
-  color: black;
-}
-.tooltip_modal br {
-  margin: 0.7em 0 0.7em 0;
-}
-.tooltip_modal hr {
-  border: solid rgb(204, 204, 204);
-  border-width: 0.5px;
-}
-
 .tab_menu {
   display: flex;
   margin-top: 2em;

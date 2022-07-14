@@ -1,12 +1,73 @@
 .header {
   margin-top: 3em;
   padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .header h1 {
   margin: 0;
   font-size: 3em;
+}
+
+#dots_icon {
+  padding: 0.5em;
+  border-radius: 25px;
+  color: grey;
+}
+
+#dots_icon:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.tooltip_modal {
+  text-align: left;
+}
+
+.tooltip_modal a {
+  font-size: 1.2em;
+  color: rgb(89, 89, 89);
+  text-decoration: none;
+  margin: 1em auto;
+}
+
+.tooltip_modal a:hover {
+  color: black;
+}
+.tooltip_modal br {
+  margin: 0.7em 0 0.7em 0;
+}
+.tooltip_modal hr {
+  border: solid rgb(204, 204, 204);
+  border-width: 0.5px;
+}
+
+.follow_container {
+  position: absolute;
+  visibility: hidden;
+  display: flex;
+  margin-top: 1em;
+}
+
+.follow_container button {
+  font-size: 1em;
+  padding: 0.4em 0.8em;
+  margin-right: 2%;
+  background-color: var(--blue-1);
+  color: white;
+  border-radius: 40px;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.follow_container button:hover {
+  cursor: pointer;
+  background-color: var(--blue-2);
+}
+
+@media screen and (max-width: 1080px) {
+  .follow_container {
+    position: relative;
+    visibility: visible;
+  }
 }
