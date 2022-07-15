@@ -95,6 +95,30 @@
   border-radius: 100px;
 }
 
+.banner {
+  display: flex;
+  align-items: center;
+  margin: 1.2em 0;
+}
+
+.banner:hover {
+  cursor: pointer;
+}
+
+.banner img {
+  width: 25%;
+}
+
+.banner p {
+  color: black;
+  margin: 0;
+}
+
+.banner #username {
+  color: grey;
+  font-size: 0.9em;
+}
+
 @media screen and (max-width: 720px) {
   .toolbar_container {
     justify-content: space-between;

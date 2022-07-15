@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "./ToolBar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { BsThreeDots } from "react-icons/bs";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authUserSet } from "../../redux/actions";
 
 function ToolBar({ showPreview }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const store = useSelector((state) => state);
   const currentUser = store.globalData.authUser;
 
@@ -51,20 +54,24 @@ function ToolBar({ showPreview }) {
   const ProfileOptions = () => {
     return (
       <>
-        banner
-        <hr />
-        {[
-          "Write a story",
-          "Stories",
-          "Stats",
-          "Design Your Profile",
-          "Settings",
-        ].map((item, index) => (
-          <div key={index}>
-            <a href="#">{item}</a>
-            <br />
+        <div className={styles.banner} onClick={() => navigate("/profile")}>
+          <img src={currentUser.avatar} alt="" />
+          <div style={{ marginLeft: "4%" }}>
+            <p>{currentUser.fullname}</p>
+            <p id={styles.username}>@{currentUser.username}</p>
           </div>
-        ))}
+        </div>
+        <hr />
+        {["Write a story", "Stories", "Stats", "Design Your Profile"].map(
+          (item, index) => (
+            <div key={index}>
+              <a href="#">{item}</a>
+              <br />
+            </div>
+          )
+        )}
+        <a onClick={() => navigate("/settings")}>Settings</a>
+        <br />
         <hr />
         {["Lists", "Publications"].map((item, index) => (
           <div key={index}>
@@ -73,12 +80,24 @@ function ToolBar({ showPreview }) {
           </div>
         ))}
         <hr />
-        {["Help", "Sign Out"].map((item, index) => (
-          <div key={index}>
-            <a href="#">{item}</a>
-            <br />
-          </div>
-        ))}
+        <a href="#">Help</a>
+        <br />
+        <a
+          onClick={() => {
+            // Set redux store to null
+            dispatch(authUserSet(null));
+
+            // Set local Storage to null
+            localStorage.removeItem("logged_in");
+            localStorage.removeItem("access_token");
+
+            // Navigate to landing-page
+            navigate("/landing-page");
+          }}
+        >
+          Sign Out
+        </a>
+        <br />
       </>
     );
   };

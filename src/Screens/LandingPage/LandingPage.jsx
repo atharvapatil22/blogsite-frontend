@@ -204,6 +204,7 @@ function LandingPage({ setPageTitle }) {
             </li>
             <li>Option to save blogs to collections(public/private)</li>
             <li>Notifications</li>
+            <li>Settings Page</li>
           </ul>
           <button
             style={{ marginTop: "2em" }}
