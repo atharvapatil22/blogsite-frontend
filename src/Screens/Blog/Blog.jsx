@@ -37,6 +37,7 @@ function Blog() {
   const [disableLikes, setDisableLikes] = useState(false);
   const [impressionsModal, setImpressionsModal] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState(false);
+  const [selfBlog, setSelfBlog] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -53,6 +54,7 @@ function Blog() {
         if (res.data.thumbs.length > 0 && currentUserID) {
           if (res.data.thumbs.includes(currentUserID)) setHasLiked(true);
         }
+        if (res.data.author_id === currentUserID) setSelfBlog(true);
         let { content, ...blog_info } = res.data;
         setBlogInfo(blog_info);
         setBlogContent(res.data.content);
@@ -302,9 +304,11 @@ function Blog() {
                     >
                       {blogInfo.author_fullname}{" "}
                     </p>
-                    <button className={styles.follow_btn} type="button">
-                      Follow
-                    </button>
+                    {!selfBlog && (
+                      <button className={styles.follow_btn} type="button">
+                        Follow
+                      </button>
+                    )}
                     <ReactTooltip
                       id="author_name"
                       place="top"

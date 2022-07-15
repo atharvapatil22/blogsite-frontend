@@ -1,11 +1,11 @@
 import React from "react";
-import "./PageLoader.css";
+import styles from "./PageLoader.module.css";
 
 function PageLoader() {
   return (
-    <div className="circle-loader-wrapper">
-      <div className="circle">
-        <div className="inner"></div>
+    <div className={styles.circle_loader_wrapper}>
+      <div className={styles.circle}>
+        <div className={styles.inner}></div>
       </div>
     </div>
   );

@@ -197,6 +197,7 @@ function LandingPage({ setPageTitle }) {
           <h3>Features under development:</h3>
           <ul>
             <li>Responsive Write Blogs Page</li>
+            <li>Saving Blogs to drafts</li>
             <li>Topics: Blogs could be tagged with one or more topics</li>
             <li>
               Blog Recommendation based on topic and recent browsing history
