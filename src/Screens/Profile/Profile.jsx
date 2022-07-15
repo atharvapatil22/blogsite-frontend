@@ -337,11 +337,6 @@ function Profile() {
             )}
           </div>
         </div>
-        {!!userLoggedIn && (
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        )}
       </div>
       <Sidebar />
     </div>

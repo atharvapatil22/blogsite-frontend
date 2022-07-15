@@ -21,6 +21,7 @@
   border-radius: 50px;
   margin-left: 1%;
   border: 1px solid lightgray;
+  cursor: pointer;
 }
 
 .options_btn {
@@ -54,6 +55,7 @@
   margin: 0;
   line-height: 1.6em;
   text-align: left;
+  cursor: pointer;
 }
 
 .follow_btn {

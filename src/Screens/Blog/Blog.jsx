@@ -1,7 +1,7 @@
 import styles from "./Blog.module.css";
 import "./Blog_Draftail.css";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import axios from "axios";
 import { BaseURL } from "../../environment";
@@ -29,6 +29,7 @@ import AuthForm from "../../Components/AuthForm/AuthForm";
 function Blog() {
   let { blogID } = useParams();
   const store = useSelector((state) => state);
+  const navigate = useNavigate();
 
   const [blogContent, setBlogContent] = useState(null);
   const [blogInfo, setBlogInfo] = useState(null);
@@ -106,6 +107,11 @@ function Blog() {
         encodeURIComponent(uri);
 
     window.open(link);
+  };
+
+  const goToAuthorProfile = () => {
+    if (selfBlog) navigate("/profile");
+    else navigate(`/user/${blogInfo.author_id}`);
   };
 
   const toolTipProps = {
@@ -279,6 +285,7 @@ function Blog() {
           <>
             <div className={`${styles.blog_header} ${styles.responsive_width}`}>
               <img
+                onClick={goToAuthorProfile}
                 className={styles.author_img}
                 src={blogInfo.author_avatar}
                 alt=""
@@ -298,9 +305,10 @@ function Blog() {
                     }}
                   >
                     <p
+                      onClick={goToAuthorProfile}
                       className={styles.author_fullname}
-                      data-tip
-                      data-for="author_name"
+                      // data-tip
+                      // data-for="author_name"
                     >
                       {blogInfo.author_fullname}{" "}
                     </p>
@@ -309,7 +317,7 @@ function Blog() {
                         Follow
                       </button>
                     )}
-                    <ReactTooltip
+                    {/* <ReactTooltip
                       id="author_name"
                       place="top"
                       effect="solid"
@@ -323,7 +331,7 @@ function Blog() {
                         />
                         <p>{blogInfo.author_fullname}</p>
                       </div>
-                    </ReactTooltip>
+                    </ReactTooltip> */}
                   </div>
                   <div
                     style={{

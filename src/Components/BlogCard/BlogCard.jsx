@@ -10,6 +10,12 @@ import ReactTooltip from "react-tooltip";
 function BlogCard({ blog, currentUser_ID }) {
   const navigate = useNavigate();
 
+  const goToAuthorProfile = (e) => {
+    e.stopPropagation();
+    if (blog.author_id === currentUser_ID) navigate("/profile");
+    else navigate(`/user/${blog.author_id}`);
+  };
+
   const MoreOptions = () => {
     return (
       <>
@@ -90,8 +96,15 @@ function BlogCard({ blog, currentUser_ID }) {
       onClick={() => navigate(`/blog/${blog.id}`)}
     >
       <div className={styles.card_header}>
-        <img src={blog.author_avatar} className={styles.author_avatar} alt="" />
-        <p style={{ margin: "0 0.5em" }}>{blog.author_fullname}</p>
+        <img
+          src={blog.author_avatar}
+          className={styles.author_avatar}
+          alt=""
+          onClick={goToAuthorProfile}
+        />
+        <p style={{ margin: "0 0.5em" }} onClick={goToAuthorProfile}>
+          {blog.author_fullname}
+        </p>
         {"."}&nbsp;
         <p style={{ color: "grey", margin: "0.5em" }}>
           <PublishingDate dateString={blog.blog_date} />

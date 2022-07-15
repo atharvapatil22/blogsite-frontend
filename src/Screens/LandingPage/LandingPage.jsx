@@ -10,6 +10,7 @@ import PublishingDate from "../../Components/PublishingDate";
 import { useNavigate } from "react-router-dom";
 import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 import AnimatedLogo from "../../Components/AnimatedLogo/AnimatedLogo";
+import { useSelector } from "react-redux";
 
 function LandingPage({ setPageTitle }) {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -30,6 +31,7 @@ function LandingPage({ setPageTitle }) {
   const scroll_down_icon = useRef(null);
 
   const navigate = useNavigate();
+  const store = useSelector((state) => state);
 
   useEffect(() => {
     setTimeout(afterAnimation, 5200);
@@ -104,6 +106,12 @@ function LandingPage({ setPageTitle }) {
       layer2.current.style.transition =
         "all 0.7s cubic-bezier(0.5,0.1,0.9,0.2)";
     }, 1200);
+  };
+
+  const goToAuthorProfile = (e, author_id) => {
+    e.stopPropagation();
+    if (author_id === currentUser_ID) navigate("/profile");
+    else navigate(`/user/${author_id}`);
   };
 
   const Menu = () => {
@@ -237,6 +245,8 @@ function LandingPage({ setPageTitle }) {
     );
   };
 
+  const currentUser_ID = store.globalData.authUser?.id;
+
   return (
     <div className={styles.landing_page}>
       {!!showAuthForm && (
@@ -326,8 +336,14 @@ function LandingPage({ setPageTitle }) {
                   onClick={() => navigate(`/blog/${blog.id}`)}
                 >
                   <div className={styles.card_heading}>
-                    <img src={blog.author_avatar} alt="" />
-                    <p>{blog.author_fullname}</p>
+                    <img
+                      src={blog.author_avatar}
+                      alt=""
+                      onClick={(e) => goToAuthorProfile(e, blog.author_id)}
+                    />
+                    <p onClick={(e) => goToAuthorProfile(e, blog.author_id)}>
+                      {blog.author_fullname}
+                    </p>
                   </div>
                   <h4>{blog.title}</h4>
                   <div className={styles.card_footer}>
