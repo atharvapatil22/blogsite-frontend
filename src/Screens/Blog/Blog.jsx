@@ -39,6 +39,8 @@ function Blog() {
   const [impressionsModal, setImpressionsModal] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [selfBlog, setSelfBlog] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [disableFollowBtn, setDisableFollowBtn] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -56,6 +58,9 @@ function Blog() {
           if (res.data.thumbs.includes(currentUserID)) setHasLiked(true);
         }
         if (res.data.author_id === currentUserID) setSelfBlog(true);
+        if (res.data.author_followers.includes(currentUserID))
+          setIsFollowing(true);
+
         let { content, ...blog_info } = res.data;
         setBlogInfo(blog_info);
         setBlogContent(res.data.content);
@@ -112,6 +117,32 @@ function Blog() {
   const goToAuthorProfile = () => {
     if (selfBlog) navigate("/profile");
     else navigate(`/user/${blogInfo.author_id}`);
+  };
+
+  const handleFollow = () => {
+    const currentUserID = store.globalData.authUser?.id;
+
+    if (currentUserID == null) {
+      setShowAuthForm(true);
+      return;
+    }
+    setDisableFollowBtn(true);
+    axios
+      .post(BaseURL + "/users/follow", {
+        source_user: currentUserID,
+        target_user: blogInfo.author_id,
+        type: isFollowing ? "unfollow" : "follow",
+      })
+      .then((res) => {
+        console.log("res:", res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(() => {
+        setIsFollowing(!isFollowing);
+        setDisableFollowBtn(false);
+      });
   };
 
   const toolTipProps = {
@@ -313,8 +344,14 @@ function Blog() {
                       {blogInfo.author_fullname}{" "}
                     </p>
                     {!selfBlog && (
-                      <button className={styles.follow_btn} type="button">
-                        Follow
+                      <button
+                        disabled={disableFollowBtn}
+                        className={styles.follow_btn}
+                        type="button"
+                        onClick={handleFollow}
+                        id={isFollowing ? styles.following_btn : ""}
+                      >
+                        {isFollowing ? "Following" : "Follow"}
                       </button>
                     )}
                     {/* <ReactTooltip

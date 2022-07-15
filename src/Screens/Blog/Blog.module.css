@@ -73,6 +73,17 @@
   cursor: pointer;
 }
 
+#following_btn {
+  border: 2px solid var(--blue-1);
+  background-color: white;
+  color: var(--blue-1);
+}
+
+#following_btn:hover {
+  border: 2px solid var(--blue-2);
+  color: var(--blue-2);
+}
+
 .header_section_2 {
   min-width: 50%;
   display: flex;

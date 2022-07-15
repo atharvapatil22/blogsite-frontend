@@ -164,29 +164,30 @@ function User() {
             userLoggedIn={currentUserID != null}
             selfProfile={true}
           />
-
-          <div className={styles.follow_container}>
-            <button
-              disabled={disableFollowBtn}
-              type="button"
-              onClick={handleFollow}
-              id={isFollowing ? styles.following_btn : ""}
-            >
-              {isFollowing ? "Following" : "Follow"}
-            </button>
-            <button
-              data-tip
-              data-for="mail"
-              type="button"
-              style={{ padding: "0.5em" }}
-              onClick={() => alert("Feature is under development")}
-            >
-              <RiMailAddLine size={"1.2em"} />
-            </button>
-            <ReactTooltip place="bottom" effect="solid" id="mail">
-              Subscribe to get an email whenever {userData.fullname} publishes
-            </ReactTooltip>
-          </div>
+          {currentUserID != userData.id && (
+            <div className={styles.follow_container}>
+              <button
+                disabled={disableFollowBtn}
+                type="button"
+                onClick={handleFollow}
+                id={isFollowing ? styles.following_btn : ""}
+              >
+                {isFollowing ? "Following" : "Follow"}
+              </button>
+              <button
+                data-tip
+                data-for="mail"
+                type="button"
+                style={{ padding: "0.5em" }}
+                onClick={() => alert("Feature is under development")}
+              >
+                <RiMailAddLine size={"1.2em"} />
+              </button>
+              <ReactTooltip place="bottom" effect="solid" id="mail">
+                Subscribe to get an email whenever {userData.fullname} publishes
+              </ReactTooltip>
+            </div>
+          )}
 
           <div className={styles.tab_menu}>
             <p
