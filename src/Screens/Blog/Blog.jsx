@@ -434,7 +434,7 @@ function Blog() {
               onClose={() => {
                 setImpressionsModal(false);
               }}
-              blogLikes={blogInfo.thumbs}
+              arrayOfUserIDs={blogInfo.thumbs}
             />
           </>
         )}

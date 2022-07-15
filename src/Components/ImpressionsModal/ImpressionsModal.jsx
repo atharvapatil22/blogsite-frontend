@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import Comments from "./Comments";
 import styles from "./ImpressionsModal.module.css";
-import Likes from "./Likes";
+import UserList from "./UserList";
 
-const ImpressionsModal = ({ show, onClose, type, blogLikes }) => {
+const ImpressionsModal = ({ show, onClose, type, arrayOfUserIDs }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +36,11 @@ const ImpressionsModal = ({ show, onClose, type, blogLikes }) => {
                 ? "Comments"
                 : type === "likes"
                 ? "Likes"
-                : "null"}
+                : type === "followers"
+                ? "Followers"
+                : type === "following"
+                ? "Following"
+                : ""}
             </h2>
             <button onClick={onClose} className={styles.close_btn}>
               <GrClose fontSize={"1.6em"} />
@@ -45,9 +49,13 @@ const ImpressionsModal = ({ show, onClose, type, blogLikes }) => {
           {type == "comments" ? (
             <Comments />
           ) : type === "likes" ? (
-            <Likes blogLikes={blogLikes} />
+            <UserList arrayOfUserIDs={arrayOfUserIDs} type={"Likes"} />
+          ) : type === "followers" ? (
+            <UserList arrayOfUserIDs={arrayOfUserIDs} type={"Followers"} />
+          ) : type === "following" ? (
+            <UserList arrayOfUserIDs={arrayOfUserIDs} type={"Following"} />
           ) : (
-            "null"
+            ""
           )}
         </div>
       </div>

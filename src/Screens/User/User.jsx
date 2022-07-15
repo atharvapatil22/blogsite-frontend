@@ -13,6 +13,7 @@ import HomeSection from "../../Components/UserPageComponents/HomeSection";
 import { RiMailAddLine } from "react-icons/ri";
 import ReactTooltip from "react-tooltip";
 import AuthForm from "../../Components/AuthForm/AuthForm";
+import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
 
 function User() {
   const { userID } = useParams();
@@ -26,6 +27,9 @@ function User() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
   const [authFormVisible, setAuthFormVisible] = useState(false);
+
+  const [impressionsModal, setImpressionsModal] = useState(false);
+  const [impressionsType, setImpressionsType] = useState("followers");
 
   useEffect(() => {
     if (store.globalData.authUser != null)
@@ -99,10 +103,25 @@ function User() {
         )}
         <div className={styles.about_footer}>
           <div style={{ display: "flex", marginTop: "2em" }}>
-            <button type="button" style={{ paddingLeft: "0" }}>
+            <button
+              type="button"
+              style={{ paddingLeft: "0" }}
+              onClick={() => {
+                setImpressionsType("followers");
+                setImpressionsModal(true);
+              }}
+            >
               {userData.followers.length} Followers
             </button>
-            <button type="button">{userData.following.length} Following</button>
+            <button
+              type="button"
+              onClick={() => {
+                setImpressionsType("following");
+                setImpressionsModal(true);
+              }}
+            >
+              {userData.following.length} Following
+            </button>
           </div>
           <div className={styles.social_links}>
             {(twitter || facebook || linkedin) && (
@@ -148,6 +167,20 @@ function User() {
   return (
     <div className={styles.user_container}>
       <div className={styles.user_body}>
+        {!!impressionsModal && (
+          <ImpressionsModal
+            show={!!impressionsModal}
+            type={impressionsType}
+            onClose={() => {
+              setImpressionsModal(false);
+            }}
+            arrayOfUserIDs={
+              impressionsType == "followers"
+                ? userData.followers
+                : userData.following
+            }
+          />
+        )}
         <div className={styles.responsive_width}>
           {!!authFormVisible && (
             <AuthForm

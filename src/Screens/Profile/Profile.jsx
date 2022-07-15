@@ -10,6 +10,7 @@ import { BaseURL } from "../../environment";
 import { authUserSet } from "../../redux/actions";
 import styles from "./Profile.module.css";
 import { BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
+import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
 
 function Profile() {
   const store = useSelector((state) => state);
@@ -30,6 +31,9 @@ function Profile() {
   const [hasSocialLinks, setHasSocialLinks] = useState(false);
   const [showLinksEditor, setShowLinksEditor] = useState(false);
   const [disableLinksEditor, setDisableLinksEditor] = useState(false);
+
+  const [impressionsModal, setImpressionsModal] = useState(false);
+  const [impressionsType, setImpressionsType] = useState("followers");
 
   useEffect(() => {
     if (store.globalData.authUser != null) setUserLoggedIn(true);
@@ -263,6 +267,20 @@ function Profile() {
     <div className={styles.profile_container}>
       <div className={styles.profile_body}>
         <div className={styles.responsive_width}>
+          {!!impressionsModal && (
+            <ImpressionsModal
+              show={!!impressionsModal}
+              type={impressionsType}
+              onClose={() => {
+                setImpressionsModal(false);
+              }}
+              arrayOfUserIDs={
+                impressionsType == "followers"
+                  ? userData.followers
+                  : userData.following
+              }
+            />
+          )}
           <Header
             userData={userData}
             userLoggedIn={userLoggedIn}
@@ -322,10 +340,21 @@ function Profile() {
                       className={styles.follower_btn}
                       type="button"
                       style={{ paddingLeft: "0" }}
+                      onClick={() => {
+                        setImpressionsType("followers");
+                        setImpressionsModal(true);
+                      }}
                     >
                       {userData.followers.length} Followers
                     </button>
-                    <button type="button" className={styles.follower_btn}>
+                    <button
+                      type="button"
+                      className={styles.follower_btn}
+                      onClick={() => {
+                        setImpressionsType("following");
+                        setImpressionsModal(true);
+                      }}
+                    >
                       {userData.following.length} Following
                     </button>
                   </div>

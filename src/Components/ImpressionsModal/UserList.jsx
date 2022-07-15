@@ -4,20 +4,20 @@ import { BaseURL } from "../../environment";
 import styles from "./ImpressionsModal.module.css";
 import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
-function Likes({ blogLikes }) {
-  const [likers, setLikers] = useState([]);
+function Likes({ arrayOfUserIDs, type }) {
+  const [arrayOfUserDetails, setArrayOfUserDetails] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
-    if (blogLikes.length > 0) fetchData();
+    if (arrayOfUserIDs.length > 0) fetchData();
   }, []);
 
   const fetchData = () => {
     setShowLoader(true);
     axios
-      .post(BaseURL + "/blogs/get-likes", { array_of_likers: blogLikes })
+      .post(BaseURL + "/blogs/get-likes", { array_of_likers: arrayOfUserIDs })
       .then((res) => {
-        setLikers(res.data.likers);
+        setArrayOfUserDetails(res.data.likers);
       })
       .catch((err) => {
         console.log("Error:", err);
@@ -25,14 +25,14 @@ function Likes({ blogLikes }) {
       .finally(() => setShowLoader(false));
   };
 
-  if (blogLikes.length == 0) return <p>No Likes Yet</p>;
+  if (arrayOfUserIDs.length == 0) return <p>No {type} Yet</p>;
 
   return (
     <div>
       {showLoader ? (
         <SpinnerLoader color={"black"} />
       ) : (
-        likers.map((user, index) => (
+        arrayOfUserDetails.map((user, index) => (
           <div className={styles.liker_row} key={index}>
             <img src={user.avatar} alt="" />
             <p>{user.fullname}</p>
