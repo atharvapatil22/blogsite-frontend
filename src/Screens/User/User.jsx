@@ -10,19 +10,26 @@ import { useSelector } from "react-redux";
 import { BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
 import Header from "../../Components/UserPageComponents/Header";
 import HomeSection from "../../Components/UserPageComponents/HomeSection";
+import { RiMailAddLine } from "react-icons/ri";
+import ReactTooltip from "react-tooltip";
+import AuthForm from "../../Components/AuthForm/AuthForm";
 
 function User() {
   const { userID } = useParams();
   const store = useSelector((state) => state);
   const navigate = useNavigate();
 
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [currentUserID, setCurrentUserID] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
   const [userData, setUserData] = useState({});
   const [selectedTab, setSelectedTab] = useState("home");
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [disableFollowBtn, setDisableFollowBtn] = useState(false);
+  const [authFormVisible, setAuthFormVisible] = useState(false);
 
   useEffect(() => {
-    if (store.globalData.authUser != null) setUserLoggedIn(true);
+    if (store.globalData.authUser != null)
+      setCurrentUserID(store.globalData.authUser.id);
     fetchData();
   }, []);
 
@@ -33,7 +40,11 @@ function User() {
       .then((res) => {
         setDataLoading(false);
         console.log("Data Response: ", res.data);
-        if (res.data.message === "success") setUserData(res.data.user);
+        if (res.data.message === "success") {
+          setUserData(res.data.user);
+          if (res.data.user.followers.includes(store.globalData?.authUser?.id))
+            setIsFollowing(true);
+        }
       })
       .catch((err) => {
         setDataLoading(false);
@@ -42,6 +53,30 @@ function User() {
           alert(err.response.data.message);
           navigate(-1);
         } else console.log("Error in GET users/:id API", err);
+      });
+  };
+
+  const handleFollow = () => {
+    if (currentUserID == null) {
+      setAuthFormVisible(true);
+      return;
+    }
+    setDisableFollowBtn(true);
+    axios
+      .post(BaseURL + "/users/follow", {
+        source_user: currentUserID,
+        target_user: userData.id,
+        type: isFollowing ? "unfollow" : "follow",
+      })
+      .then((res) => {
+        console.log("res:", res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(() => {
+        setIsFollowing(!isFollowing);
+        setDisableFollowBtn(false);
       });
   };
 
@@ -114,11 +149,45 @@ function User() {
     <div className={styles.user_container}>
       <div className={styles.user_body}>
         <div className={styles.responsive_width}>
+          {!!authFormVisible && (
+            <AuthForm
+              type={"login"}
+              message={"Login to Follow users"}
+              hideForm={() => {
+                setAuthFormVisible(false);
+              }}
+              dontSendBack
+            />
+          )}
           <Header
             userData={userData}
-            userLoggedIn={userLoggedIn}
-            selfProfile={false}
+            userLoggedIn={currentUserID != null}
+            selfProfile={true}
           />
+
+          <div className={styles.follow_container}>
+            <button
+              disabled={disableFollowBtn}
+              type="button"
+              onClick={handleFollow}
+              id={isFollowing ? styles.following_btn : ""}
+            >
+              {isFollowing ? "Following" : "Follow"}
+            </button>
+            <button
+              data-tip
+              data-for="mail"
+              type="button"
+              style={{ padding: "0.5em" }}
+              onClick={() => alert("Feature is under development")}
+            >
+              <RiMailAddLine size={"1.2em"} />
+            </button>
+            <ReactTooltip place="bottom" effect="solid" id="mail">
+              Subscribe to get an email whenever {userData.fullname} publishes
+            </ReactTooltip>
+          </div>
+
           <div className={styles.tab_menu}>
             <p
               className={selectedTab === "home" ? styles.selected : ""}

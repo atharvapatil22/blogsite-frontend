@@ -96,9 +96,52 @@
   display: flex;
 }
 
+.follow_container {
+  position: absolute;
+  visibility: hidden;
+  display: flex;
+  margin-top: 1em;
+}
+
+.follow_container button {
+  font-size: 1em;
+  padding: 0.4em 0.8em;
+  margin-right: 2%;
+  background-color: var(--blue-1);
+  color: white;
+  border-radius: 40px;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.follow_container button:hover {
+  cursor: pointer;
+  background-color: var(--blue-2);
+}
+.follow_container button:hover {
+  cursor: pointer;
+  background-color: var(--blue-2);
+}
+
+#following_btn {
+  border: 2px solid var(--blue-1);
+  background-color: white;
+  color: var(--blue-1);
+}
+
+#following_btn:hover {
+  border: 2px solid var(--blue-2);
+  color: var(--blue-2);
+}
+
 @media screen and (max-width: 1080px) {
   .user_container {
     padding-top: calc(var(--navbar-mobile-height) - 10px);
+  }
+  .follow_container {
+    position: relative;
+    visibility: visible;
   }
 }
 

@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./UserPage.module.css";
 import ReactTooltip from "react-tooltip";
 import { BsThreeDots } from "react-icons/bs";
-import { RiMailAddLine } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 
 function Header({ userData, userLoggedIn, selfProfile }) {
@@ -17,8 +16,6 @@ function Header({ userData, userLoggedIn, selfProfile }) {
     clickable: true,
     dataEvent: "click",
   };
-
-  const handleFollow = () => {};
 
   return (
     <>
@@ -78,25 +75,6 @@ function Header({ userData, userLoggedIn, selfProfile }) {
             </>
           )}
         </div>
-        {!selfProfile && (
-          <div className={styles.follow_container}>
-            <button type="button" onClick={handleFollow}>
-              Follow
-            </button>
-            <button
-              data-tip
-              data-for="mail"
-              type="button"
-              style={{ padding: "0.5em" }}
-              onClick={() => alert("Feature is under development")}
-            >
-              <RiMailAddLine size={"1.2em"} />
-            </button>
-            <ReactTooltip place="bottom" effect="solid" id="mail">
-              Subscribe to get an email whenever {userData.fullname} publishes
-            </ReactTooltip>
-          </div>
-        )}
       </header>
     </>
   );
