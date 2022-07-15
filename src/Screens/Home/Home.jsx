@@ -6,11 +6,16 @@ import { BaseURL } from "../../environment";
 import PageLoader from "../../Components/PageLoader/PageLoader";
 import BlogCard from "../../Components/BlogCard/BlogCard";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [blogsList, setBlogsList] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
+
+  const [followingData, setFollowingData] = useState([]);
+
   const store = useSelector((state) => state);
+  const navigate = useNavigate();
 
   const fetchData = () => {
     setShowLoader(true);
@@ -26,8 +31,25 @@ function Home() {
       });
   };
 
+  const fetchFollowers = () => {
+    const currentUser = store.globalData.authUser;
+    if (currentUser != null) {
+      if (currentUser.following.length > 0)
+        axios
+          .post(BaseURL + "/blogs/get-likes", {
+            array_of_likers: currentUser.following,
+          })
+          .then((res) => {
+            console.log("Followers", res.data);
+            setFollowingData(res.data.likers);
+          })
+          .catch((err) => console.log("err", err.response));
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    fetchFollowers();
   }, []);
 
   const currentUser_ID = store.globalData.authUser?.id;
@@ -38,25 +60,35 @@ function Home() {
     <div className={styles.home_container}>
       <div className={styles.home_body}>
         <div className={styles.responsive_width}>
-          <div
-            style={{
-              backgroundColor: "lightblue",
-              margin: "10px",
-              marginTop: 0,
-              padding: "10px",
-            }}
-          >
-            Topics
-          </div>
-          <div
-            style={{
-              backgroundColor: "lightgreen",
-              margin: "10px",
-              padding: "10px",
-            }}
-          >
-            Following
-          </div>
+          {!!followingData.length > 0 ? (
+            <div
+              style={{
+                // margin: "1.5em 0",
+                padding: "0 2%",
+                borderBottom: "1px solid lightgray",
+              }}
+            >
+              <h2 style={{ textAlign: "left", fontFamily: "var(--font-1)" }}>
+                People you Follow:
+              </h2>
+              <div className={styles.following}>
+                {followingData.map((item, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      if (item.id === currentUser_ID) navigate("/profile");
+                      else navigate(`/user/${item.id}`);
+                    }}
+                  >
+                    <img src={item.avatar}></img>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <h2 id={styles.home_heading}>Home</h2>
+          )}
+
           <div className={styles.blog_list}>
             {blogsList.map((blog) => (
               <div

@@ -8,6 +8,8 @@
 .home_body {
   width: 100%;
   margin-bottom: 200px;
+  padding-top: 1em;
+  text-align: left;
 }
 
 .responsive_width {
@@ -15,7 +17,30 @@
   margin: auto;
 }
 
+#home_heading {
+  font-family: var(--font-1);
+  font-size: 2em;
+}
+
+.following {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.following img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin-right: 1em;
+}
+
+.following img:hover {
+  cursor: pointer;
+}
+
 .blog_list {
+  margin-top: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
