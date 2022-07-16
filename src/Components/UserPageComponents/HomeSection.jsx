@@ -8,43 +8,10 @@ import BlogCard from "../BlogCard/BlogCard";
 import styles from "./UserPage.module.css";
 import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
 
-function HomeSection({ userID }) {
-  const navigate = useNavigate();
+function HomeSection({ userBlogs, blogsLoading }) {
   const store = useSelector((state) => state);
 
-  const [blogsLoading, setBlogsLoading] = useState(false);
-  const [userBlogs, setUserBlogs] = useState([]);
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
-  const fetchBlogs = () => {
-    setBlogsLoading(true);
-
-    axios
-      .get(BaseURL + `/users/${userID}/all-blogs`)
-      .then((res) => {
-        setBlogsLoading(false);
-        console.log("Blogs Response: ", res.data);
-        setUserBlogs(res.data);
-      })
-      .catch((err) => {
-        setBlogsLoading(false);
-        if (err?.response?.data) {
-          console.log(
-            "Error in GET users/:id/all-blogs API",
-            err.response.data
-          );
-          alert(err.response.data.message);
-          navigate(-1);
-        } else console.log("Error in GET users/:id/all-blogs API", err);
-      });
-  };
-
   const currentUser_ID = store.globalData.authUser?.id;
-
-  // Show loader
   if (blogsLoading) return <SpinnerLoader color={"black"} />;
   else if (!!userBlogs && userBlogs.length === 0)
     return (

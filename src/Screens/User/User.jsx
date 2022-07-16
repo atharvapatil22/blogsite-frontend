@@ -21,9 +21,14 @@ function User() {
   const navigate = useNavigate();
 
   const [currentUserID, setCurrentUserID] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("home");
+
   const [dataLoading, setDataLoading] = useState(false);
   const [userData, setUserData] = useState({});
-  const [selectedTab, setSelectedTab] = useState("home");
+
+  const [blogsLoading, setBlogsLoading] = useState(false);
+  const [userBlogs, setUserBlogs] = useState([]);
+
   const [isFollowing, setIsFollowing] = useState(false);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
   const [authFormVisible, setAuthFormVisible] = useState(false);
@@ -35,6 +40,7 @@ function User() {
     if (store.globalData.authUser != null)
       setCurrentUserID(store.globalData.authUser.id);
     fetchData();
+    fetchBlogs();
   }, []);
 
   const fetchData = () => {
@@ -57,6 +63,29 @@ function User() {
           alert(err.response.data.message);
           navigate(-1);
         } else console.log("Error in GET users/:id API", err);
+      });
+  };
+
+  const fetchBlogs = () => {
+    setBlogsLoading(true);
+
+    axios
+      .get(BaseURL + `/users/${userID}/all-blogs`)
+      .then((res) => {
+        setBlogsLoading(false);
+        console.log("Blogs Response: ", res.data);
+        setUserBlogs(res.data);
+      })
+      .catch((err) => {
+        setBlogsLoading(false);
+        if (err?.response?.data) {
+          console.log(
+            "Error in GET users/:id/all-blogs API",
+            err.response.data
+          );
+          alert(err.response.data.message);
+          navigate(-1);
+        } else console.log("Error in GET users/:id/all-blogs API", err);
       });
   };
 
@@ -239,7 +268,7 @@ function User() {
           </div>
           <div className={styles.selected_tab}>
             {selectedTab == "home" ? (
-              <HomeSection userID={userID} />
+              <HomeSection userBlogs={userBlogs} blogsLoading={blogsLoading} />
             ) : selectedTab === "about" ? (
               <AboutSection />
             ) : (

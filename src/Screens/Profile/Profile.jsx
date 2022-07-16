@@ -19,9 +19,12 @@ function Profile() {
   const navigate = useNavigate();
 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("home");
+
   const [dataLoading, setDataLoading] = useState(false);
   const [userData, setUserData] = useState({});
-  const [selectedTab, setSelectedTab] = useState("home");
+  const [blogsLoading, setBlogsLoading] = useState(false);
+  const [userBlogs, setUserBlogs] = useState([]);
 
   const [aboutText, setAboutText] = useState("");
   const [disableSaveBtn, setDisableSaveBtn] = useState(true);
@@ -38,6 +41,7 @@ function Profile() {
   useEffect(() => {
     if (store.globalData.authUser != null) setUserLoggedIn(true);
     fetchData();
+    fetchBlogs();
   }, []);
 
   const checkSocialLinks = (links) => {
@@ -67,6 +71,29 @@ function Profile() {
           alert(err.response.data.message);
           navigate(-1);
         } else console.log("Error in GET users/:id API", err);
+      });
+  };
+
+  const fetchBlogs = () => {
+    setBlogsLoading(true);
+
+    axios
+      .get(BaseURL + `/users/${currentUser_ID}/all-blogs`)
+      .then((res) => {
+        setBlogsLoading(false);
+        console.log("Blogs Response: ", res.data);
+        setUserBlogs(res.data);
+      })
+      .catch((err) => {
+        setBlogsLoading(false);
+        if (err?.response?.data) {
+          console.log(
+            "Error in GET users/:id/all-blogs API",
+            err.response.data
+          );
+          alert(err.response.data.message);
+          navigate(-1);
+        } else console.log("Error in GET users/:id/all-blogs API", err);
       });
   };
 
@@ -303,7 +330,11 @@ function Profile() {
           </div>
           <div className={styles.selected_tab}>
             {selectedTab == "home" ? (
-              <HomeSection userID={currentUser_ID} />
+              <HomeSection
+                userID={currentUser_ID}
+                userBlogs={userBlogs}
+                blogsLoading={blogsLoading}
+              />
             ) : selectedTab === "about" ? (
               <div className={styles.about_section}>
                 <textarea
