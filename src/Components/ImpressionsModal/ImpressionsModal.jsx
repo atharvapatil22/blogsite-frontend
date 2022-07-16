@@ -4,7 +4,15 @@ import Comments from "./Comments";
 import styles from "./ImpressionsModal.module.css";
 import UserList from "./UserList";
 
-const ImpressionsModal = ({ show, onClose, type, arrayOfUserIDs }) => {
+const ImpressionsModal = ({
+  show,
+  onClose,
+  type,
+  arrayOfUserIDs,
+  incrementCount,
+  blogId,
+  blogComments,
+}) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +55,11 @@ const ImpressionsModal = ({ show, onClose, type, arrayOfUserIDs }) => {
             </button>
           </div>
           {type == "comments" ? (
-            <Comments />
+            <Comments
+              incrementCount={incrementCount}
+              blogId={blogId}
+              blogComments={blogComments}
+            />
           ) : type === "likes" ? (
             <UserList arrayOfUserIDs={arrayOfUserIDs} type={"Likes"} />
           ) : type === "followers" ? (

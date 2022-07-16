@@ -40,6 +40,7 @@ function Blog() {
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [selfBlog, setSelfBlog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [commentsCount, setCommentsCount] = useState(0);
 
   useEffect(() => {
     fetchData();
@@ -59,6 +60,8 @@ function Blog() {
         if (res.data.author_id === currentUserID) setSelfBlog(true);
         if (res.data.author_followers.includes(currentUserID))
           setIsFollowing(true);
+
+        setCommentsCount(res.data.comments);
 
         let { content, ...blog_info } = res.data;
         setBlogInfo(blog_info);
@@ -176,13 +179,16 @@ function Blog() {
           </div>
         )}
         {!!showPipe && <div className={styles.pipe_symbol} />}
-        <button
-          onClick={() => setImpressionsModal("comments")}
-          className={styles.footer_btns}
-          type="button"
-        >
-          <IoChatbubbleOutline size={"1.5em"} />
-        </button>
+        {!!blogInfo && (
+          <button
+            onClick={() => setImpressionsModal("comments")}
+            className={styles.footer_btns}
+            type="button"
+          >
+            <IoChatbubbleOutline size={"1.5em"} />
+            &nbsp;{commentsCount}
+          </button>
+        )}
       </div>
     );
   };
@@ -245,14 +251,19 @@ function Blog() {
               rawContentState={blogContent}
               readOnly
             />
-            <ImpressionsModal
-              show={!!impressionsModal}
-              type={impressionsModal}
-              onClose={() => {
-                setImpressionsModal(false);
-              }}
-              arrayOfUserIDs={blogInfo.thumbs}
-            />
+            {!!blogInfo && (
+              <ImpressionsModal
+                show={!!impressionsModal}
+                type={impressionsModal}
+                onClose={() => {
+                  setImpressionsModal(false);
+                }}
+                arrayOfUserIDs={blogInfo.thumbs}
+                incrementCount={() => setCommentsCount(commentsCount + 1)}
+                blogId={blogInfo.id}
+                blogComments={commentsCount}
+              />
+            )}
           </>
         )}
 

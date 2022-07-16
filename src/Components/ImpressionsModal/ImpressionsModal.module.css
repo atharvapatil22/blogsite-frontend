@@ -132,6 +132,51 @@
   background-color: var(--blue-2);
 }
 
+.new_comment .disabled {
+  background-color: rgb(164, 164, 164);
+}
+
+.comments_list {
+  border-top: 1px solid gray;
+  margin-top: 2em;
+}
+
+.comment_block {
+  margin: 1em 0;
+  border-bottom: 1px solid lightgray;
+  padding: 0.6em;
+}
+
+.comment_block p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.comment_block .header {
+  display: flex;
+  align-items: center;
+}
+
+.comment_block .header img {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+}
+
+.comment_block .main {
+  text-align: left;
+  margin: 1em 0;
+  font-size: 1.2em;
+}
+
+.comment_block .footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: grey;
+  margin-bottom: 1em;
+}
+
 /* Likes CSS */
 
 .liker_row {
