@@ -153,7 +153,7 @@ function LandingPage({ setPageTitle }) {
               <button>Help</button>
             </li>
             <li ref={item5}>
-              <button>Settings</button>
+              <button onClick={() => navigate("/settings")}>Settings</button>
             </li>
           </ul>
           <div id={styles.close} onClick={hideMenu}>
@@ -170,7 +170,7 @@ function LandingPage({ setPageTitle }) {
       <Modal
         show={true}
         onClose={() => setShowAbout(false)}
-        bgColor={"#afaeae66"}
+        bgColor={"#afaeae8d"}
       >
         <div className={styles.about_modal}>
           <h2>
