@@ -8,6 +8,8 @@ import { BaseURL } from "../../environment";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SpinnerLoader from "../SpinnerLoader/SpinnerLoader";
+import { BsExclamationCircleFill } from "react-icons/bs";
+import ReactTooltip from "react-tooltip";
 
 function BlogPreview({
   setPreviewVisible,
@@ -111,64 +113,84 @@ function BlogPreview({
         }}
       >
         <div className={styles.blog_preview}>
-          <div className={styles.section_1}>
-            <h2>Blog Preview</h2>
-            <img
-              className={styles.preview_blog_image}
-              src={URL.createObjectURL(blogImageObj)}
-              alt=""
-            />
-            <h3>Title</h3>
-            <input
-              className={styles.preview_title}
-              type="text"
-              name="title"
-              value={blogTitle}
-              onChange={(e) => {
-                setBlogTitle(e.target.value);
-              }}
-            />
-            <p>
-              Note: Changes here will affect the title and image in your saved
-              draft as well
-            </p>
-          </div>
-          <div className={styles.section_2}>
-            <p>
-              Publishing To:{" "}
-              <span style={{ fontWeight: "bold" }}>
-                {!!currentUser ? currentUser.fullname : "null"}
-              </span>
-            </p>
-            <h3>Add Tags</h3>
-            <input disabled type="text" />
-            <div className={styles.email_checkbox}>
+          <div className={styles.grid_container}>
+            <div className={styles.section} id={styles.section_1}>
+              <h2>Blog Preview</h2>
+              <h3>Featured Image</h3>
+              <img
+                className={styles.preview_blog_image}
+                src={URL.createObjectURL(blogImageObj)}
+                alt=""
+              />
+              <h3>Title</h3>
               <input
-                checked={false}
-                type="checkbox"
-                name=""
-                id=""
-                onChange={() => alert("Feature will be added later")}
+                className={styles.preview_title}
+                type="text"
+                name="title"
+                value={blogTitle}
+                onChange={(e) => {
+                  setBlogTitle(e.target.value);
+                }}
               />
               <p>
-                Send a link to your email subscribers.
-                <br />
-                <span style={{ color: "grey" }}>
-                  It is only sent to readers who have opted to receive your
-                  stories via email, not to all followers
-                </span>
+                Note: Changes here will affect the title and image in your saved
+                draft as well
               </p>
             </div>
-            <button
-              disabled={showLoader}
-              onClick={publishBlog}
-              className={` ${styles.final_publish_btn} ${
-                showLoader && styles.disabled_publish_btn
-              }`}
-              type="button"
-            >
-              <div>Publish Now {!!showLoader && <SpinnerLoader />}</div>
-            </button>
+            <div className={styles.section} id={styles.section_2}>
+              <p>
+                Publishing To:{" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {!!currentUser ? currentUser.fullname : "null"}
+                </span>
+              </p>
+              <h3>Add Tags</h3>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <input disabled type="text" />
+                {/* <BsExclamationCircleFill
+                  data-tip
+                  data-for="tags_input"
+                  fontSize={"2em"}
+                  style={{ marginLeft: "8%" }}
+                />
+                <ReactTooltip place="top" effect="solid" id="tags_input">
+                  Feature is under development
+                </ReactTooltip> */}
+              </div>
+
+              <div className={styles.email_checkbox}>
+                <input
+                  checked={false}
+                  type="checkbox"
+                  name=""
+                  id=""
+                  onChange={() => alert("Feature will be added later")}
+                />
+                <p>
+                  Send a link to your email subscribers.
+                  <br />
+                  <span style={{ color: "grey" }}>
+                    It is only sent to readers who have opted to receive your
+                    stories via email, not to all followers
+                  </span>
+                </p>
+              </div>
+              <button
+                disabled={showLoader}
+                onClick={publishBlog}
+                className={` ${styles.final_publish_btn} ${
+                  showLoader && styles.disabled_publish_btn
+                }`}
+                type="button"
+              >
+                <div>Publish Now {!!showLoader && <SpinnerLoader />}</div>
+              </button>
+            </div>
           </div>
         </div>
       </Modal>

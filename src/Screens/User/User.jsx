@@ -195,7 +195,7 @@ function User() {
           <Header
             userData={userData}
             userLoggedIn={currentUserID != null}
-            selfProfile={true}
+            selfProfile={false}
           />
           {currentUserID != userData.id && (
             <div className={styles.follow_container}>
