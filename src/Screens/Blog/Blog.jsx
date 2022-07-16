@@ -125,6 +125,68 @@ function Blog() {
     dataEvent: "click",
   };
 
+  const Impressions = ({ showPipe }) => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "start",
+          alignItems: "center",
+        }}
+      >
+        {!!blogInfo && (
+          <div
+            style={{
+              display: "flex",
+
+              flexDirection: "row",
+              justifyContent: "initial",
+              width: "auto",
+            }}
+          >
+            <button
+              className={` ${styles.footer_btns} ${
+                disableLikes ? styles.disabled_btn : ""
+              } `}
+              style={{
+                marginLeft: 0,
+                marginRight: "0.2em",
+                paddingRight: 0,
+              }}
+              type="button"
+              onClick={updateLikes}
+              disabled={disableLikes}
+            >
+              {hasLiked ? (
+                <RiThumbUpFill size={"1.5em"} />
+              ) : (
+                <RiThumbUpLine size={"1.5em"} />
+              )}
+            </button>
+
+            <button
+              onClick={() => setImpressionsModal("likes")}
+              style={{ marginLeft: 0, paddingLeft: 0 }}
+              className={styles.footer_btns}
+              type="button"
+            >
+              &nbsp;{blogInfo.thumbs.length}
+            </button>
+          </div>
+        )}
+        {!!showPipe && <div className={styles.pipe_symbol} />}
+        <button
+          onClick={() => setImpressionsModal("comments")}
+          className={styles.footer_btns}
+          type="button"
+        >
+          <IoChatbubbleOutline size={"1.5em"} />
+        </button>
+      </div>
+    );
+  };
+
   const BlankCard = () => {
     return (
       <div className={styles.blank_card}>
@@ -150,6 +212,23 @@ function Blog() {
             type={"login"}
           />
         )}
+
+        <div className={styles.impressions_wrapper}>
+          <div className={styles.impressions_bubble}>
+            <Impressions showPipe={true} />
+            <div className={styles.pipe_symbol} />
+            <button
+              className={styles.footer_btns}
+              style={{ marginRight: 0 }}
+              type="button"
+              data-tip
+              data-for="header_more"
+              data-event="click"
+            >
+              <BsThreeDots size={"1.5em"} />
+            </button>
+          </div>
+        </div>
 
         {!!blogInfo && (
           <BlogHeader
@@ -182,60 +261,7 @@ function Blog() {
           id="blog_footer"
         >
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "start",
-              }}
-            >
-              {!!blogInfo && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "initial",
-                    width: "auto",
-                  }}
-                >
-                  <button
-                    className={` ${styles.footer_btns} ${
-                      disableLikes ? styles.disabled_btn : ""
-                    } `}
-                    style={{
-                      marginLeft: 0,
-                      marginRight: "0.2em",
-                      paddingRight: 0,
-                    }}
-                    type="button"
-                    onClick={updateLikes}
-                    disabled={disableLikes}
-                  >
-                    {hasLiked ? (
-                      <RiThumbUpFill size={"1.5em"} />
-                    ) : (
-                      <RiThumbUpLine size={"1.5em"} />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => setImpressionsModal("likes")}
-                    style={{ marginLeft: 0, paddingLeft: 0 }}
-                    className={styles.footer_btns}
-                    type="button"
-                  >
-                    &nbsp;{blogInfo.thumbs.length}
-                  </button>
-                </div>
-              )}
-
-              <button
-                onClick={() => setImpressionsModal("comments")}
-                className={styles.footer_btns}
-                type="button"
-              >
-                <IoChatbubbleOutline size={"1.5em"} />
-              </button>
-            </div>
+            <Impressions />
             <div style={{ display: "flex", flexDirection: "row" }}>
               <button
                 className={styles.footer_btns}
