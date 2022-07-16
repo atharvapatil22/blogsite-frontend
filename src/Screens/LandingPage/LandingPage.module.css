@@ -480,14 +480,6 @@
   color: rgb(89, 89, 89);
 }
 
-@media only screen and (min-width: 900px) {
-  .grid_container .card {
-    float: left;
-    width: 48%;
-    margin: 0.5em 1%;
-  }
-}
-
 /* Footer */
 .footer {
   display: flex;
@@ -569,6 +561,42 @@
 
 /* MEDIA QUERIES */
 
+@media screen and (min-width: 1500px) {
+  #box1 {
+    left: 35%;
+    background-size: cover;
+    width: 689px;
+    height: 702px;
+  }
+
+  #box1:after {
+    background-size: cover;
+    width: 689px;
+    height: 702px;
+    left: 0;
+  }
+
+  @keyframes anim {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0%;
+    }
+  }
+
+  @keyframes anim2 {
+    from {
+      left: 35%;
+      width: 530px;
+    }
+    to {
+      width: 0px;
+      left: 55%;
+    }
+  }
+}
+
 @media screen and (max-width: 1080px) {
   #mainmenu ul li button {
     font-size: 2.5em;
@@ -579,6 +607,81 @@
 
   #close #icon {
     font-size: 2.5em;
+  }
+
+  #box1 {
+    left: 35%;
+  }
+
+  #box1:after {
+    left: 0;
+  }
+
+  @keyframes anim {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0%;
+    }
+  }
+
+  @keyframes anim2 {
+    from {
+      left: 35%;
+      width: 530px;
+    }
+    to {
+      width: 0px;
+      left: 55%;
+    }
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .grid_container .card {
+    float: left;
+    width: 48%;
+    margin: 0.5em 1%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #box1 {
+    left: 5%;
+  }
+
+  @keyframes anim {
+    from {
+      bottom: -100%;
+    }
+    to {
+      bottom: 0%;
+    }
+  }
+
+  @keyframes anim2 {
+    from {
+      left: 5%;
+      width: 540px;
+    }
+    to {
+      width: 0px;
+      left: 25%;
+    }
+  }
+
+  #box2 {
+    font-size: 6em;
+    height: 15vh;
+    top: 2.5em;
+  }
+
+  #box2a {
+    width: 75%;
+    height: 5em;
+    font-size: 1.5em;
+    top: 15em;
   }
 }
 
@@ -616,7 +719,7 @@
       bottom: -100%;
     }
     to {
-      bottom: 20%;
+      bottom: 0%;
     }
   }
 
@@ -635,14 +738,14 @@
     height: 10vh;
     font-size: 3em;
     font-weight: 500;
-    top: 5em;
+    top: 3.5em;
   }
 
   #box2a {
     width: 90%;
     height: 5em;
     font-size: 1.3em;
-    top: 15em;
+    top: 12em;
   }
 
   .grid_container .card {

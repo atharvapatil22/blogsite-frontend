@@ -82,7 +82,7 @@ function App() {
   // Get Redux Value for user
   const userLoggedIn = store.globalData.authUser;
 
-  if (authLoader) return <SplashLoader />;
+  if (true) return <SplashLoader />;
 
   return (
     <div className="App">
