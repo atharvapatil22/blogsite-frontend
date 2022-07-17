@@ -54,62 +54,64 @@ function Home() {
 
   const currentUser_ID = store.globalData.authUser?.id;
 
-  if (showLoader) return <PageLoader />;
-
   return (
     <div className={styles.home_container}>
       <div className={styles.home_body}>
-        <div className={styles.responsive_width}>
-          {!!followingData.length > 0 ? (
-            <div
-              style={{
-                // margin: "1.5em 0",
-                padding: "0 2%",
-                borderBottom: "1px solid lightgray",
-              }}
-            >
-              <h2 style={{ textAlign: "left", fontFamily: "var(--font-1)" }}>
-                People you Follow:
-              </h2>
-              <div className={styles.following}>
-                {followingData.map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      if (item.id === currentUser_ID) navigate("/profile");
-                      else navigate(`/user/${item.id}`);
-                    }}
-                  >
-                    <img src={item.avatar}></img>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <h2 id={styles.home_heading}>Home</h2>
-          )}
-
-          <div className={styles.blog_list}>
-            {blogsList.map((blog) => (
+        {!!showLoader ? (
+          <PageLoader />
+        ) : (
+          <div className={styles.responsive_width}>
+            {!!followingData.length > 0 ? (
               <div
                 style={{
-                  width: "100%",
+                  // margin: "1.5em 0",
+                  padding: "0 2%",
+                  borderBottom: "1px solid lightgray",
                 }}
-                key={blog.id}
               >
-                <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
-                <hr
-                  style={{
-                    marginTop: "1em",
-                    marginBottom: "1em",
-                    borderColor: "#f0f0f0",
-                    borderWidth: "0.1px",
-                  }}
-                />
+                <h2 style={{ textAlign: "left", fontFamily: "var(--font-1)" }}>
+                  People you Follow:
+                </h2>
+                <div className={styles.following}>
+                  {followingData.map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => {
+                        if (item.id === currentUser_ID) navigate("/profile");
+                        else navigate(`/user/${item.id}`);
+                      }}
+                    >
+                      <img src={item.avatar}></img>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            ) : (
+              <h2 id={styles.home_heading}>Home</h2>
+            )}
+
+            <div className={styles.blog_list}>
+              {blogsList.map((blog) => (
+                <div
+                  style={{
+                    width: "100%",
+                  }}
+                  key={blog.id}
+                >
+                  <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
+                  <hr
+                    style={{
+                      marginTop: "1em",
+                      marginBottom: "1em",
+                      borderColor: "#f0f0f0",
+                      borderWidth: "0.1px",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <Sidebar />
     </div>

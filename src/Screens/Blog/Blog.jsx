@@ -204,150 +204,156 @@ function Blog() {
       </div>
     );
   };
+
   // RENDERER
-  if (showLoader) return <PageLoader />;
 
   return (
     <div className={`blog_container ${styles.blog_container}`}>
       <div className={`blog_body ${styles.blog_body}`}>
-        {!!showAuthForm && (
-          <AuthForm
-            dontSendBack
-            message="Login to Like Blogs"
-            hideForm={() => setShowAuthForm(false)}
-            type={"login"}
-          />
-        )}
-
-        <div className={styles.impressions_wrapper}>
-          <div className={styles.impressions_bubble}>
-            <Impressions showPipe={true} />
-            <div className={styles.pipe_symbol} />
-            <button
-              className={styles.footer_btns}
-              style={{ marginRight: 0 }}
-              type="button"
-              data-tip
-              data-for="header_more"
-              data-event="click"
-            >
-              <BsThreeDots size={"1.5em"} />
-            </button>
-          </div>
-        </div>
-
-        {!!blogInfo && (
-          <BlogHeader
-            selfBlog={selfBlog}
-            blogInfo={blogInfo}
-            isFollowing={isFollowing}
-          />
-        )}
-
-        {!!blogContent && (
+        {!!showLoader ? (
+          <PageLoader />
+        ) : (
           <>
-            <DraftailEditor
-              className="editor"
-              rawContentState={blogContent}
-              readOnly
-            />
-            {!!blogInfo && (
-              <ImpressionsModal
-                show={!!impressionsModal}
-                type={impressionsModal}
-                onClose={() => {
-                  setImpressionsModal(false);
-                }}
-                arrayOfUserIDs={blogInfo.thumbs}
-                incrementCount={() => setCommentsCount(commentsCount + 1)}
-                blogId={blogInfo.id}
-                blogComments={commentsCount}
+            {!!showAuthForm && (
+              <AuthForm
+                dontSendBack
+                message="Login to Like Blogs"
+                hideForm={() => setShowAuthForm(false)}
+                type={"login"}
               />
             )}
-          </>
-        )}
 
-        <div
-          className={`${styles.blog_footer} ${styles.responsive_width}`}
-          id="blog_footer"
-        >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Impressions />
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <button
-                className={styles.footer_btns}
-                data-tip
-                data-for="footer_share"
-                data-event="click"
-                type="button"
-              >
-                <IoShareOutline size={"1.5em"} />
-              </button>
-              <button
-                data-tip
-                data-for="share_save"
-                className={styles.footer_btns}
-                type="button"
-                onClick={() => alert("Feature is under development")}
-              >
-                <MdOutlineBookmarkAdd size={"1.5em"} />
-              </button>
-              <button
-                className={styles.footer_btns}
-                style={{ marginRight: 0 }}
-                type="button"
-                data-tip
-                data-for="header_more"
-                data-event="click"
-              >
-                <BsThreeDots size={"1.5em"} />
-              </button>
-              <ReactTooltip
-                id="footer_share"
-                {...toolTipProps}
-                className={`${styles.tooltip_modal} `}
-              >
+            <div className={styles.impressions_wrapper}>
+              <div className={styles.impressions_bubble}>
+                <Impressions showPipe={true} />
+                <div className={styles.pipe_symbol} />
                 <button
-                  onClick={() => {
-                    const url = window.location.href;
-                    navigator.clipboard.writeText(url);
-                    toast("Link Copied", {
-                      position: "top-center",
-                      theme: "dark",
-                    });
-                  }}
+                  className={styles.footer_btns}
+                  style={{ marginRight: 0 }}
+                  type="button"
+                  data-tip
+                  data-for="header_more"
+                  data-event="click"
                 >
-                  <ImLink />
-                  &nbsp;Copy Link
+                  <BsThreeDots size={"1.5em"} />
                 </button>
-                <button onClick={() => shareBlog("twitter")}>
-                  <BsTwitter />
-                  &nbsp;Share on Twitter
-                </button>
-
-                <button onClick={() => shareBlog("facebook")}>
-                  <BsFacebook />
-                  &nbsp;Share on Facebook
-                </button>
-
-                <button onClick={() => shareBlog("linkedin")}>
-                  <BsLinkedin />
-                  &nbsp;Share on LinkedIn
-                </button>
-              </ReactTooltip>
+              </div>
             </div>
-          </div>
-          <hr />
-        </div>
 
-        {!!blogContent && (
-          <div
-            className={`${styles.blog_recomended} ${styles.responsive_width}`}
-          >
-            <h1>Recomended Blogs:</h1>
-            <BlankCard />
-            <BlankCard />
-          </div>
+            {!!blogInfo && (
+              <BlogHeader
+                selfBlog={selfBlog}
+                blogInfo={blogInfo}
+                isFollowing={isFollowing}
+              />
+            )}
+
+            {!!blogContent && (
+              <>
+                <DraftailEditor
+                  className="editor"
+                  rawContentState={blogContent}
+                  readOnly
+                />
+                {!!blogInfo && (
+                  <ImpressionsModal
+                    show={!!impressionsModal}
+                    type={impressionsModal}
+                    onClose={() => {
+                      setImpressionsModal(false);
+                    }}
+                    arrayOfUserIDs={blogInfo.thumbs}
+                    incrementCount={() => setCommentsCount(commentsCount + 1)}
+                    blogId={blogInfo.id}
+                    blogComments={commentsCount}
+                  />
+                )}
+              </>
+            )}
+
+            <div
+              className={`${styles.blog_footer} ${styles.responsive_width}`}
+              id="blog_footer"
+            >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Impressions />
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <button
+                    className={styles.footer_btns}
+                    data-tip
+                    data-for="footer_share"
+                    data-event="click"
+                    type="button"
+                  >
+                    <IoShareOutline size={"1.5em"} />
+                  </button>
+                  <button
+                    data-tip
+                    data-for="share_save"
+                    className={styles.footer_btns}
+                    type="button"
+                    onClick={() => alert("Feature is under development")}
+                  >
+                    <MdOutlineBookmarkAdd size={"1.5em"} />
+                  </button>
+                  <button
+                    className={styles.footer_btns}
+                    style={{ marginRight: 0 }}
+                    type="button"
+                    data-tip
+                    data-for="header_more"
+                    data-event="click"
+                  >
+                    <BsThreeDots size={"1.5em"} />
+                  </button>
+                  <ReactTooltip
+                    id="footer_share"
+                    {...toolTipProps}
+                    className={`${styles.tooltip_modal} `}
+                  >
+                    <button
+                      onClick={() => {
+                        const url = window.location.href;
+                        navigator.clipboard.writeText(url);
+                        toast("Link Copied", {
+                          position: "top-center",
+                          theme: "dark",
+                        });
+                      }}
+                    >
+                      <ImLink />
+                      &nbsp;Copy Link
+                    </button>
+                    <button onClick={() => shareBlog("twitter")}>
+                      <BsTwitter />
+                      &nbsp;Share on Twitter
+                    </button>
+
+                    <button onClick={() => shareBlog("facebook")}>
+                      <BsFacebook />
+                      &nbsp;Share on Facebook
+                    </button>
+
+                    <button onClick={() => shareBlog("linkedin")}>
+                      <BsLinkedin />
+                      &nbsp;Share on LinkedIn
+                    </button>
+                  </ReactTooltip>
+                </div>
+              </div>
+              <hr />
+            </div>
+
+            {!!blogContent && (
+              <div
+                className={`${styles.blog_recomended} ${styles.responsive_width}`}
+              >
+                <h1>Recomended Blogs:</h1>
+                <BlankCard />
+                <BlankCard />
+              </div>
+            )}
+          </>
         )}
       </div>
       <Sidebar />

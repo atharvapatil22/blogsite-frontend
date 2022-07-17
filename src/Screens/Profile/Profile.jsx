@@ -288,115 +288,117 @@ function Profile() {
       );
   };
 
-  if (dataLoading) return <PageLoader />;
-
   return (
     <div className={styles.profile_container}>
       <div className={styles.profile_body}>
-        <div className={styles.responsive_width}>
-          {!!impressionsModal && (
-            <ImpressionsModal
-              show={!!impressionsModal}
-              type={impressionsType}
-              onClose={() => {
-                setImpressionsModal(false);
-              }}
-              arrayOfUserIDs={
-                impressionsType == "followers"
-                  ? userData.followers
-                  : userData.following
-              }
-            />
-          )}
-          <Header
-            userData={userData}
-            userLoggedIn={userLoggedIn}
-            selfProfile={true}
-          />
-          <div className={styles.tab_menu}>
-            <p
-              className={selectedTab === "home" ? styles.selected : ""}
-              onClick={() => setSelectedTab("home")}
-            >
-              Home
-            </p>
-            <p
-              className={selectedTab === "about" ? styles.selected : ""}
-              style={{ marginLeft: "2em" }}
-              onClick={() => setSelectedTab("about")}
-            >
-              About
-            </p>
-          </div>
-          <div className={styles.selected_tab}>
-            {selectedTab == "home" ? (
-              <HomeSection
-                userID={currentUser_ID}
-                userBlogs={userBlogs}
-                blogsLoading={blogsLoading}
+        {!!dataLoading ? (
+          <PageLoader />
+        ) : (
+          <div className={styles.responsive_width}>
+            {!!impressionsModal && (
+              <ImpressionsModal
+                show={!!impressionsModal}
+                type={impressionsType}
+                onClose={() => {
+                  setImpressionsModal(false);
+                }}
+                arrayOfUserIDs={
+                  impressionsType == "followers"
+                    ? userData.followers
+                    : userData.following
+                }
               />
-            ) : selectedTab === "about" ? (
-              <div className={styles.about_section}>
-                <textarea
-                  disabled={disableInput}
-                  placeholder="Write something about yourself"
-                  value={aboutText}
-                  onChange={(e) => {
-                    if (disableSaveBtn) setDisableSaveBtn(false);
-                    setAboutText(e.target.value);
-                  }}
+            )}
+            <Header
+              userData={userData}
+              userLoggedIn={userLoggedIn}
+              selfProfile={true}
+            />
+            <div className={styles.tab_menu}>
+              <p
+                className={selectedTab === "home" ? styles.selected : ""}
+                onClick={() => setSelectedTab("home")}
+              >
+                Home
+              </p>
+              <p
+                className={selectedTab === "about" ? styles.selected : ""}
+                style={{ marginLeft: "2em" }}
+                onClick={() => setSelectedTab("about")}
+              >
+                About
+              </p>
+            </div>
+            <div className={styles.selected_tab}>
+              {selectedTab == "home" ? (
+                <HomeSection
+                  userID={currentUser_ID}
+                  userBlogs={userBlogs}
+                  blogsLoading={blogsLoading}
                 />
-                <div
-                  style={{
-                    marginTop: "1em",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <button
-                    className={`${styles.save_btn} ${
-                      disableSaveBtn ? styles.disabled : ""
-                    }`}
-                    type="button"
-                    disabled={disableSaveBtn}
-                    onClick={saveAboutText}
+              ) : selectedTab === "about" ? (
+                <div className={styles.about_section}>
+                  <textarea
+                    disabled={disableInput}
+                    placeholder="Write something about yourself"
+                    value={aboutText}
+                    onChange={(e) => {
+                      if (disableSaveBtn) setDisableSaveBtn(false);
+                      setAboutText(e.target.value);
+                    }}
+                  />
+                  <div
+                    style={{
+                      marginTop: "1em",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
                   >
-                    Save
-                  </button>
-                </div>
-
-                <div className={styles.about_footer}>
-                  <div style={{ display: "flex", marginTop: "2em" }}>
                     <button
-                      className={styles.follower_btn}
+                      className={`${styles.save_btn} ${
+                        disableSaveBtn ? styles.disabled : ""
+                      }`}
                       type="button"
-                      style={{ paddingLeft: "0" }}
-                      onClick={() => {
-                        setImpressionsType("followers");
-                        setImpressionsModal(true);
-                      }}
+                      disabled={disableSaveBtn}
+                      onClick={saveAboutText}
                     >
-                      {userData.followers.length} Followers
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.follower_btn}
-                      onClick={() => {
-                        setImpressionsType("following");
-                        setImpressionsModal(true);
-                      }}
-                    >
-                      {userData.following.length} Following
+                      Save
                     </button>
                   </div>
-                  <SocialLinks />
+
+                  <div className={styles.about_footer}>
+                    <div style={{ display: "flex", marginTop: "2em" }}>
+                      <button
+                        className={styles.follower_btn}
+                        type="button"
+                        style={{ paddingLeft: "0" }}
+                        onClick={() => {
+                          setImpressionsType("followers");
+                          setImpressionsModal(true);
+                        }}
+                      >
+                        {userData.followers.length} Followers
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.follower_btn}
+                        onClick={() => {
+                          setImpressionsType("following");
+                          setImpressionsModal(true);
+                        }}
+                      >
+                        {userData.following.length} Following
+                      </button>
+                    </div>
+                    <SocialLinks />
+                  </div>
                 </div>
-              </div>
-            ) : (
-              "null"
-            )}
+              ) : (
+                "null"
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <Sidebar />
     </div>

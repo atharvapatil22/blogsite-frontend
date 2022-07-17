@@ -191,91 +191,99 @@ function User() {
     );
   };
 
-  if (dataLoading) return <PageLoader />;
-
   return (
     <div className={styles.user_container}>
       <div className={styles.user_body}>
-        {!!impressionsModal && (
-          <ImpressionsModal
-            show={!!impressionsModal}
-            type={impressionsType}
-            onClose={() => {
-              setImpressionsModal(false);
-            }}
-            arrayOfUserIDs={
-              impressionsType == "followers"
-                ? userData.followers
-                : userData.following
-            }
-          />
-        )}
-        <div className={styles.responsive_width}>
-          {!!authFormVisible && (
-            <AuthForm
-              type={"login"}
-              message={"Login to Follow users"}
-              hideForm={() => {
-                setAuthFormVisible(false);
-              }}
-              dontSendBack
-            />
-          )}
-          <Header
-            userData={userData}
-            userLoggedIn={currentUserID != null}
-            selfProfile={false}
-          />
-          {currentUserID != userData.id && (
-            <div className={styles.follow_container}>
-              <button
-                disabled={disableFollowBtn}
-                type="button"
-                onClick={handleFollow}
-                id={isFollowing ? styles.following_btn : ""}
-              >
-                {isFollowing ? "Following" : "Follow"}
-              </button>
-              <button
-                data-tip
-                data-for="mail"
-                type="button"
-                style={{ padding: "0.5em" }}
-                onClick={() => alert("Feature is under development")}
-              >
-                <RiMailAddLine size={"1.2em"} />
-              </button>
-              <ReactTooltip place="bottom" effect="solid" id="mail">
-                Subscribe to get an email whenever {userData.fullname} publishes
-              </ReactTooltip>
-            </div>
-          )}
-
-          <div className={styles.tab_menu}>
-            <p
-              className={selectedTab === "home" ? styles.selected : ""}
-              onClick={() => setSelectedTab("home")}
-            >
-              Home
-            </p>
-            <p
-              className={selectedTab === "about" ? styles.selected : ""}
-              style={{ marginLeft: "2em" }}
-              onClick={() => setSelectedTab("about")}
-            >
-              About
-            </p>
-          </div>
-          <div className={styles.selected_tab}>
-            {selectedTab == "home" ? (
-              <HomeSection userBlogs={userBlogs} blogsLoading={blogsLoading} />
-            ) : selectedTab === "about" ? (
-              <AboutSection />
-            ) : (
-              "null"
+        {!!dataLoading ? (
+          <PageLoader />
+        ) : (
+          <>
+            {!!impressionsModal && (
+              <ImpressionsModal
+                show={!!impressionsModal}
+                type={impressionsType}
+                onClose={() => {
+                  setImpressionsModal(false);
+                }}
+                arrayOfUserIDs={
+                  impressionsType == "followers"
+                    ? userData.followers
+                    : userData.following
+                }
+              />
             )}
-          </div>
-        </div>
+            <div className={styles.responsive_width}>
+              {!!authFormVisible && (
+                <AuthForm
+                  type={"login"}
+                  message={"Login to Follow users"}
+                  hideForm={() => {
+                    setAuthFormVisible(false);
+                  }}
+                  dontSendBack
+                />
+              )}
+              <Header
+                userData={userData}
+                userLoggedIn={currentUserID != null}
+                selfProfile={false}
+              />
+              {currentUserID != userData.id && (
+                <div className={styles.follow_container}>
+                  <button
+                    disabled={disableFollowBtn}
+                    type="button"
+                    onClick={handleFollow}
+                    id={isFollowing ? styles.following_btn : ""}
+                  >
+                    {isFollowing ? "Following" : "Follow"}
+                  </button>
+                  <button
+                    data-tip
+                    data-for="mail"
+                    type="button"
+                    style={{ padding: "0.5em" }}
+                    onClick={() => alert("Feature is under development")}
+                  >
+                    <RiMailAddLine size={"1.2em"} />
+                  </button>
+                  <ReactTooltip place="bottom" effect="solid" id="mail">
+                    Subscribe to get an email whenever {userData.fullname}{" "}
+                    publishes
+                  </ReactTooltip>
+                </div>
+              )}
+
+              <div className={styles.tab_menu}>
+                <p
+                  className={selectedTab === "home" ? styles.selected : ""}
+                  onClick={() => setSelectedTab("home")}
+                >
+                  Home
+                </p>
+                <p
+                  className={selectedTab === "about" ? styles.selected : ""}
+                  style={{ marginLeft: "2em" }}
+                  onClick={() => setSelectedTab("about")}
+                >
+                  About
+                </p>
+              </div>
+              <div className={styles.selected_tab}>
+                {selectedTab == "home" ? (
+                  <HomeSection
+                    userBlogs={userBlogs}
+                    blogsLoading={blogsLoading}
+                  />
+                ) : selectedTab === "about" ? (
+                  <AboutSection />
+                ) : (
+                  "null"
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <Sidebar />
     </div>
