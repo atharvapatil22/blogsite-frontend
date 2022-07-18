@@ -39,6 +39,7 @@ function Blog() {
   const [disableLikes, setDisableLikes] = useState(false);
   const [impressionsModal, setImpressionsModal] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState(false);
+  const [authFormMessage, setAuthFormMessage] = useState("");
   const [selfBlog, setSelfBlog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
@@ -79,6 +80,7 @@ function Blog() {
     const currentUserID = store.globalData.authUser?.id;
 
     if (!currentUserID) {
+      setAuthFormMessage("Login to Like Blogs");
       setShowAuthForm(true);
       return;
     }
@@ -123,7 +125,9 @@ function Blog() {
   const handleFollow = () => {
     const currentUserID = store.globalData.authUser?.id;
     if (currentUserID == null) {
-      // setShowAuthForm(true);
+      setAuthFormMessage("Login to Follow users");
+      setShowAuthForm(true);
+
       return;
     }
     setDisableFollowBtn(true);
@@ -320,7 +324,7 @@ function Blog() {
             {!!showAuthForm && (
               <AuthForm
                 dontSendBack
-                message="Login to Like Blogs"
+                message={authFormMessage}
                 hideForm={() => setShowAuthForm(false)}
                 type={"login"}
               />

@@ -86,6 +86,7 @@
     rgba(100, 100, 100, 0.23) 0px 3px 6px;
   visibility: hidden;
   display: flex;
+  z-index: 10;
 }
 
 .home_link_mobile {
@@ -107,7 +108,7 @@
     width: 100vw;
     position: fixed;
     bottom: 0;
-    z-index: 5;
+    z-index: 10;
     background-color: white;
     box-shadow: 1em 1em 1em 1em rgba(155, 155, 155, 0.486);
   }

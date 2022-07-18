@@ -35,6 +35,7 @@ function User() {
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
   const [authFormVisible, setAuthFormVisible] = useState(false);
 
   const [impressionsModal, setImpressionsModal] = useState(false);
@@ -56,8 +57,10 @@ function User() {
         console.log("Data Response: ", res.data);
         if (res.data.message === "success") {
           setUserData(res.data.user);
+          setFollowersCount(res.data.user.followers.length);
           if (res.data.user.followers.includes(store.globalData?.authUser?.id))
             setIsFollowing(true);
+
           if (res.data.user.following.length > 0) {
             setHasFollowing(true);
             fetchFollowing(res.data.user.following);
@@ -122,13 +125,16 @@ function User() {
         type: isFollowing ? "unfollow" : "follow",
       })
       .then((res) => {
+        setFollowersCount(
+          isFollowing ? followersCount - 1 : followersCount + 1
+        );
+        setIsFollowing(!isFollowing);
         console.log("res:", res.data);
       })
       .catch((err) => {
         console.log("err", err);
       })
       .finally(() => {
-        setIsFollowing(!isFollowing);
         setDisableFollowBtn(false);
       });
   };
@@ -217,9 +223,7 @@ function User() {
         <div className={styles.part_1}>
           <img src={userData.avatar} alt="" />
           <h2>{userData.fullname}</h2>
-          <p>
-            {!!userData.followers ? userData.followers.length : 0} Followers
-          </p>
+          <p>{followersCount} Followers</p>
           {currentUserID != userData.id && (
             <div className={styles.follow_container}>
               <button
