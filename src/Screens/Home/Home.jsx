@@ -14,7 +14,6 @@ function Home() {
   const [showLoader, setShowLoader] = useState(false);
 
   const [followingData, setFollowingData] = useState([]);
-  const [popularUsers, setPopularUsers] = useState([]);
 
   const store = useSelector((state) => state);
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ function Home() {
   useEffect(() => {
     fetchData();
     fetchFollowers();
-    fetchPopularUsers();
   }, []);
 
   const fetchData = () => {
@@ -55,15 +53,27 @@ function Home() {
     }
   };
 
-  const fetchPopularUsers = () => {
-    axios
-      .get(BaseURL + "/users/popular")
-      .then((res) => {
-        console.log("Popular Users", res.data.popular_users);
-        setPopularUsers(res.data.popular_users);
-      })
-      .catch((err) => console.log("Error", err));
-  };
+  // HARD CODED FOR NOW
+  const popularUsers = [
+    {
+      id: 74,
+      fullname: "coder",
+      avatar:
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1656173518/vcqd7eihyzqkw18vmclq.png",
+    },
+    {
+      id: 75,
+      fullname: "Doge Man",
+      avatar:
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1656173551/u6daabzg0z5jiqyuar9l.jpg",
+    },
+    {
+      id: 79,
+      fullname: "Bot 4",
+      avatar:
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1657782093/bot_d6uzzb.jpg",
+    },
+  ];
 
   const SidebarContent = () => {
     // Hard Coded for now
