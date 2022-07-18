@@ -11,6 +11,7 @@ import { authUserSet } from "../../redux/actions";
 import styles from "./Profile.module.css";
 import { BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
 import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
+import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 
 function Profile() {
   const store = useSelector((state) => state);
@@ -25,6 +26,8 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [blogsLoading, setBlogsLoading] = useState(false);
   const [userBlogs, setUserBlogs] = useState([]);
+  const [hasFollowing, setHasFollowing] = useState(false);
+  const [followingList, setFollowingList] = useState([]);
 
   const [aboutText, setAboutText] = useState("");
   const [disableSaveBtn, setDisableSaveBtn] = useState(true);
@@ -62,6 +65,10 @@ function Profile() {
           setAboutText(res.data.user.about);
           setSocialLinks(_links);
           setHasSocialLinks(checkSocialLinks(_links));
+          if (res.data.user.following.length > 0) {
+            setHasFollowing(true);
+            fetchFollowing(res.data.user.following);
+          }
         }
       })
       .catch((err) => {
@@ -95,6 +102,18 @@ function Profile() {
           navigate(-1);
         } else console.log("Error in GET users/:id/all-blogs API", err);
       });
+  };
+
+  const fetchFollowing = (array_of_following) => {
+    axios
+      .post(BaseURL + "/blogs/get-likes", {
+        array_of_likers: array_of_following,
+      })
+      .then((res) => {
+        console.log("Following List", res.data.likers);
+        setFollowingList(res.data.likers);
+      })
+      .catch((err) => console.log("Error", err));
   };
 
   const saveAboutText = () => {
@@ -298,122 +317,147 @@ function Profile() {
             {!!userData.followers ? userData.followers.length : 0} Followers
           </p>
         </div>
-        <div className={styles.part_2}>part 2</div>
+        <div className={styles.part_2}>
+          <div className={styles.part_2}>
+            {hasFollowing && (
+              <>
+                <h4>Following</h4>
+                {followingList.length === 0 ? (
+                  <SpinnerLoader color={"black"} />
+                ) : (
+                  <div>
+                    {followingList.slice(0, 5).map((item, index) => {
+                      return (
+                        <div key={index} className={styles.following_user}>
+                          <img src={item.avatar} alt="" />
+                          <p>{item.fullname}</p>
+                        </div>
+                      );
+                    })}
+                    {followingList.length > 5 && (
+                      <p className={styles.show_all_following}>
+                        Show all {followingList.length}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     );
   };
 
+  if (dataLoading) return <PageLoader />;
+
   return (
     <div className={styles.profile_container}>
       <div className={styles.profile_body}>
-        {!!dataLoading ? (
-          <PageLoader />
-        ) : (
-          <div className={styles.responsive_width}>
-            {!!impressionsModal && (
-              <ImpressionsModal
-                show={!!impressionsModal}
-                type={impressionsType}
-                onClose={() => {
-                  setImpressionsModal(false);
-                }}
-                arrayOfUserIDs={
-                  impressionsType == "followers"
-                    ? userData.followers
-                    : userData.following
-                }
-              />
-            )}
-            <Header
-              userData={userData}
-              userLoggedIn={userLoggedIn}
-              selfProfile={true}
+        <div className={styles.responsive_width}>
+          {!!impressionsModal && (
+            <ImpressionsModal
+              show={!!impressionsModal}
+              type={impressionsType}
+              onClose={() => {
+                setImpressionsModal(false);
+              }}
+              arrayOfUserIDs={
+                impressionsType == "followers"
+                  ? userData.followers
+                  : userData.following
+              }
             />
-            <div className={styles.tab_menu}>
-              <p
-                className={selectedTab === "home" ? styles.selected : ""}
-                onClick={() => setSelectedTab("home")}
-              >
-                Home
-              </p>
-              <p
-                className={selectedTab === "about" ? styles.selected : ""}
-                style={{ marginLeft: "2em" }}
-                onClick={() => setSelectedTab("about")}
-              >
-                About
-              </p>
-            </div>
-            <div className={styles.selected_tab}>
-              {selectedTab == "home" ? (
-                <HomeSection
-                  userID={currentUser_ID}
-                  userBlogs={userBlogs}
-                  blogsLoading={blogsLoading}
+          )}
+          <Header
+            userData={userData}
+            userLoggedIn={userLoggedIn}
+            selfProfile={true}
+          />
+          <div className={styles.tab_menu}>
+            <p
+              className={selectedTab === "home" ? styles.selected : ""}
+              onClick={() => setSelectedTab("home")}
+            >
+              Home
+            </p>
+            <p
+              className={selectedTab === "about" ? styles.selected : ""}
+              style={{ marginLeft: "2em" }}
+              onClick={() => setSelectedTab("about")}
+            >
+              About
+            </p>
+          </div>
+          <div className={styles.selected_tab}>
+            {selectedTab == "home" ? (
+              <HomeSection
+                userID={currentUser_ID}
+                userBlogs={userBlogs}
+                blogsLoading={blogsLoading}
+              />
+            ) : selectedTab === "about" ? (
+              <div className={styles.about_section}>
+                <textarea
+                  disabled={disableInput}
+                  placeholder="Write something about yourself"
+                  value={aboutText}
+                  onChange={(e) => {
+                    if (disableSaveBtn) setDisableSaveBtn(false);
+                    setAboutText(e.target.value);
+                  }}
                 />
-              ) : selectedTab === "about" ? (
-                <div className={styles.about_section}>
-                  <textarea
-                    disabled={disableInput}
-                    placeholder="Write something about yourself"
-                    value={aboutText}
-                    onChange={(e) => {
-                      if (disableSaveBtn) setDisableSaveBtn(false);
-                      setAboutText(e.target.value);
-                    }}
-                  />
-                  <div
-                    style={{
-                      marginTop: "1em",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
+                <div
+                  style={{
+                    marginTop: "1em",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <button
+                    className={`${styles.save_btn} ${
+                      disableSaveBtn ? styles.disabled : ""
+                    }`}
+                    type="button"
+                    disabled={disableSaveBtn}
+                    onClick={saveAboutText}
                   >
+                    Save
+                  </button>
+                </div>
+
+                <div className={styles.about_footer}>
+                  <div style={{ display: "flex", marginTop: "2em" }}>
                     <button
-                      className={`${styles.save_btn} ${
-                        disableSaveBtn ? styles.disabled : ""
-                      }`}
+                      className={styles.follower_btn}
                       type="button"
-                      disabled={disableSaveBtn}
-                      onClick={saveAboutText}
+                      style={{ paddingLeft: "0" }}
+                      onClick={() => {
+                        setImpressionsType("followers");
+                        setImpressionsModal(true);
+                      }}
                     >
-                      Save
+                      {userData.followers.length} Followers
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.follower_btn}
+                      onClick={() => {
+                        setImpressionsType("following");
+                        setImpressionsModal(true);
+                      }}
+                    >
+                      {userData.following.length} Following
                     </button>
                   </div>
-
-                  <div className={styles.about_footer}>
-                    <div style={{ display: "flex", marginTop: "2em" }}>
-                      <button
-                        className={styles.follower_btn}
-                        type="button"
-                        style={{ paddingLeft: "0" }}
-                        onClick={() => {
-                          setImpressionsType("followers");
-                          setImpressionsModal(true);
-                        }}
-                      >
-                        {userData.followers.length} Followers
-                      </button>
-                      <button
-                        type="button"
-                        className={styles.follower_btn}
-                        onClick={() => {
-                          setImpressionsType("following");
-                          setImpressionsModal(true);
-                        }}
-                      >
-                        {userData.following.length} Following
-                      </button>
-                    </div>
-                    <SocialLinks />
-                  </div>
+                  <SocialLinks />
                 </div>
-              ) : (
-                "null"
-              )}
-            </div>
+              </div>
+            ) : (
+              "null"
+            )}
           </div>
-        )}
+        </div>
       </div>
       <Sidebar content={<SidebarContent />} />
     </div>

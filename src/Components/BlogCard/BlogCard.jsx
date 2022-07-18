@@ -105,10 +105,10 @@ function BlogCard({ blog, currentUser_ID }) {
         <p style={{ margin: "0 0.5em" }} onClick={goToAuthorProfile}>
           {blog.author_fullname}
         </p>
-        {"."}&nbsp;
-        <p style={{ color: "grey", margin: "0.5em" }}>
+        {"∙"}
+        <div style={{ color: "grey", margin: "0.5em" }}>
           <PublishingDate dateString={blog.blog_date} />
-        </p>
+        </div>
       </div>
       <div className={styles.card_main}>
         <div

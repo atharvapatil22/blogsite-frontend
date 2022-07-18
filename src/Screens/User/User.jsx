@@ -14,6 +14,7 @@ import { RiMailAddLine } from "react-icons/ri";
 import ReactTooltip from "react-tooltip";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
+import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 
 function User() {
   const { userID } = useParams();
@@ -28,6 +29,9 @@ function User() {
 
   const [blogsLoading, setBlogsLoading] = useState(false);
   const [userBlogs, setUserBlogs] = useState([]);
+
+  const [hasFollowing, setHasFollowing] = useState(false);
+  const [followingList, setFollowingList] = useState([]);
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
@@ -54,6 +58,10 @@ function User() {
           setUserData(res.data.user);
           if (res.data.user.followers.includes(store.globalData?.authUser?.id))
             setIsFollowing(true);
+          if (res.data.user.following.length > 0) {
+            setHasFollowing(true);
+            fetchFollowing(res.data.user.following);
+          }
         }
       })
       .catch((err) => {
@@ -87,6 +95,18 @@ function User() {
           navigate(-1);
         } else console.log("Error in GET users/:id/all-blogs API", err);
       });
+  };
+
+  const fetchFollowing = (array_of_following) => {
+    axios
+      .post(BaseURL + "/blogs/get-likes", {
+        array_of_likers: array_of_following,
+      })
+      .then((res) => {
+        console.log("Following List", res.data.likers);
+        setFollowingList(res.data.likers);
+      })
+      .catch((err) => console.log("Error", err));
   };
 
   const handleFollow = () => {
@@ -225,7 +245,32 @@ function User() {
             </div>
           )}
         </div>
-        <div className={styles.part_2}>part 2</div>
+        <div className={styles.part_2}>
+          {hasFollowing && (
+            <>
+              <h4>Following</h4>
+              {followingList.length === 0 ? (
+                <SpinnerLoader color={"black"} />
+              ) : (
+                <div>
+                  {followingList.slice(0, 5).map((item, index) => {
+                    return (
+                      <div key={index} className={styles.following_user}>
+                        <img src={item.avatar} alt="" />
+                        <p>{item.fullname}</p>
+                      </div>
+                    );
+                  })}
+                  {followingList.length > 5 && (
+                    <p className={styles.show_all_following}>
+                      Show all {followingList.length}
+                    </p>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     );
   };

@@ -232,7 +232,8 @@ function LandingPage({ setPageTitle }) {
             ref={scroll_down_icon}
             id={styles.scroll_down_icon}
             onClick={() => {
-              scroll_down_icon.current.style.display = "none";
+              if (scroll_down_icon)
+                scroll_down_icon.current.style.display = "none";
               trending.current.scrollIntoView({ behavior: "smooth" });
             }}
           >
@@ -266,9 +267,9 @@ function LandingPage({ setPageTitle }) {
                   </div>
                   <h4>{blog.title}</h4>
                   <div className={styles.card_footer}>
-                    <p>
+                    <div>
                       <PublishingDate dateString={blog.blog_date} />
-                    </p>
+                    </div>
                     <p style={{ margin: "0 2%" }}>∙</p>
                     <p>{blog.length_in_time} min read</p>
                   </div>
