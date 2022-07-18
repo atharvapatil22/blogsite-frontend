@@ -13,11 +13,16 @@ import { BsThreeDots, BsTwitter, BsFacebook, BsLinkedin } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import { ImLink } from "react-icons/im";
 
-function BlogHeader({ selfBlog, blogInfo, isFollowing }) {
+function BlogHeader({
+  selfBlog,
+  blogInfo,
+  isFollowing,
+  setIsFollowing,
+  updateCount,
+}) {
   const store = useSelector((state) => state);
   const navigate = useNavigate();
 
-  const [following, setFollowing] = useState(isFollowing);
   const [disableFollowBtn, setDisableFollowBtn] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState(false);
 
@@ -33,16 +38,17 @@ function BlogHeader({ selfBlog, blogInfo, isFollowing }) {
       .post(BaseURL + "/users/follow", {
         source_user: currentUserID,
         target_user: blogInfo.author_id,
-        type: following ? "unfollow" : "follow",
+        type: isFollowing ? "unfollow" : "follow",
       })
       .then((res) => {
         console.log("res:", res.data);
+        updateCount();
+        setIsFollowing(!isFollowing);
       })
       .catch((err) => {
         console.log("err", err);
       })
       .finally(() => {
-        setFollowing(!following);
         setDisableFollowBtn(false);
       });
   };
@@ -260,9 +266,9 @@ function BlogHeader({ selfBlog, blogInfo, isFollowing }) {
                   className={styles.follow_btn}
                   type="button"
                   onClick={handleFollow}
-                  id={following ? styles.following_btn : ""}
+                  id={isFollowing ? styles.following_btn : ""}
                 >
-                  {following ? "Following" : "Follow"}
+                  {isFollowing ? "Following" : "Follow"}
                 </button>
               )}
               {/* <ReactTooltip

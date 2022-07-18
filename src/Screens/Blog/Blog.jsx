@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ImpressionsModal from "../../Components/ImpressionsModal/ImpressionsModal";
 import AuthForm from "../../Components/AuthForm/AuthForm";
 import BlogHeader from "../../Components/BlogHeader/BlogHeader";
+import { RiMailAddLine } from "react-icons/ri";
 
 function Blog() {
   let { blogID } = useParams();
@@ -40,6 +41,8 @@ function Blog() {
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [selfBlog, setSelfBlog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [disableFollowBtn, setDisableFollowBtn] = useState(false);
+  const [authorFollowersCount, setAuthorFollowersCount] = useState(0);
   const [commentsCount, setCommentsCount] = useState(0);
 
   useEffect(() => {
@@ -62,6 +65,7 @@ function Blog() {
           setIsFollowing(true);
 
         setCommentsCount(res.data.comments);
+        setAuthorFollowersCount(res.data.author_followers.length);
 
         let { content, ...blog_info } = res.data;
         setBlogInfo(blog_info);
@@ -114,6 +118,34 @@ function Blog() {
         encodeURIComponent(uri);
 
     window.open(link);
+  };
+
+  const handleFollow = () => {
+    const currentUserID = store.globalData.authUser?.id;
+    if (currentUserID == null) {
+      // setShowAuthForm(true);
+      return;
+    }
+    setDisableFollowBtn(true);
+    axios
+      .post(BaseURL + "/users/follow", {
+        source_user: currentUserID,
+        target_user: blogInfo.author_id,
+        type: isFollowing ? "unfollow" : "follow",
+      })
+      .then((res) => {
+        console.log("res:", res.data);
+        setAuthorFollowersCount(
+          isFollowing ? authorFollowersCount - 1 : authorFollowersCount + 1
+        );
+        setIsFollowing(!isFollowing);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(() => {
+        setDisableFollowBtn(false);
+      });
   };
 
   const toolTipProps = {
@@ -205,6 +237,77 @@ function Blog() {
     );
   };
 
+  const SidebarContent = () => {
+    return (
+      <div className={styles.sidebar_content}>
+        {!!blogInfo && (
+          <div className={styles.part_1}>
+            <img src={blogInfo.author_avatar} alt="" />
+            <h2>{blogInfo.author_fullname}</h2>
+            <p>{authorFollowersCount} Followers</p>
+            {!selfBlog && (
+              <div className={styles.follow_container}>
+                <button
+                  disabled={disableFollowBtn}
+                  type="button"
+                  onClick={handleFollow}
+                  id={isFollowing ? styles.following_btn : ""}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </button>
+                <button
+                  data-tip
+                  data-for="mail"
+                  type="button"
+                  style={{ padding: "0.5em", marginLeft: "5%" }}
+                  onClick={() => alert("Feature is under development")}
+                >
+                  <RiMailAddLine size={"1.2em"} />
+                </button>
+                <ReactTooltip place="bottom" effect="solid" id="mail">
+                  Subscribe to get an email whenever {blogInfo.author_fullname}{" "}
+                  publishes
+                </ReactTooltip>
+              </div>
+            )}
+          </div>
+        )}
+        <hr />
+
+        <div className={styles.part_2}>
+          <h3>Related Blogs</h3>
+          <div
+            style={{
+              height: "3em",
+              width: "100%",
+              borderRadius: 0,
+              margin: "1em 0",
+            }}
+            className={styles.line}
+          />
+          <div
+            style={{
+              height: "3em",
+              width: "100%",
+              borderRadius: 0,
+              margin: "1em 0",
+            }}
+            className={styles.line}
+          />
+          <div
+            style={{
+              height: "3em",
+              width: "100%",
+              borderRadius: 0,
+              margin: "1em 0",
+            }}
+            className={styles.line}
+          />
+        </div>
+      </div>
+    );
+  };
+
   // RENDERER
 
   return (
@@ -245,6 +348,14 @@ function Blog() {
                 selfBlog={selfBlog}
                 blogInfo={blogInfo}
                 isFollowing={isFollowing}
+                setIsFollowing={setIsFollowing}
+                updateCount={() => {
+                  setAuthorFollowersCount(
+                    isFollowing
+                      ? authorFollowersCount - 1
+                      : authorFollowersCount + 1
+                  );
+                }}
               />
             )}
 
@@ -356,7 +467,7 @@ function Blog() {
           </>
         )}
       </div>
-      <Sidebar />
+      <Sidebar content={<SidebarContent />} />
     </div>
   );
 }
