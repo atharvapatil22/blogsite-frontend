@@ -7,15 +7,23 @@ import PageLoader from "../../Components/PageLoader/PageLoader";
 import BlogCard from "../../Components/BlogCard/BlogCard";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SpinnerLoader from "../../Components/SpinnerLoader/SpinnerLoader";
 
 function Home() {
   const [blogsList, setBlogsList] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
 
   const [followingData, setFollowingData] = useState([]);
+  const [popularUsers, setPopularUsers] = useState([]);
 
   const store = useSelector((state) => state);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();
+    fetchFollowers();
+    fetchPopularUsers();
+  }, []);
 
   const fetchData = () => {
     setShowLoader(true);
@@ -47,73 +55,167 @@ function Home() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-    fetchFollowers();
-  }, []);
+  const fetchPopularUsers = () => {
+    axios
+      .get(BaseURL + "/users/popular")
+      .then((res) => {
+        console.log("Popular Users", res.data.popular_users);
+        setPopularUsers(res.data.popular_users);
+      })
+      .catch((err) => console.log("Error", err));
+  };
+
+  const SidebarContent = () => {
+    // Hard Coded for now
+    let todaysRec = [0, 1, 2];
+
+    return (
+      <div className={styles.sidebar_content}>
+        {!!blogsList && (
+          <div className={styles.todays_rec}>
+            <h3>Today's Recommendations</h3>
+
+            {todaysRec.map((n, index) => {
+              return (
+                <div
+                  key={index}
+                  className={styles.blog_item}
+                  onClick={() => {
+                    if (!!blogsList[n]) navigate(`/blog/${blogsList[n].id}`);
+                  }}
+                >
+                  {!!blogsList[n] && (
+                    <div style={{ margin: "1em 0" }}>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img src={blogsList[n].author_avatar} alt="" />
+                        <p style={{ marginLeft: "2%" }}>
+                          {blogsList[n].author_fullname}
+                        </p>
+                      </div>
+                      <p style={{ marginTop: "0.3em", fontWeight: "600" }}>
+                        {blogsList[n].title}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            <p id={styles.rec_link}>See full list</p>
+          </div>
+        )}
+        <hr />
+        <div className={styles.topics_rec}>
+          <h3>Recommended Topics</h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1em",
+            }}
+          >
+            <div className={styles.topic}></div>
+            <div className={styles.topic}></div>
+            <div className={styles.topic}></div>
+          </div>
+        </div>
+        <hr />
+        <div className={styles.follow_rec}>
+          <h3>Who to Follow</h3>
+          {!!popularUsers.length == 0 ? (
+            <SpinnerLoader color={"black"} />
+          ) : (
+            <>
+              {popularUsers.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={styles.popular_user}
+                    onClick={() => navigate(`/user/${item.id}`)}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "75%",
+                      }}
+                    >
+                      <img src={item.avatar} alt="" />
+                      <p>{item.fullname}</p>
+                    </div>
+                    <button disabled type="button">
+                      Follow
+                    </button>
+                  </div>
+                );
+              })}
+              <p>See more suggestions</p>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   const currentUser_ID = store.globalData.authUser?.id;
+
+  if (showLoader) return <PageLoader />;
 
   return (
     <div className={styles.home_container}>
       <div className={styles.home_body}>
-        {!!showLoader ? (
-          <PageLoader />
-        ) : (
-          <div className={styles.responsive_width}>
-            {!!followingData.length > 0 ? (
+        <div className={styles.responsive_width}>
+          {!!followingData.length > 0 ? (
+            <div
+              style={{
+                // margin: "1.5em 0",
+                padding: "0 2%",
+                borderBottom: "1px solid lightgray",
+              }}
+            >
+              <h2 style={{ textAlign: "left", fontFamily: "var(--font-1)" }}>
+                People you Follow:
+              </h2>
+              <div className={styles.following}>
+                {followingData.map((item, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      if (item.id === currentUser_ID) navigate("/profile");
+                      else navigate(`/user/${item.id}`);
+                    }}
+                  >
+                    <img src={item.avatar}></img>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <h2 id={styles.home_heading}>Home</h2>
+          )}
+
+          <div className={styles.blog_list}>
+            {blogsList.map((blog) => (
               <div
                 style={{
-                  // margin: "1.5em 0",
-                  padding: "0 2%",
-                  borderBottom: "1px solid lightgray",
+                  width: "100%",
                 }}
+                key={blog.id}
               >
-                <h2 style={{ textAlign: "left", fontFamily: "var(--font-1)" }}>
-                  People you Follow:
-                </h2>
-                <div className={styles.following}>
-                  {followingData.map((item, index) => (
-                    <div
-                      key={index}
-                      onClick={() => {
-                        if (item.id === currentUser_ID) navigate("/profile");
-                        else navigate(`/user/${item.id}`);
-                      }}
-                    >
-                      <img src={item.avatar}></img>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <h2 id={styles.home_heading}>Home</h2>
-            )}
-
-            <div className={styles.blog_list}>
-              {blogsList.map((blog) => (
-                <div
+                <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
+                <hr
                   style={{
-                    width: "100%",
+                    marginTop: "1em",
+                    marginBottom: "1em",
+                    borderColor: "#f0f0f0",
+                    borderWidth: "0.1px",
                   }}
-                  key={blog.id}
-                >
-                  <BlogCard blog={blog} currentUser_ID={currentUser_ID} />
-                  <hr
-                    style={{
-                      marginTop: "1em",
-                      marginBottom: "1em",
-                      borderColor: "#f0f0f0",
-                      borderWidth: "0.1px",
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+                />
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
-      <Sidebar />
+      <Sidebar content={<SidebarContent />} />
     </div>
   );
 }
