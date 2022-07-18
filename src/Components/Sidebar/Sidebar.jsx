@@ -4,7 +4,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 import AboutSite from "../AboutSite/AboutSite";
 
-function Sidebar() {
+function Sidebar({ content }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showAbout, setShowAbout] = useState(false);
 
@@ -31,7 +31,7 @@ function Sidebar() {
           />
         </div>
       </div>
-      <div>MAin</div>
+      <div>{content}</div>
       <div className={styles.footer}>
         <p style={{ marginRight: "1%" }}>© 2022 Atharva Patil</p>
         <button onClick={() => setShowAbout(true)}>About</button>

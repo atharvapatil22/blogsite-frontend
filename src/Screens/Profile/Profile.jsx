@@ -288,6 +288,21 @@ function Profile() {
       );
   };
 
+  const SidebarContent = () => {
+    return (
+      <div className={styles.sidebar_content}>
+        <div className={styles.part_1}>
+          <img src={userData.avatar} alt="" />
+          <h2>{userData.fullname}</h2>
+          <p>
+            {!!userData.followers ? userData.followers.length : 0} Followers
+          </p>
+        </div>
+        <div className={styles.part_2}>part 2</div>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.profile_container}>
       <div className={styles.profile_body}>
@@ -400,7 +415,7 @@ function Profile() {
           </div>
         )}
       </div>
-      <Sidebar />
+      <Sidebar content={<SidebarContent />} />
     </div>
   );
 }

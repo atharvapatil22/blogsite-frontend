@@ -181,6 +181,39 @@
   cursor: pointer;
 }
 
+/* SIDEBAR CONTENT */
+
+.sidebar_content {
+  padding: 1em 6%;
+}
+
+.part_1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.part_1 img {
+  width: 100px;
+  height: 100px;
+  border-radius: 120px;
+  margin-left: 0;
+}
+
+.part_1 h2 {
+  text-align: left;
+  margin: 0;
+  margin-top: 0.5em;
+  font-size: 1.7em;
+}
+
+.part_1 p {
+  margin: 0;
+  text-align: left;
+  color: grey;
+  font-size: 1.1em;
+}
+
 @media screen and (max-width: 1080px) {
   .profile_container {
     padding-top: calc(var(--navbar-mobile-height) - 10px);
