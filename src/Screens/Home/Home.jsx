@@ -56,28 +56,28 @@ function Home() {
   // HARD CODED FOR NOW
   const popularUsers = [
     {
-      id: 74,
-      fullname: "coder",
+      id: 87,
+      fullname: "Atharva Patil",
       avatar:
-        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1656173518/vcqd7eihyzqkw18vmclq.png",
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1658231089/usiip8oelocdjhkmsf3v.png",
     },
     {
-      id: 75,
-      fullname: "Doge Man",
+      id: 89,
+      fullname: "Jane Doe",
       avatar:
-        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1656173551/u6daabzg0z5jiqyuar9l.jpg",
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1658231505/eibvpecfwy735nget012.png",
     },
     {
-      id: 79,
-      fullname: "Bot 4",
+      id: 90,
+      fullname: "Dinesh Singh",
       avatar:
-        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1657782093/bot_d6uzzb.jpg",
+        "https://res.cloudinary.com/dbanpvg0t/image/upload/v1658231722/theft6l9iqzzckc0tvnx.png",
     },
   ];
 
   const SidebarContent = () => {
     // Hard Coded for now
-    let todaysRec = [0, 1, 2];
+    let todaysRec = [1, 3, 4];
 
     return (
       <div className={styles.sidebar_content}>
