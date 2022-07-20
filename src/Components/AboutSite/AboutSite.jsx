@@ -40,6 +40,7 @@ function AboutSite({ onClose }) {
         <h3>Features under development:</h3>
         <ul>
           <li>Responsive Write Blogs Page</li>
+          <li>Option to add links, images etc in blogs</li>
           <li>Saving Blogs to drafts</li>
           <li>Topics: Blogs could be tagged with one or more topics</li>
           <li>
@@ -47,7 +48,6 @@ function AboutSite({ onClose }) {
           </li>
           <li>Option to save blogs to collections(public/private)</li>
           <li>Notifications</li>
-          <li>Settings Page</li>
         </ul>
         <button
           style={{ marginTop: "2em" }}
