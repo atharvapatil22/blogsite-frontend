@@ -18,7 +18,7 @@
 }
 
 .header_section_1 {
-  min-width: 40%;
+  min-width: 52%;
   margin-left: 3%;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .header_section_2 {
-  min-width: 50%;
+  min-width: 44%;
   display: flex;
   justify-content: center;
   align-items: center;

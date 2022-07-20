@@ -152,6 +152,11 @@ function Blog() {
       });
   };
 
+  const goToAuthorProfile = () => {
+    if (selfBlog) navigate("/profile");
+    else navigate(`/user/${blogInfo.author_id}`);
+  };
+
   const toolTipProps = {
     place: "bottom",
     effect: "solid",
@@ -246,8 +251,12 @@ function Blog() {
       <div className={styles.sidebar_content}>
         {!!blogInfo && (
           <div className={styles.part_1}>
-            <img src={blogInfo.author_avatar} alt="" />
-            <h2>{blogInfo.author_fullname}</h2>
+            <img
+              src={blogInfo.author_avatar}
+              alt=""
+              onClick={goToAuthorProfile}
+            />
+            <h2 onClick={goToAuthorProfile}>{blogInfo.author_fullname}</h2>
             <p>{authorFollowersCount} Followers</p>
             {!selfBlog && (
               <div className={styles.follow_container}>

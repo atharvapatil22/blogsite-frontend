@@ -30,7 +30,7 @@
 
 .login-form-btn:hover {
   cursor: pointer;
-  color: var(--purple-2);
+  color: var(--blue-2);
 }
 
 .login-form-email {
@@ -96,7 +96,7 @@
 
 .create-account-btn:hover {
   cursor: pointer;
-  color: var(--purple-2);
+  color: var(--blue-2);
 }
 
 .create-account-email {
@@ -129,6 +129,7 @@ form > button {
 
 form > button:hover {
   cursor: pointer;
+  background-color: var(--blue-2);
 }
 
 .create-account-form input {
@@ -381,5 +382,9 @@ form > button:hover {
 }
 
 .form-btn-disabled {
-  background-color: rgba(66, 8, 255, 0.6);
+  background-color: rgba(24, 53, 181, 0.6);
+}
+
+.form-btn-disabled:hover {
+  background-color: rgba(24, 53, 181, 0.6);
 }

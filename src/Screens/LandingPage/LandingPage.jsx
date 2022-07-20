@@ -247,7 +247,7 @@ function LandingPage({ setPageTitle }) {
           <MdTrendingUp id={styles.trending_icon} /> Trending on Cogito{" "}
         </h3>
         <div className={styles.grid_container}>
-          {!!blogsList ? (
+          {!!blogsList.length > 0 ? (
             <div>
               {blogsList.map((blog, index) => (
                 <div

@@ -185,11 +185,16 @@
   border-radius: 120px;
 }
 
+.part_1 img:hover {
+  cursor: pointer;
+}
+
 .part_1 h2 {
   text-align: left;
   margin: 0;
   margin-top: 0.5em;
   font-size: 1.7em;
+  cursor: pointer;
 }
 
 .part_1 p {

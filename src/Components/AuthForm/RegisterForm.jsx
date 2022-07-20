@@ -36,10 +36,19 @@ function RegisterForm(props) {
   const myRef = useRef(null);
 
   useEffect(() => {
-    // Set random default avatar
+    initializeAvatar();
+  }, []);
+
+  // Set random default avatar
+  const initializeAvatar = async () => {
     const randomNumber = Math.floor(Math.random() * 8 + 0);
     setAvatar(defaultAvatars[randomNumber]);
-  }, []);
+
+    // Need to convert the local image uri to Blob because blob is uploaded to cloudinary
+    const response = await fetch(defaultAvatars[randomNumber]);
+    const blob = await response.blob();
+    setAvatarObject(blob);
+  };
 
   // When User Selects Default Avatar
   const handleAvatarChange = async (index) => {
