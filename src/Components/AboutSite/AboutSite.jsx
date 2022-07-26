@@ -39,8 +39,9 @@ function AboutSite({ onClose }) {
         </ul>
         <h3>Features under development:</h3>
         <ul>
-          <li>Responsive Write Blogs Page</li>
-          <li>Option to add links, images etc in blogs</li>
+          <li>
+            Responsive Blog Editor. And option to add links, images etc in blogs
+          </li>
           <li>Saving Blogs to drafts</li>
           <li>Topics: Blogs could be tagged with one or more topics</li>
           <li>
