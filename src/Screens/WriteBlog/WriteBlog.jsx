@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DraftailEditor, serialiseEditorStateToRaw } from "draftail";
 import { EditorState } from "draft-js";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
@@ -44,6 +44,14 @@ function WriteBlog() {
   const [blogImageObj, setBlogImageObj] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [previewVisible, setPreviewVisible] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 720) {
+      alert(
+        "Blog Editor UI is not optimized for Mobile. Please consider using a PC/Tablet to write blogs."
+      );
+    }
+  }, []);
 
   const showPreview = () => {
     const blogContent = serialiseEditorStateToRaw(editorState);

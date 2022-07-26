@@ -72,8 +72,8 @@ function AboutSite({ onClose }) {
             )
           }
         >
-          <BsLinkedin size={"1.2em"} style={{ marginRight: "4%" }} /> Follow me
-          on linkedin
+          <BsLinkedin size={"1.2em"} style={{ marginRight: "4%" }} /> Connect on
+          LinkedIn
         </button>
       </div>
     </Modal>
