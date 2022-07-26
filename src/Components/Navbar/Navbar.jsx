@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./Navbar.module.css";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { BiHomeAlt } from "react-icons/bi";
-import { TiEdit } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMenuSharp } from "react-icons/io5";
 import ReactTooltip from "react-tooltip";
 import { authUserSet } from "../../redux/actions";
+import { FiEdit } from "react-icons/fi";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoBookmarksOutline } from "react-icons/io5";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -109,19 +110,28 @@ function Navbar() {
           <div className={styles.navbar_menu}>
             <ul>
               <li>
-                <Link to={"/home"}>
+                <Link to={"/home"} data-tip data-for="home_link">
                   <div className={styles.navbar_link}>
-                    <BiHomeAlt fontSize={"2em"} />
+                    <AiOutlineHome fontSize={"2em"} />
                   </div>
                 </Link>
+              </li>
+              <li className={` ${styles.hide_for_mobile}`}>
+                <a href="#" data-tip data-for="list_link">
+                  <div className={styles.navbar_link}>
+                    <IoBookmarksOutline fontSize={"1.7em"} />
+                  </div>
+                </a>
               </li>
               <li>
-                <Link to={"/write-blog"}>
+                <Link to={"/write-blog"} data-tip data-for="write_link">
                   <div className={styles.navbar_link}>
-                    <TiEdit fontSize={"2em"} />
+                    <FiEdit fontSize={"1.8em"} />
                   </div>
                 </Link>
               </li>
+              <li className={` ${styles.hide_for_mobile}`}> </li>
+              <li className={` ${styles.hide_for_mobile}`}> </li>
               <li className={`${styles.profile_nav} ${styles.show_for_mobile}`}>
                 <Link to={"/profile"}>
                   <img
@@ -134,6 +144,17 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
+            <div className={` ${styles.hide_for_mobile}`}>
+              <ReactTooltip place="right" effect="solid" id="home_link">
+                <p style={{ margin: 0, fontSize: "1.2em" }}>Home</p>
+              </ReactTooltip>
+              <ReactTooltip place="right" effect="solid" id="list_link">
+                <p style={{ margin: 0, fontSize: "1.2em" }}>Lists</p>
+              </ReactTooltip>
+              <ReactTooltip place="right" effect="solid" id="write_link">
+                <p style={{ margin: 0, fontSize: "1.2em" }}>Write Blogs</p>
+              </ReactTooltip>
+            </div>
           </div>
 
           <div

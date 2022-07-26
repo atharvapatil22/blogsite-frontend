@@ -6,11 +6,11 @@
   flex-direction: row;
   justify-content: space-evenly;
   border: 0px solid grey;
-  border-bottom-width: 1px;
+  /* border-bottom-width: 1px; */
   height: 5em;
   z-index: 10;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  box-shadow: rgba(0, 0, 0, 0.238) 0px 2px 0.5em;
 }
 
 .toolbar_container .section_1,

@@ -152,9 +152,7 @@ function Home() {
                       <img src={item.avatar} alt="" />
                       <p>{item.fullname}</p>
                     </div>
-                    <button disabled type="button">
-                      Follow
-                    </button>
+                    <button type="button">Follow</button>
                   </div>
                 );
               })}

@@ -279,7 +279,7 @@
 #mainmenu {
   height: 100vh;
   width: 100%;
-  background: rgb(43, 13, 101);
+  background: rgb(29, 69, 189);
   clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
   position: fixed;
   top: 100%;
@@ -291,7 +291,7 @@
 #layer2 {
   height: 100vh;
   width: 100%;
-  background: cyan;
+  background-color: rgb(254, 236, 69);
   clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
   position: fixed;
   top: 100%;
@@ -325,7 +325,7 @@
   border-radius: 25px;
   border: none;
   padding: 0.2em 0.4em;
-  color: cyan;
+  color: rgb(254, 236, 69);
   font-size: 3em;
   font-family: var(--font-1);
   transition: all 0.6s ease;
@@ -333,8 +333,8 @@
 
 #mainmenu ul li button:hover {
   cursor: pointer;
-  color: black;
-  background-color: white;
+  /* color: black; */
+  background-color: rgba(255, 255, 255, 0.413);
 }
 
 #mainmenu ul li:nth-child(1) {
