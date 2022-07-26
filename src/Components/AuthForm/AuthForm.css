@@ -388,3 +388,22 @@ form > button:hover {
 .form-btn-disabled:hover {
   background-color: rgba(24, 53, 181, 0.6);
 }
+
+@media screen and (max-width: 720px) {
+  form > button,
+  .login-form > button {
+    height: 65px;
+  }
+
+  .form-body {
+    margin-bottom: 250px;
+  }
+
+  .create-account-form input {
+    height: 65px;
+  }
+
+  .login-form input {
+    height: 65px;
+  }
+}
