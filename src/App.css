@@ -27,6 +27,14 @@
   font-family: var(--font-2);
 }
 
+.App button:focus {
+  outline: none;
+}
+
+.App a:focus {
+  outline: none;
+}
+
 @media screen and (max-width: 1080px) {
   .App {
     margin-bottom: var(--navbar-mobile-height);
